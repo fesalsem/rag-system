@@ -6,8 +6,8 @@ run without API keys, GPU, or network access.
 
 import pytest
 from pathlib import Path
-from unittest.mock import patch, MagicMock, PropertyMock
-from langchain.schema import Document
+from unittest.mock import patch, MagicMock, PropertyMock, create_autospec
+from langchain_groq import ChatGroq
 
 from rag_engine import RAGEngine
 from config import RAGConfig, VectorStoreConfig
@@ -83,11 +83,16 @@ class TestAddDocuments:
 
         mock_vs = MagicMock()
         mock_vs.index.ntotal = len(sample_docs)
+        mock_vs.as_retriever.return_value = MagicMock()
+
+        mock_llm = create_autospec(ChatGroq, instance=True)
 
         with patch("rag_engine.HuggingFaceEmbeddings", return_value=mock_embeddings), \
              patch("rag_engine.FAISS.from_documents", return_value=mock_vs), \
-             patch("rag_engine.ChatGroq"), \
+             patch("rag_engine.ChatGroq", return_value=mock_llm), \
+             patch("rag_engine.ConversationalRetrievalChain.from_llm") as mock_chain, \
              patch.object(RAGEngine, "_save_index"):
+            mock_chain.return_value = MagicMock()
             engine = RAGEngine(config=tmp_config)
             engine.add_documents(sample_docs)
             assert engine._vector_store is not None
@@ -112,11 +117,16 @@ class TestGetIndexStats:
 
         mock_vs = MagicMock()
         mock_vs.index.ntotal = 2
+        mock_vs.as_retriever.return_value = MagicMock()
+
+        mock_llm = create_autospec(ChatGroq, instance=True)
 
         with patch("rag_engine.HuggingFaceEmbeddings", return_value=mock_embeddings), \
              patch("rag_engine.FAISS.from_documents", return_value=mock_vs), \
-             patch("rag_engine.ChatGroq"), \
+             patch("rag_engine.ChatGroq", return_value=mock_llm), \
+             patch("rag_engine.ConversationalRetrievalChain.from_llm") as mock_chain, \
              patch.object(RAGEngine, "_save_index"):
+            mock_chain.return_value = MagicMock()
             engine = RAGEngine(config=tmp_config)
             engine.add_documents(sample_docs)
             stats = engine.get_index_stats()
