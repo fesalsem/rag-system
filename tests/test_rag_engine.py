@@ -7,6 +7,7 @@ run without API keys, GPU, or network access.
 import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock, PropertyMock, create_autospec
+from langchain.schema import Document
 from langchain_groq import ChatGroq
 
 from rag_engine import RAGEngine
