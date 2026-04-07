@@ -1,0 +1,42 @@
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Vector store (large binary files, user-specific)
+vector_store/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# HuggingFace model cache
+.cache/
+*.bin
+*.safetensors
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Temp uploads
+tmp/
+temp/
