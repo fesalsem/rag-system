@@ -1,5 +1,6 @@
 # Intellect — RAG Document Intelligence System
 
+![CI](https://github.com/fesalsem/rag-system/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-0.3-1C3C3C?style=flat-square)
 ![Groq](https://img.shields.io/badge/Groq-Llama_3.1-F55036?style=flat-square)
