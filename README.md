@@ -9,8 +9,6 @@
 
 A production-ready, modular **Retrieval-Augmented Generation (RAG)** system that lets you upload PDF documents and ask natural language questions. Answers include precise source attribution (page numbers) and full conversation memory.
 
-Built entirely on **free-tier tools** — no cloud vector DB, no paid embeddings.
-
 ---
 
 ## Architecture
