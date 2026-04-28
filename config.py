@@ -55,7 +55,7 @@ class VectorStoreConfig(BaseModel):
         description="Vector store provider. Swap to 'pinecone' or 'chroma'.",
     )
     index_path: Path = Field(
-        default=Path("./vector_store/faiss_index"),
+        default=Path("/tmp/faiss_index"),
         description="Local path where the FAISS index is persisted.",
     )
 
