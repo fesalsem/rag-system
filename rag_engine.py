@@ -119,7 +119,8 @@ class RAGEngine:
             llm_cfg = self.config.llm
             if not llm_cfg.groq_api_key:
                 raise EnvironmentError(
-                    "GROQ_API_KEY is not set. Add it to your .env file."
+                    "GROQ_API_KEY is not set. Add it to your .env file "
+                    "(locally) or to Streamlit secrets (cloud)."
                 )
             logger.info("Connecting to Groq — model: %s", llm_cfg.model_name)
             try:

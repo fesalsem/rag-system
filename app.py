@@ -4,11 +4,22 @@ Apple-inspired: light, airy, typographic, precise.
 """
 
 import logging
+import os
 import sys
 import tempfile
 from pathlib import Path
 
 import streamlit as st
+
+# On Streamlit Community Cloud, secrets live in ``st.secrets`` (there is no
+# ``.env`` file). Surface them as environment variables *before* ``config``
+# is imported, so ``config.py`` picks them up via ``os.getenv``.
+try:
+    for _key in ("GROQ_API_KEY",):
+        if not os.getenv(_key) and _key in st.secrets:
+            os.environ[_key] = st.secrets[_key]
+except Exception:
+    pass
 
 from config import settings
 from document_processor import DocumentProcessor
