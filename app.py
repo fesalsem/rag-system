@@ -76,7 +76,6 @@ html, body, [class*="css"] {
     padding-top: 0;
 }
 [data-testid="stSidebar"] > div:first-child { padding: 0; }
-[data-testid="stSidebar"] * { color: #1d1d1f !important; }
 
 .sidebar-logo {
     padding: 32px 28px 24px;
@@ -113,13 +112,12 @@ html, body, [class*="css"] {
 
 /* ── Upload zone ── */
 [data-testid="stFileUploader"] {
-    background: #f5f5f7;
-    border: 1.5px dashed #c7c7cc;
+    background: #ffffff;
+    border: 1.5px solid #1d1d1f;
     border-radius: 12px;
-    padding: 4px;
-    transition: border-color 0.2s;
+    padding: 8px;
 }
-[data-testid="stFileUploader"]:hover { border-color: #1d1d1f; }
+[data-testid="stFileUploader"] * { color: #1d1d1f !important; }
 [data-testid="stFileUploader"] label { display: none; }
 
 /* ── Buttons ── */
@@ -142,6 +140,7 @@ html, body, [class*="css"] {
     transform: scale(1.01) !important;
 }
 .stButton > button:active { transform: scale(0.99) !important; }
+.stButton > button * { color: #f5f5f7 !important; }
 
 /* ── Stats pill ── */
 .stats-pill {
