@@ -1,94 +1,63 @@
 # Intellect — RAG Document Intelligence System
 
-![CI](https://github.com/fesalsem/rag-system/actions/workflows/ci.yml/badge.svg)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-0.3-1C3C3C?style=flat-square)
-![Groq](https://img.shields.io/badge/Groq-Llama_3.1-F55036?style=flat-square)
-![FAISS](https://img.shields.io/badge/FAISS-Local_Vector_DB-0467DF?style=flat-square)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.45-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+> Upload your PDFs, then ask questions in plain language. Get precise answers backed by exact page-number citations.
 
-A production-ready, modular **Retrieval-Augmented Generation (RAG)** system that lets you upload PDF documents and ask natural language questions. Answers include precise source attribution (page numbers) and full conversation memory.
+## 🚀 Try it now
+
+**https://fesalsem-rag.streamlit.app**
+
+No install, no setup — just open the link and start asking.
 
 ---
 
-## Architecture
+## How to use
 
-```
-rag_system/
-├── app.py                  # Streamlit UI (Apple-inspired design)
-├── rag_engine.py           # LangChain RAG pipeline
-├── document_processor.py   # PDF loading & recursive chunking
-├── config.py               # Centralised Pydantic settings
-├── requirements.txt
-├── .env.template
-├── .gitignore
-└── README.md
-```
+1. **Open** the app: https://fesalsem-rag.streamlit.app
+2. **Upload** one or more PDFs in the left sidebar
+3. **Click "Index Documents"** (this prepares your files for searching)
+4. **Type a question** in the chat box and press Enter
 
-### Data flow
-
-```
-PDF Upload
-    │
-    ▼
-DocumentProcessor
-(PyPDFLoader → RecursiveCharacterTextSplitter)
-    │  chunks with metadata
-    ▼
-RAGEngine.add_documents()
-(HuggingFace all-MiniLM-L6-v2 embeddings)
-    │  vectors
-    ▼
-FAISS Index (persisted to disk)
-    │
-    │  user question
-    ▼
-ConversationalRetrievalChain
-(top-k retrieval → Groq Llama 3.1 8B)
-    │
-    ▼
-Answer + Source Attribution
-```
+Every answer comes with a **Sources** section pointing to the exact page in your document, so you can verify where each fact came from.
 
 ---
 
-## Tech Stack
+## What it gives you
 
-| Layer | Tool | Why |
-|---|---|---|
-| Orchestration | LangChain 0.3 | Modular chains, memory, retrieval |
-| LLM | Llama 3.1 8B via Groq | Free tier, ~500 tok/s |
-| Embeddings | all-MiniLM-L6-v2 | Local, free, fast, 384-dim |
-| Vector DB | FAISS | Local persistence, no cloud cost |
-| Frontend | Streamlit | Rapid Python UI |
-| Config | Pydantic v2 | Type-safe settings |
+- **Ask in plain English** — no special syntax, just talk to your documents
+- **Source attribution** — every answer cites the page it came from
+- **Conversation memory** — ask follow-up questions and it remembers context
+- **Multiple PDFs** — index several documents and search across all of them at once
 
 ---
 
-## Quick Start
+## How it works (in plain terms)
 
-### 1. Clone
+When you upload a PDF, the app:
+
+1. Splits it into small chunks of text
+2. Converts each chunk into a "vector" (a mathematical fingerprint of its meaning)
+3. Stores them in a local search index
+4. When you ask a question, it finds the most relevant chunks and asks an LLM to answer **using only that material** — so answers stay grounded in your documents, with no guesswork from the model's memory
+
+**Tech Stack:** LangChain · Llama 3.1 8B (Groq) · all-MiniLM-L6-v2 embeddings · FAISS · Streamlit
+
+---
+
+## 🛠️ For developers
+
+Want to run or modify it locally?
+
+### 1. Clone & set up (requires Python 3.12)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/rag-system.git
+git clone https://github.com/fesalsem/rag-system.git
 cd rag-system
-```
-
-### 2. Python environment (requires Python 3.12)
-
-```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
-```
-
-### 3. Install
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 4. API key
+### 2. Add your Groq API key
 
 ```bash
 cp .env.template .env
@@ -97,17 +66,27 @@ cp .env.template .env
 
 Get a free key at [console.groq.com](https://console.groq.com).
 
-### 5. Run
+### 3. Run
 
 ```bash
 streamlit run app.py
 ```
 
----
+### Project structure
 
-## Swapping Components
+```
+rag_system/
+├── app.py                  # Streamlit UI
+├── rag_engine.py           # LangChain RAG pipeline
+├── document_processor.py   # PDF loading & chunking
+├── config.py               # Centralised Pydantic settings
+├── requirements.txt
+└── .env.template
+```
 
-All configuration lives in `config.py`. No pipeline code changes needed.
+### Swapping components
+
+All configuration lives in `config.py` — no pipeline code changes needed.
 
 | To swap | Change in `config.py` |
 |---|---|
