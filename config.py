@@ -29,7 +29,9 @@ class LLMConfig(BaseModel):
         description="LLM provider identifier. Swap to 'ollama' or 'openai' as needed.",
     )
     model_name: str = Field(
-        default="llama-3.1-8b-instant",
+        default_factory=lambda: os.getenv(
+            "GROQ_MODEL", "openai/gpt-oss-20b"
+        ),
         description="Model identifier on the chosen provider.",
     )
     temperature: float = Field(default=0.2, ge=0.0, le=2.0)

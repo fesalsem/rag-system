@@ -15,7 +15,7 @@ import streamlit as st
 # ``.env`` file). Surface them as environment variables *before* ``config``
 # is imported, so ``config.py`` picks them up via ``os.getenv``.
 try:
-    for _key in ("GROQ_API_KEY",):
+    for _key in ("GROQ_API_KEY", "GROQ_MODEL"):
         if not os.getenv(_key) and _key in st.secrets:
             os.environ[_key] = st.secrets[_key]
 except Exception:

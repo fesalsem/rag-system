@@ -91,7 +91,7 @@ All configuration lives in `config.py` — no pipeline code changes needed.
 | To swap | Change in `config.py` |
 |---|---|
 | Groq → Ollama | `llm.provider = "ollama"`, update `model_name` |
-| Llama 3.1 8B → 70B | `llm.model_name = "llama-3.3-70b-versatile"` |
+| Change Groq model | `llm.model_name = "openai/gpt-oss-20b"` (or set `GROQ_MODEL` in `.env`/secrets) |
 | FAISS → Pinecone | `vector_store.provider = "pinecone"` |
 | MiniLM → BGE | `embedding.model_name = "BAAI/bge-small-en-v1.5"` |
 
