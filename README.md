@@ -39,7 +39,9 @@ When you upload a PDF, the app:
 3. Stores them in a local search index
 4. When you ask a question, it finds the most relevant chunks and asks an LLM to answer **using only that material** — so answers stay grounded in your documents, with no guesswork from the model's memory
 
-**Tech Stack:** LangChain · Llama 3.1 8B (Groq) · all-MiniLM-L6-v2 embeddings · FAISS · Streamlit
+**Tech Stack:** LangChain · Groq (GPT-OSS-20B) · all-MiniLM-L6-v2 embeddings · FAISS · Streamlit
+
+> The model is set in `config.py` and can be changed without touching pipeline code. The deployed app originally ran Llama 3.1 and moved to GPT-OSS-20B when Llama was retired.
 
 ---
 
