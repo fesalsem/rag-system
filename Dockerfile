@@ -20,6 +20,14 @@ RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/wh
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# pytest is not in requirements.txt, so the runtime image has no test tooling.
+# CI builds with --build-arg INSTALL_DEV=true to run the suite inside the same
+# image; a plain `docker build` leaves it out.
+ARG INSTALL_DEV=false
+RUN if [ "$INSTALL_DEV" = "true" ]; then \
+      pip install --no-cache-dir pytest pytest-cov; \
+    fi
+
 COPY . .
 
 RUN useradd --create-home --uid 1001 app \

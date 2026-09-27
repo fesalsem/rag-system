@@ -72,6 +72,7 @@ jobs:
           push: false
           load: true
           tags: intellect:ci
+          build-args: INSTALL_DEV=true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

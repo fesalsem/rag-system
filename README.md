@@ -92,11 +92,14 @@ Two named volumes persist across restarts:
 
 The image installs PyTorch from the CPU-only index. The default wheel pulls several gigabytes of CUDA libraries this app never uses, since embeddings run on CPU.
 
-To run the test suite inside the container:
+To run the test suite inside the container, build with the dev flag first. `pytest` is not in `requirements.txt`, so a plain build has no test tooling:
 
 ```bash
-docker compose run --rm intellect pytest -q
+docker build --build-arg INSTALL_DEV=true -t intellect:dev .
+docker run --rm intellect:dev pytest -q
 ```
+
+CI does exactly this, then starts the container and polls its health endpoint.
 
 ### Project structure
 
