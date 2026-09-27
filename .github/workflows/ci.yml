@@ -50,3 +50,49 @@ jobs:
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
+
+  # Builds the same image you would run locally, then proves it works:
+  # the test suite passes inside the container, and the app serves traffic.
+  # Runs once, on Linux, because the image targets a Linux container.
+  docker:
+    name: Docker build and smoke test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: intellect:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run test suite inside the image
+        run: docker run --rm -e GROQ_API_KEY=dummy intellect:ci pytest -q
+
+      - name: Start the container
+        run: docker run -d --name intellect -p 8501:8501 -e GROQ_API_KEY=dummy intellect:ci
+
+      - name: Wait for the health endpoint
+        run: |
+          for i in $(seq 1 30); do
+            sleep 5
+            if curl -fsS http://localhost:8501/_stcore/health; then
+              echo "app is serving"
+              exit 0
+            fi
+          done
+          echo "app did not become healthy"
+          exit 1
+
+      - name: Container logs
+        if: always()
+        run: docker logs intellect

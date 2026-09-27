@@ -74,6 +74,30 @@ Get a free key at [console.groq.com](https://console.groq.com).
 streamlit run app.py
 ```
 
+### 4. Or run with Docker
+
+No Python setup needed, and it pins the exact interpreter version.
+
+```bash
+cp .env.template .env        # then put your GROQ_API_KEY in it
+docker compose up --build
+```
+
+Open http://localhost:8501. Stop with `Ctrl+C`; `docker compose down` removes the containers but keeps the volumes.
+
+Two named volumes persist across restarts:
+
+- `faiss_index` is mounted at `/tmp/faiss_index`, because `config.py` defaults `index_path` there and a container's `/tmp` is wiped on every restart. Your uploaded documents stay indexed.
+- `hf_cache` holds the downloaded MiniLM model, so a rebuild does not fetch it again.
+
+The image installs PyTorch from the CPU-only index. The default wheel pulls several gigabytes of CUDA libraries this app never uses, since embeddings run on CPU.
+
+To run the test suite inside the container:
+
+```bash
+docker compose run --rm intellect pytest -q
+```
+
 ### Project structure
 
 ```

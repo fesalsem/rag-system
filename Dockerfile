@@ -1,0 +1,38 @@
+# Intellect - Streamlit RAG document Q&A app.
+
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    HF_HOME=/app/.cache/huggingface \
+    STREAMLIT_SERVER_PORT=8501 \
+    STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
+    STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+
+WORKDIR /app
+
+# PyTorch first, from the CPU-only index. The default wheel drags in several GB
+# of CUDA libraries this app never touches, since embeddings run on CPU.
+# Installing it here means the requirements step below sees it as satisfied.
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+RUN useradd --create-home --uid 1001 app \
+    && mkdir -p /app/.cache/huggingface /tmp/faiss_index \
+    && chown -R app:app /app /tmp/faiss_index
+USER app
+
+EXPOSE 8501
+
+# Streamlit's own health endpoint. urllib raises on non-200, which is a
+# non-zero exit for Docker. The start period is long because the first run
+# downloads the MiniLM model.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+  CMD ["python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health',timeout=4)"]
+
+CMD ["streamlit", "run", "app.py"]

@@ -1,0 +1,30 @@
+# Never copy secrets or local state into the image.
+.env
+.env.*
+
+.git/
+.github/
+.gitignore
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Index and model cache live in named volumes, not the image.
+vector_store/
+.cache/
+*.bin
+*.safetensors
+
+tmp/
+temp/
+*.log
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Keep tests/ and README.md in the image so the suite can be run inside it.
