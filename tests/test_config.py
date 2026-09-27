@@ -31,9 +31,13 @@ class TestEmbeddingConfig:
 
 
 class TestLLMConfig:
-    def test_default_model(self):
+    def test_default_model(self, monkeypatch):
+        # The default comes from GROQ_MODEL, falling back to the value in
+        # config.py. Clear it so a developer's local .env cannot change the
+        # result, then assert the code default.
+        monkeypatch.delenv("GROQ_MODEL", raising=False)
         cfg = LLMConfig()
-        assert cfg.model_name == "llama-3.1-8b-instant"
+        assert cfg.model_name == "openai/gpt-oss-20b"
 
     def test_temperature_bounds(self):
         with pytest.raises(Exception):
