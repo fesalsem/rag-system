@@ -113,12 +113,49 @@ Overview:"""
 # FY2023 audit could not find information to support the reported revenue, but
 # page 4 states ..."). Matching the question is deterministic, and cannot
 # discard a good answer.
-_BROAD_QUESTION_RE = re.compile(
-    r"\b(summar(?:y|ise|ize)|overview|tl;?dr|"
-    r"what(?:'s| is) (?:this|the) (?:document|pdf|file|paper) about|"
+_SUMMARY_INTENT_RE = re.compile(
+    r"\b(?:summari[sz]e|summar(?:y|ise|ize)|overview|tl;?dr|"
     r"key (?:points|takeaways)|main (?:points|ideas|themes))\b",
     re.IGNORECASE,
 )
+_DOCUMENT_WORD_RE = re.compile(
+    r"\b(?:document|documents?|pdfs?|files?|papers?|docs?|text|upload|uploads)\b",
+    re.IGNORECASE,
+)
+_WHOLE_DOCUMENT_RE = re.compile(
+    r"what(?:'s| is)\s+(?:this|the)\s+(?:document|pdf|file|paper|doc|text)\b.*\babout\b",
+    re.IGNORECASE,
+)
+# A request has to be this short before it counts as nothing but the request
+# itself. See _is_broad_request for why the bound is deliberately tight.
+_BROAD_MAX_WORDS = 4
+
+
+def _is_broad_request(question: str) -> bool:
+    """
+    True when the question asks for the document as a whole.
+
+    Keyword matching alone is not enough. "main points" appears in "What are the
+    main points of contact?", and "overview" in "overview of the methodology was
+    rejected by whom?" — both are ordinary questions about a specific passage,
+    and sending them down the overview path would discard the retrieval that
+    answers them. So a request also has to name the document, or be short enough
+    that there is nothing else in it ("key takeaways", "give me an overview").
+
+    The bound is deliberately tight and the rule errs towards False. A missed
+    overview request produces a narrower answer from a real passage, while a
+    false positive throws away retrieval entirely, which is the failure this
+    whole path exists to avoid. Questions that match nothing relevant are still
+    caught, by the distance threshold rather than by wording.
+    """
+    text = (question or "").strip()
+    if not text:
+        return False
+    if _WHOLE_DOCUMENT_RE.search(text):
+        return True
+    if not _SUMMARY_INTENT_RE.search(text):
+        return False
+    return bool(_DOCUMENT_WORD_RE.search(text)) or len(text.split()) <= _BROAD_MAX_WORDS
 
 
 # ---------------------------------------------------------------------------
@@ -502,7 +539,7 @@ class RAGEngine:
 
         # A whole-document request cannot be served by a top-k retrieval, and
         # neither can a question whose best match is still far away.
-        if _BROAD_QUESTION_RE.search(question):
+        if _is_broad_request(question):
             logger.info("Question asks for an overview — sampling the document.")
             result = self._summarize_document(question)
             self._remember(question, result["answer"])
