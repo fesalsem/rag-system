@@ -1,1 +1,7 @@
+# runtime.txt is NOT read by Streamlit Community Cloud. The Python version for a
+# deployed app is chosen in the Advanced settings step of the deploy dialog
+# (Streamlit's dependency docs list requirements.txt, uv.lock, Pipfile,
+# environment.yml and pyproject.toml, but not runtime.txt), and it is fixed once
+# the app exists, so changing it means deleting and redeploying. This file is
+# kept only as a human-readable note of the supported target.
 python-3.12

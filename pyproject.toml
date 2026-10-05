@@ -1,0 +1,34 @@
+# pyproject.toml — tooling configuration only.
+#
+# Runtime dependencies deliberately stay in requirements.txt: Streamlit
+# Community Cloud and the Docker build both install from that file, so keeping a
+# second dependency list here would just let the two drift apart. This file
+# configures pytest and coverage, nothing else.
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+# Measure the whole project, then drop the test tree itself so the numbers
+# reflect application code rather than the tests that exercise it.
+source = ["."]
+branch = true
+omit = [
+    "tests/*",
+    "*/tests/*",
+    ".venv/*",
+    "*/venv/*",
+]
+
+[tool.coverage.report]
+omit = [
+    "tests/*",
+    "*/tests/*",
+    ".venv/*",
+    "*/venv/*",
+]
+show_missing = true
+
+# fail_under is intentionally absent. The coverage gate is set once a real
+# measurement exists, so the threshold describes the project instead of an
+# arbitrary figure.

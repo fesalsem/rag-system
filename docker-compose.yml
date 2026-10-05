@@ -14,13 +14,17 @@ services:
       GROQ_API_KEY: "${GROQ_API_KEY:?set GROQ_API_KEY in a .env file beside this compose file}"
       GROQ_MODEL: "${GROQ_MODEL:-openai/gpt-oss-20b}"
     volumes:
-      # config.py defaults index_path to /tmp/faiss_index, which is ephemeral
-      # inside a container. This volume keeps the index across restarts.
-      - faiss_index:/tmp/faiss_index
-      # Embedding model cache, so a rebuild does not re-download MiniLM.
+      # Embedding model cache, so a restart or rebuild does not re-download the
+      # MiniLM model. The model is loaded lazily on the first query, not at
+      # start-up.
+      #
+      # There is deliberately no volume for the FAISS index. Indexing is
+      # per session: each session writes its own index under
+      # /tmp/faiss_index/<session-id>, and those are not kept across restarts
+      # and not shared between users. A volume would only accumulate dead
+      # per-session directories, so none is mounted.
       - hf_cache:/app/.cache/huggingface
     restart: unless-stopped
 
 volumes:
-  faiss_index:
   hf_cache:

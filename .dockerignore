@@ -2,6 +2,11 @@
 .env
 .env.*
 
+# Streamlit secrets would otherwise be baked into an image layer by COPY . .
+.streamlit/
+.streamlit/secrets.toml
+secrets.toml
+
 .git/
 .github/
 .gitignore

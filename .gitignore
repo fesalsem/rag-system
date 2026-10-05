@@ -4,6 +4,12 @@
 venv/
 env/
 
+# Streamlit secrets (a developer using the standard Streamlit pattern would
+# otherwise commit credentials).
+.streamlit/
+.streamlit/secrets.toml
+secrets.toml
+
 # Vector store (large binary files, user-specific)
 vector_store/
 
