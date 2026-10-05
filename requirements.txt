@@ -3,16 +3,21 @@ langchain==0.3.25
 langchain-community==0.3.24
 langchain-groq==0.3.2
 
+# HuggingFace embeddings via the standalone package. The equivalent
+# langchain_community.embeddings.HuggingFaceEmbeddings class is deprecated, so
+# the core imports from here instead.
+langchain-huggingface==0.1.2
+
 # ── LLM provider ─────────────────────────────────────────────────────────────
 groq==0.23.1
 
 # ── Embeddings (local, free) ─────────────────────────────────────────────────
 sentence-transformers==3.4.1
-torch>=2.9.0
+torch==2.14.1
 huggingface-hub==0.30.2
 
 # ── Vector store ─────────────────────────────────────────────────────────────
-faiss-cpu>=1.12.0
+faiss-cpu==1.15.1
 
 # ── PDF loading ──────────────────────────────────────────────────────────────
 pypdf==5.4.0
@@ -26,4 +31,16 @@ pydantic-settings==2.9.1
 python-dotenv==1.1.0
 
 # ── Utilities ────────────────────────────────────────────────────────────────
-numpy>=1.24.0
+numpy==2.4.6
+
+# Every entry is pinned with ==. There is no lock file, so a rebuild would
+# otherwise drift to whatever the indexes serve that day. To re-check the whole
+# set resolves for the Python 3.11 and 3.12 / Linux targets, run:
+#
+#   python -m pip install --dry-run --ignore-installed --only-binary=:all: \
+#     --python-version 3.12 --platform manylinux_2_28_x86_64 \
+#     --platform manylinux2014_x86_64 --platform manylinux_2_17_x86_64 \
+#     --abi cp312 --implementation cp -r requirements.txt
+#
+# pytest is deliberately absent: it is dev-only, installed by CI and by the
+# Dockerfile INSTALL_DEV build arg, so the runtime image stays lean.

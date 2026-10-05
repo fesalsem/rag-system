@@ -2,6 +2,11 @@
 .env
 .env.*
 
+# Streamlit secrets would otherwise be baked into an image layer by COPY . .
+.streamlit/
+.streamlit/secrets.toml
+secrets.toml
+
 .git/
 .github/
 .gitignore
@@ -12,7 +17,8 @@ __pycache__/
 venv/
 env/
 
-# Index and model cache live in named volumes, not the image.
+# The model cache lives in a named volume. The index does not belong in the
+# image either: it is per session and never read back.
 vector_store/
 .cache/
 *.bin
@@ -21,6 +27,13 @@ vector_store/
 tmp/
 temp/
 *.log
+
+# Local test artifacts, which COPY . . would otherwise bake into a layer.
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
 
 .vscode/
 .idea/

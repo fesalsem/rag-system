@@ -7,6 +7,7 @@ import logging
 import os
 import sys
 import tempfile
+import uuid
 from pathlib import Path
 
 import streamlit as st
@@ -23,7 +24,8 @@ except Exception:
 
 from config import settings
 from document_processor import DocumentProcessor
-from rag_engine import RAGEngine
+from rag_engine import ModelRegistry, RAGEngine
+from ui_helpers import GENERIC_ERROR, escape, safe_markdown
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -377,22 +379,58 @@ def _init_session() -> None:
 _init_session()
 
 # ---------------------------------------------------------------------------
-# Cached resources
+# Resources
+#
+# The split here is the whole isolation story. Models are stateless, so they are
+# built once per process and shared. Documents and conversation history belong to
+# one visitor, so they live in st.session_state and each session gets its own
+# index directory. Everything used to sit in a single @st.cache_resource engine,
+# which Streamlit shares "across all users, sessions, and reruns" — one
+# visitor's uploads were retrievable by the next, and one visitor clearing the
+# conversation erased everybody's.
 # ---------------------------------------------------------------------------
 
 @st.cache_resource(show_spinner=False)
-def _get_engine() -> RAGEngine:
-    engine = RAGEngine()
-    if engine.index_exists:
-        try:
-            engine.load_existing_index()
-        except Exception as exc:
-            logger.warning("Could not load existing index: %s", exc)
-    return engine
+def _get_models() -> ModelRegistry:
+    return ModelRegistry(settings)
 
 @st.cache_resource(show_spinner=False)
 def _get_processor() -> DocumentProcessor:
-    return DocumentProcessor()
+    # Stateless: holding a tokenizer is the only state, and that is safe to
+    # share. Caching it keeps the tokenizer load to once per process.
+    return DocumentProcessor(settings)
+
+def _get_engine() -> RAGEngine:
+    """The current session's engine, created on first use."""
+    if "engine" not in st.session_state:
+        session_id = uuid.uuid4().hex[:12]
+        st.session_state.session_id = session_id
+        # A private index directory per session, so two visitors can never
+        # write to or read from the same FAISS files.
+        config = settings.model_copy(deep=True)
+        config.vector_store.index_path = (
+            settings.vector_store.index_path / session_id
+        )
+        # Nothing is loaded back from that directory: it is created fresh for
+        # this session and cannot already exist. Persisting it would leave one
+        # directory behind for every visit and never read any of them again.
+        config.vector_store.persist = False
+        st.session_state.engine = RAGEngine(config=config, models=_get_models())
+    return st.session_state.engine
+
+def _upload_size(uploaded_file) -> int:
+    """
+    Size of an upload in bytes, without copying it.
+
+    `size` is not present on every Streamlit version, and `getbuffer()` is a
+    view onto the buffer the upload already occupies rather than a second copy
+    of it, so measuring costs nothing.
+    """
+    size = getattr(uploaded_file, "size", None)
+    if isinstance(size, int):
+        return size
+    return len(uploaded_file.getbuffer())
+
 
 engine = _get_engine()
 processor = _get_processor()
@@ -438,6 +476,17 @@ with st.sidebar:
                         (i + 1) / len(new_files),
                         text=f"Processing {uf.name}…"
                     )
+
+                    # Checked before the read, so an oversized file is refused
+                    # rather than pulled into memory. The whole file is then
+                    # expanded into pages, chunks and vectors on a process shared
+                    # with every other visitor.
+                    try:
+                        processor.validate_size(uf.name, _upload_size(uf))
+                    except ValueError as exc:
+                        st.error(str(exc))
+                        continue
+
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
                         tmp.write(uf.read())
                         tmp_path = Path(tmp.name)
@@ -447,9 +496,16 @@ with st.sidebar:
                             chunk.metadata["file_name"] = uf.name
                         all_chunks.extend(chunks)
                         st.session_state.indexed_files.append(uf.name)
+                    except ValueError as exc:
+                        # These messages are written for the visitor: page cap,
+                        # no extractable text.
+                        st.error(f"{uf.name}: {exc}")
+                        logger.warning("Rejected %s: %s", uf.name, exc)
                     except Exception as exc:
-                        st.error(f"Failed: {uf.name} — {exc}")
-                        logger.error("Processing error %s: %s", uf.name, exc)
+                        logger.error(
+                            "Processing error %s: %s", uf.name, exc, exc_info=True
+                        )
+                        st.error(f"Could not process {uf.name}. {GENERIC_ERROR}")
                     finally:
                         tmp_path.unlink(missing_ok=True)
 
@@ -459,7 +515,8 @@ with st.sidebar:
                         engine.add_documents(all_chunks)
                         st.success(f"{len(all_chunks):,} chunks indexed.")
                     except Exception as exc:
-                        st.error(f"Indexing failed: {exc}")
+                        logger.error("Indexing failed: %s", exc, exc_info=True)
+                        st.error(f"Indexing failed. {GENERIC_ERROR}")
                 progress.empty()
 
     # Stats
@@ -477,10 +534,11 @@ with st.sidebar:
 
         if st.session_state.indexed_files:
             st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
-            st.markdown('<div class="sidebar-label">Indexed files</div>',
+            st.markdown('<div class="sidebar-label">Your files</div>',
                         unsafe_allow_html=True)
             files_html = "".join(
-                f'<div class="file-item"><span class="file-icon">↳</span>{name}</div>'
+                f'<div class="file-item"><span class="file-icon">↳</span>'
+                f'{escape(name)}</div>'
                 for name in st.session_state.indexed_files
             )
             st.markdown(files_html, unsafe_allow_html=True)
@@ -492,9 +550,17 @@ with st.sidebar:
         engine.clear_memory()
         st.rerun()
 
-    st.markdown("""
+    # Documents are per-session and invisible to other visitors, but until this
+    # existed there was no way to remove them at all.
+    if st.button("Delete My Documents"):
+        engine.clear_documents()
+        st.session_state.indexed_files = []
+        st.session_state.chat_history = []
+        st.rerun()
+
+    st.markdown(f"""
         <div style='padding: 8px 0 0; font-size:0.68rem; color:#c7c7cc; letter-spacing:0.04em;'>
-            LLAMA 3.1 · GROQ · FAISS<br>LANGCHAIN · HUGGINGFACE
+            {escape(settings.llm.model_name)} · GROQ · FAISS<br>LANGCHAIN · HUGGINGFACE
         </div>
     """, unsafe_allow_html=True)
 
@@ -525,19 +591,19 @@ if st.session_state.chat_history:
         if msg["role"] == "user":
             st.markdown(f"""
                 <div class="msg-wrap msg-user-wrap">
-                    <div class="msg-user">{msg["content"]}</div>
+                    <div class="msg-user">{safe_markdown(msg["content"])}</div>
                 </div>
             """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
                 <div class="msg-wrap msg-assistant-wrap">
-                    <div class="msg-assistant">{msg["content"]}</div>
+                    <div class="msg-assistant">{safe_markdown(msg["content"])}</div>
                 </div>
             """, unsafe_allow_html=True)
             if msg.get("sources"):
                 chips = "".join(
                     f'<span class="source-chip">'
-                    f'<span class="source-chip-dot"></span>{s}</span>'
+                    f'<span class="source-chip-dot"></span>{escape(s)}</span>'
                     for s in msg["sources"]
                 )
                 st.markdown(
@@ -586,9 +652,11 @@ if user_input := st.chat_input(
             answer = response["answer"]
             sources = response["sources"]
         except Exception as exc:
-            answer = f"Something went wrong: {exc}"
-            sources = []
+            # The exception text used to be shown verbatim, which leaked paths
+            # and library internals to whoever could trigger a failure.
             logger.error("Query error: %s", exc, exc_info=True)
+            answer = GENERIC_ERROR
+            sources = []
 
     st.session_state.chat_history.append(
         {"role": "assistant", "content": answer, "sources": sources}

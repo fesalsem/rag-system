@@ -13,9 +13,19 @@ jobs:
 
     strategy:
       fail-fast: false   # run all matrix jobs even if one fails
+      # Three legs, not the old 3 x 2 grid. The suite is fully mocked, so more
+      # interpreters add little, and the docker job below already builds the
+      # real image and runs the same suite on Linux. 3.12 is the supported
+      # target; 3.11 is kept because requirements still resolve there, and one
+      # Windows leg stays because the maintainer develops on Windows.
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
-        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            python-version: "3.11"
+          - os: ubuntu-latest
+            python-version: "3.12"
+          - os: windows-latest
+            python-version: "3.12"
 
     steps:
       # ── 1. Checkout ────────────────────────────────────────────────
