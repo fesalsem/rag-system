@@ -411,17 +411,11 @@ def _get_engine() -> RAGEngine:
         config.vector_store.index_path = (
             settings.vector_store.index_path / session_id
         )
-        engine = RAGEngine(config=config, models=_get_models())
-        if engine.index_exists:
-            try:
-                engine.load_existing_index()
-            except Exception as exc:
-                # Surfaced rather than swallowed: this used to be a warning, so
-                # a corrupt index showed up as "No documents yet" and the real
-                # error never reached anyone.
-                logger.error("Could not load existing index: %s", exc, exc_info=True)
-                st.session_state.index_error = str(exc)
-        st.session_state.engine = engine
+        # Nothing is loaded back from that directory: it is created fresh for
+        # this session and cannot already exist. Persisting it would leave one
+        # directory behind for every visit and never read any of them again.
+        config.vector_store.persist = False
+        st.session_state.engine = RAGEngine(config=config, models=_get_models())
     return st.session_state.engine
 
 def _upload_size(uploaded_file) -> int:
@@ -525,12 +519,6 @@ with st.sidebar:
                         st.error(f"Indexing failed. {GENERIC_ERROR}")
                 progress.empty()
 
-    if st.session_state.get("index_error"):
-        st.error(
-            "The stored index could not be loaded, so nothing is searchable "
-            f"until you index again. {GENERIC_ERROR}"
-        )
-
     # Stats
     stats = engine.get_index_stats()
     if stats["indexed"]:
@@ -568,7 +556,6 @@ with st.sidebar:
         engine.clear_documents()
         st.session_state.indexed_files = []
         st.session_state.chat_history = []
-        st.session_state.pop("index_error", None)
         st.rerun()
 
     st.markdown(f"""

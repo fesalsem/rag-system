@@ -274,6 +274,9 @@ class RAGEngine:
 
     def _ensure_index_dir(self) -> None:
         """Create the vector store directory if it doesn't exist."""
+        if not self.config.vector_store.persist:
+            # Nothing will be written, so there is no directory to prepare.
+            return
         index_dir = self.config.vector_store.index_path.parent
         index_dir.mkdir(parents=True, exist_ok=True)
 
@@ -449,15 +452,21 @@ class RAGEngine:
         embeddings = self._get_embeddings()
 
         with self._lock:
-            if self.index_exists:
+            if self._vector_store is not None:
+                # Adding to the store already in memory. This used to branch on
+                # `index_exists` instead, which rebuilt the index from only the
+                # new documents whenever the index was not persisted, silently
+                # dropping everything added before it.
+                logger.info("Adding %d chunks to the index in memory …", len(documents))
+                self._vector_store.add_documents(documents)
+            elif self.index_exists:
                 logger.info("Existing index found — merging new documents.")
                 existing = FAISS.load_local(
                     str(self.config.vector_store.index_path),
                     embeddings,
                     allow_dangerous_deserialization=True,
                 )
-                new_store = FAISS.from_documents(documents, embeddings)
-                existing.merge_from(new_store)
+                existing.add_documents(documents)
                 self._vector_store = existing
             else:
                 logger.info("Creating new FAISS index with %d chunks …", len(documents))
@@ -468,7 +477,8 @@ class RAGEngine:
                     raise
 
             self._docs.extend(documents)
-            self._save_index()
+            if self.config.vector_store.persist:
+                self._save_index()
 
         logger.info("Index updated — %d documents added.", len(documents))
 
@@ -505,7 +515,8 @@ class RAGEngine:
             self._vector_store = None
             self._docs = []
             self._history.clear()
-            shutil.rmtree(self.config.vector_store.index_path, ignore_errors=True)
+            if self.config.vector_store.persist:
+                shutil.rmtree(self.config.vector_store.index_path, ignore_errors=True)
         logger.info("Documents cleared for this session.")
 
     def query(self, question: str) -> Dict[str, Any]:

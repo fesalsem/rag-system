@@ -115,6 +115,16 @@ class VectorStoreConfig(BaseModel):
         default_factory=lambda: _env_path("RAG_INDEX_PATH", "/tmp/faiss_index"),
         description="Directory where the FAISS index is persisted.",
     )
+    persist: bool = Field(
+        default_factory=lambda: _env_str("RAG_PERSIST_INDEX", "1") == "1",
+        description=(
+            "Write the index to disk. On for a single-user deployment, where "
+            "keeping the index across restarts is the point. The web app turns "
+            "it off: its indexes are per-session and short-lived, so persisting "
+            "them would leave one directory behind for every visit and never "
+            "reuse any of them."
+        ),
+    )
 
 
 class MemoryConfig(BaseModel):
