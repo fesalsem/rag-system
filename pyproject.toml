@@ -29,6 +29,9 @@ omit = [
 ]
 show_missing = true
 
-# fail_under is intentionally absent. The coverage gate is set once a real
-# measurement exists, so the threshold describes the project instead of an
-# arbitrary figure.
+# Measured at 80% when this was set (config and ui_helpers 100%,
+# document_processor 91%, rag_engine 81%, app.py 57%). The gate sits below the
+# measurement on purpose: it is there to catch a drop, not to block an honest
+# refactor. The largest remaining gap is app.py's upload and button handling,
+# which needs a fake file uploader to exercise.
+fail_under = 75

@@ -43,6 +43,13 @@ desktop.ini
 # Logs
 *.log
 
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
 # Temp uploads
 tmp/
 temp/
