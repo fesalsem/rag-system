@@ -39,9 +39,21 @@ When you upload a PDF, the app:
 3. Stores them in a local search index
 4. When you ask a question, it finds the most relevant chunks and asks an LLM to answer **using only that material** — so answers stay grounded in your documents, with no guesswork from the model's memory
 
-**Tech Stack:** LangChain · Groq (GPT-OSS-20B) · all-MiniLM-L6-v2 embeddings · FAISS · Streamlit
+**Tech Stack:** LangChain · Groq (GPT-OSS-20B) · all-MiniLM-L6-v2 embeddings · FAISS · BM25 hybrid retrieval with cross-encoder reranking · Streamlit
 
 > The Groq model is chosen with the `GROQ_MODEL` environment variable (default `openai/gpt-oss-20b`), so it can be changed without touching pipeline code. The deployed app originally ran Llama 3.1 and moved to GPT-OSS-20B when Llama was retired.
+
+### Evaluation
+
+Intellect ships with a reproducible evaluation harness: 60 hand-written
+questions over three pinned public PDFs, deterministic retrieval metrics, and
+a cross-family LLM judge for claim-level faithfulness. Run
+`python -m evals.run_eval --out evals/results/current.json` to reproduce the
+numbers in [`evals/README.md`](evals/README.md).
+
+Hybrid retrieval lifts recall@4 from 0.78 to 0.86 and MRR from 0.575 to 0.740
+on the same index; it costs about one second per query on CPU, so it sits
+behind `RAG_HYBRID_ENABLED=1`.
 
 ---
 
