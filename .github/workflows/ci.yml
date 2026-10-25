@@ -107,3 +107,42 @@ jobs:
       - name: Container logs
         if: always()
         run: docker logs intellect
+
+  # Retrieval quality is a test too: the golden set is fixed, the corpus is
+  # hash-locked, and a drop past the thresholds fails the build.
+  retrieval-eval:
+    name: Retrieval evaluation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Cache corpus
+        uses: actions/cache@v4
+        with:
+          path: evals/corpus/*.pdf
+          key: corpus-${{ hashFiles('evals/corpus/lock.json') }}
+
+      - name: Fetch and verify corpus
+        run: python -m evals.fetch_corpus
+
+      - name: Run retrieval evaluation
+        run: python -m evals.run_eval --out evals/results/current.json
+
+      - name: Compare against baseline
+        run: |
+          python -m evals.compare \
+            --baseline evals/results/baseline.json \
+            --current evals/results/current.json \
+            --thresholds evals/thresholds.json

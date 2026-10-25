@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import subprocess
 import sys
 import time
@@ -16,6 +17,8 @@ from config import RAGConfig
 from document_processor import DocumentProcessor
 from evals.fetch_corpus import ensure_corpus
 from evals.golden import load_golden, validate
+from evals.judge import DeepSeekJudge, JudgeConfig
+from evals.metrics.generation import aggregate, is_abstention
 from evals.metrics.retrieval import (
     hit_at_k,
     page_of,
@@ -85,6 +88,31 @@ def run_retrieval(
     return rows
 
 
+def run_answers(
+    golden: Sequence[dict[str, Any]], engine: RAGEngine, judge: DeepSeekJudge
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for item in golden:
+        result = engine.query(item["question"])
+        answer = result["answer"]
+        row: dict[str, Any] = {
+            "id": item["id"],
+            "type": item["type"],
+            "answer": answer,
+            "sources": result["sources"],
+        }
+        if item["type"] == "unanswerable":
+            row["abstained"] = is_abstention(answer)
+        else:
+            row["faithfulness"] = judge.score_faithfulness(
+                item["question"],
+                answer,
+                "\n\n".join(result["contexts"]),
+            )
+        rows.append(row)
+    return rows
+
+
 def percentile(values: Sequence[float], pct: float) -> float:
     if not values:
         return 0.0
@@ -116,6 +144,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--index-dir", default="evals/.index")
     parser.add_argument("--reuse-index", action="store_true")
     parser.add_argument("--hybrid", action="store_true")
+    parser.add_argument("--full", action="store_true")
     parser.add_argument("--limit", type=int)
     args = parser.parse_args(argv)
 
@@ -147,6 +176,17 @@ def main(argv: list[str] | None = None) -> int:
         "summary": summarise(rows),
         "questions": rows,
     }
+    if args.full:
+        api_key = os.getenv("DEEPSEEK_API_KEY", "")
+        if not api_key:
+            print("DEEPSEEK_API_KEY is not set; --full requires it.", file=sys.stderr)
+            return 2
+        judge = DeepSeekJudge(
+            JudgeConfig(api_key=api_key), cache_dir="evals/.judge_cache"
+        )
+        answers = run_answers(golden, engine, judge)
+        report["generation"] = aggregate(answers)
+        report["answers"] = answers
     destination = Path(args.out)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(
