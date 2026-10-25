@@ -142,6 +142,40 @@ class MemoryConfig(BaseModel):
     )
 
 
+class HybridRetrievalConfig(BaseModel):
+    """BM25 plus dense fusion, optionally followed by a cross-encoder rerank."""
+
+    enabled: bool = Field(
+        default_factory=lambda: _env_str("RAG_HYBRID_ENABLED", "0") == "1",
+        description="Use BM25 plus FAISS fusion instead of FAISS alone.",
+    )
+    bm25_weight: float = Field(
+        default_factory=lambda: _env_float("RAG_BM25_WEIGHT", 0.4),
+        ge=0.0,
+        le=1.0,
+        description="Weight of BM25 in the reciprocal rank fusion.",
+    )
+    candidate_k: int = Field(
+        default_factory=lambda: _env_int("RAG_CANDIDATE_K", 20),
+        gt=0,
+        description="Chunks each retriever contributes before reranking.",
+    )
+    rerank_model: str = Field(
+        default_factory=lambda: _env_str(
+            "RAG_RERANK_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2"
+        ),
+        description="Cross-encoder used to reorder the fused candidates.",
+    )
+    rerank_min_score: float = Field(
+        default_factory=lambda: _env_float("RAG_RERANK_MIN_SCORE", 0.0),
+        description=(
+            "Minimum cross-encoder logit. The model is trained so that a "
+            "positive score means the passage is relevant, which is why the "
+            "default gate sits at zero."
+        ),
+    )
+
+
 class RAGConfig(BaseModel):
     """Root configuration object — pass this around instead of globals."""
 
@@ -150,6 +184,7 @@ class RAGConfig(BaseModel):
     chunking: ChunkingConfig = Field(default_factory=ChunkingConfig)
     vector_store: VectorStoreConfig = Field(default_factory=VectorStoreConfig)
     memory: MemoryConfig = Field(default_factory=MemoryConfig)
+    hybrid: HybridRetrievalConfig = Field(default_factory=HybridRetrievalConfig)
 
     retriever_k: int = Field(
         default_factory=lambda: _env_int("RAG_RETRIEVER_K", 4),

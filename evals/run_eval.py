@@ -39,12 +39,14 @@ def git_commit() -> str:
 
 def build_engine(
     corpus_paths: dict[str, Path],
+    hybrid: bool,
     index_dir: str | Path,
     reuse_index: bool,
 ) -> RAGEngine:
     config = RAGConfig()
     config.vector_store.persist = True
     config.vector_store.index_path = Path(index_dir)
+    config.hybrid.enabled = hybrid
     engine = RAGEngine(config=config)
     if reuse_index and engine.index_exists:
         LOGGER.info("Reusing index at %s", index_dir)
@@ -113,6 +115,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default="evals/results/current.json")
     parser.add_argument("--index-dir", default="evals/.index")
     parser.add_argument("--reuse-index", action="store_true")
+    parser.add_argument("--hybrid", action="store_true")
     parser.add_argument("--limit", type=int)
     args = parser.parse_args(argv)
 
@@ -129,12 +132,17 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit:
         golden = golden[: args.limit]
 
-    engine = build_engine(corpus, args.index_dir, args.reuse_index)
+    engine = build_engine(
+        corpus,
+        hybrid=args.hybrid,
+        index_dir=args.index_dir,
+        reuse_index=args.reuse_index,
+    )
     rows = run_retrieval(golden, engine)
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "git_commit": git_commit(),
-        "hybrid": False,
+        "hybrid": args.hybrid,
         "corpus": {doc_id: path.name for doc_id, path in corpus.items()},
         "summary": summarise(rows),
         "questions": rows,

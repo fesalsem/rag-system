@@ -22,6 +22,7 @@ from config import (
     ChunkingConfig,
     VectorStoreConfig,
     MemoryConfig,
+    HybridRetrievalConfig,
 )
 
 _DEFAULT_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
@@ -44,6 +45,11 @@ _ENV_VARS = [
     "RAG_LOG_LEVEL",
     "RAG_INDEX_PATH",
     "RAG_PERSIST_INDEX",
+    "RAG_HYBRID_ENABLED",
+    "RAG_BM25_WEIGHT",
+    "RAG_CANDIDATE_K",
+    "RAG_RERANK_MODEL",
+    "RAG_RERANK_MIN_SCORE",
 ]
 
 
@@ -208,6 +214,24 @@ class TestMemoryConfig:
         assert set(MemoryConfig().model_dump()) == {"window_turns"}
 
 
+class TestHybridRetrievalConfig:
+    def test_defaults_are_off(self, clean_env):
+        config = HybridRetrievalConfig()
+        assert config.enabled is False
+        assert config.bm25_weight == 0.4
+        assert config.candidate_k == 20
+        assert config.rerank_min_score == 0.0
+
+    def test_env_overrides_values(self, clean_env):
+        clean_env.setenv("RAG_HYBRID_ENABLED", "1")
+        clean_env.setenv("RAG_BM25_WEIGHT", "0.7")
+        clean_env.setenv("RAG_CANDIDATE_K", "40")
+        config = HybridRetrievalConfig()
+        assert config.enabled is True
+        assert config.bm25_weight == 0.7
+        assert config.candidate_k == 40
+
+
 class TestRAGConfig:
     def test_composes_subconfigs(self, clean_env):
         cfg = RAGConfig()
@@ -216,6 +240,7 @@ class TestRAGConfig:
         assert isinstance(cfg.chunking, ChunkingConfig)
         assert isinstance(cfg.vector_store, VectorStoreConfig)
         assert isinstance(cfg.memory, MemoryConfig)
+        assert isinstance(cfg.hybrid, HybridRetrievalConfig)
 
     def test_defaults(self, clean_env):
         cfg = RAGConfig()
@@ -300,6 +325,7 @@ class TestRAGConfig:
             "chunking",
             "vector_store",
             "memory",
+            "hybrid",
             "retriever_k",
             "max_distance",
             "max_pages",
