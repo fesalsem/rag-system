@@ -34,6 +34,7 @@ from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import RAGConfig, settings
+from retrieval import HybridRetriever
 from ui_helpers import source_label, source_labels
 
 logger = logging.getLogger(__name__)
@@ -255,6 +256,9 @@ class RAGEngine:
         self.config: RAGConfig = config or settings
         self._models: ModelRegistry = models or ModelRegistry(self.config)
         self._vector_store: Optional[FAISS] = None
+        # Built on first use and dropped whenever the index changes, because
+        # BM25 holds its own copy of every chunk.
+        self._hybrid: Optional[HybridRetriever] = None
         # Kept so the overview fallback can sample the whole document without
         # reaching into FAISS internals.
         self._docs: List[Document] = []
@@ -367,7 +371,11 @@ class RAGEngine:
         """
         docs = self._get_all_documents()
         if not docs:
-            return {"answer": "No documents are indexed yet.", "sources": []}
+            return {
+                "answer": "No documents are indexed yet.",
+                "sources": [],
+                "contexts": [],
+            }
 
         if len(docs) <= max_chunks:
             sampled = docs
@@ -387,11 +395,17 @@ class RAGEngine:
                 "answer": "I could not generate an overview right now. "
                           "Please try a more specific question.",
                 "sources": [],
+                "contexts": [],
             }
 
         sources = source_labels(sampled)
         logger.info("Overview generated from %d chunks.", len(sampled))
-        return {"answer": answer, "sources": sources, "summary": True}
+        return {
+            "answer": answer,
+            "sources": sources,
+            "contexts": [doc.page_content for doc in sampled],
+            "summary": True,
+        }
 
     # ------------------------------------------------------------------
     # Public API
@@ -477,6 +491,7 @@ class RAGEngine:
                     raise
 
             self._docs.extend(documents)
+            self._hybrid = None
             if self.config.vector_store.persist:
                 self._save_index()
 
@@ -514,6 +529,7 @@ class RAGEngine:
         with self._lock:
             self._vector_store = None
             self._docs = []
+            self._hybrid = None
             self._history.clear()
             if self.config.vector_store.persist:
                 shutil.rmtree(self.config.vector_store.index_path, ignore_errors=True)
@@ -545,14 +561,38 @@ class RAGEngine:
             doc for doc, distance in scored if distance <= self.config.max_distance
         ]
 
+    def _get_hybrid(self) -> HybridRetriever:
+        """Build the hybrid retriever once per index change."""
+        if self._hybrid is None:
+            documents = self._get_all_documents()
+            if not documents:
+                raise RuntimeError(
+                    "Cannot build hybrid retrieval without indexed documents."
+                )
+            self._hybrid = HybridRetriever(documents, self._vector_store, self.config)
+        return self._hybrid
+
     def retrieve(self, question: str) -> List[Document]:
         """
-        Return the chunks this engine would put in the prompt for ``question``.
+        Return the chunks that answer ``question``.
 
-        No LLM call and no conversation rewrite, so the evaluation measures
-        retrieval on its own.
+        Hybrid retrieval applies its own relevance gate, so an empty list means
+        no passage cleared it. The dense path keeps the existing distance
+        ceiling, which is what preserves current behaviour when hybrid is off.
         """
-        return self._relevant_chunks(question)
+        if self._vector_store is None:
+            raise RuntimeError(
+                "The RAG chain is not ready. "
+                "Load or create an index before querying."
+            )
+        search_query = self._condense(question)
+        if not self.config.hybrid.enabled:
+            return self._relevant_chunks(search_query)
+        try:
+            return self._get_hybrid().retrieve(search_query)
+        except Exception as exc:
+            logger.error("Hybrid retrieval failed: %s", exc, exc_info=True)
+            raise
 
     def query(self, question: str) -> Dict[str, Any]:
         """
@@ -569,6 +609,8 @@ class RAGEngine:
             ``answer``  : str — model response.
             ``sources`` : List[str] — deduplicated source labels
             (e.g. "document.pdf — Page 3").
+            ``contexts`` : List[str] — chunk text the answer was built from,
+            which is what the faithfulness judge scores.
 
         Raises
         ------
@@ -591,8 +633,7 @@ class RAGEngine:
             self._remember(question, result["answer"])
             return result
 
-        search_query = self._condense(question)
-        relevant = self._relevant_chunks(search_query)
+        relevant = self.retrieve(question)
         if not relevant:
             logger.info(
                 "No chunk scored better than %.2f — falling back to an overview.",
@@ -612,7 +653,11 @@ class RAGEngine:
         self._remember(question, answer)
 
         logger.info("Query answered. Sources used: %s", sources)
-        return {"answer": answer, "sources": sources}
+        return {
+            "answer": answer,
+            "sources": sources,
+            "contexts": [doc.page_content for doc in relevant],
+        }
 
     def clear_memory(self) -> None:
         """Reset this session's conversation history."""
