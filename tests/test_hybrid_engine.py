@@ -74,6 +74,17 @@ def test_dense_path_unchanged_when_hybrid_is_off(tmp_path):
     assert engine.retrieve("question") == [near[0]]
 
 
+def test_empty_hybrid_result_falls_back_to_dense(tmp_path, monkeypatch):
+    near = (make_doc("near"), 0.5)
+    engine = make_engine(tmp_path, store=FakeStore([near]), documents=[make_doc()])
+    monkeypatch.setattr(
+        "rag_engine.HybridRetriever", lambda *args, **kwargs: FakeHybrid([])
+    )
+    engine.config.hybrid.enabled = True
+
+    assert engine.retrieve("question") == [near[0]]
+
+
 def test_query_returns_the_retrieved_contexts(tmp_path):
     document = make_doc("the context")
     engine = make_engine(tmp_path, store=FakeStore([(document, 0.5)]))

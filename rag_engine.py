@@ -589,10 +589,18 @@ class RAGEngine:
         if not self.config.hybrid.enabled:
             return self._relevant_chunks(search_query)
         try:
-            return self._get_hybrid().retrieve(search_query)
+            documents = self._get_hybrid().retrieve(search_query)
         except Exception as exc:
             logger.error("Hybrid retrieval failed: %s", exc, exc_info=True)
             raise
+        if documents:
+            return documents
+        # The reranker can reject every candidate for a question the dense
+        # index does answer, and an empty result sends query() to the overview
+        # fallback, which samples whole documents and answers from the wrong
+        # pages. Degrade to dense instead.
+        logger.info("Reranker rejected every candidate; using dense retrieval.")
+        return self._relevant_chunks(search_query)
 
     def query(self, question: str) -> Dict[str, Any]:
         """
