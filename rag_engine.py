@@ -519,6 +519,41 @@ class RAGEngine:
                 shutil.rmtree(self.config.vector_store.index_path, ignore_errors=True)
         logger.info("Documents cleared for this session.")
 
+    def _relevant_chunks(self, search_query: str) -> List[Document]:
+        """
+        Chunks whose distance clears ``max_distance``, in ranked order.
+
+        FAISS returns squared L2 distance on normalised vectors, so lower is
+        better and the cutoff is a ceiling. Distances used to be ignored
+        entirely, which fed the model the four nearest chunks whether or not
+        any of them were related — and the only guard was the model's own
+        willingness to say it could not find the answer.
+        """
+        if self._vector_store is None:
+            raise RuntimeError(
+                "The RAG chain is not ready. "
+                "Load or create an index before querying."
+            )
+        try:
+            scored = self._vector_store.similarity_search_with_score(
+                search_query, k=self.config.retriever_k
+            )
+        except Exception as exc:
+            logger.error("Retrieval failed: %s", exc, exc_info=True)
+            raise
+        return [
+            doc for doc, distance in scored if distance <= self.config.max_distance
+        ]
+
+    def retrieve(self, question: str) -> List[Document]:
+        """
+        Return the chunks this engine would put in the prompt for ``question``.
+
+        No LLM call and no conversation rewrite, so the evaluation measures
+        retrieval on its own.
+        """
+        return self._relevant_chunks(question)
+
     def query(self, question: str) -> Dict[str, Any]:
         """
         Run a RAG query and return the answer with sources.
@@ -557,22 +592,7 @@ class RAGEngine:
             return result
 
         search_query = self._condense(question)
-        try:
-            scored = self._vector_store.similarity_search_with_score(
-                search_query, k=self.config.retriever_k
-            )
-        except Exception as exc:
-            logger.error("Retrieval failed: %s", exc, exc_info=True)
-            raise
-
-        # FAISS returns squared L2 distance on normalised vectors, so lower is
-        # better and the cutoff is a ceiling. Distances used to be ignored
-        # entirely, which fed the model the four nearest chunks whether or not
-        # any of them were related — and the only guard was the model's own
-        # willingness to say it could not find the answer.
-        relevant = [
-            doc for doc, distance in scored if distance <= self.config.max_distance
-        ]
+        relevant = self._relevant_chunks(search_query)
         if not relevant:
             logger.info(
                 "No chunk scored better than %.2f — falling back to an overview.",

@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-10-25T13:46:06.200280+00:00",
+  "git_commit": "0da8956",
+  "hybrid": false,
+  "corpus": {
+    "attention": "attention-is-all-you-need.pdf",
+    "rag-paper": "rag-knowledge-intensive-nlp.pdf",
+    "berkshire-2023": "berkshire-2023-ar.pdf"
+  },
+  "summary": {
+    "recall@4": 0.5,
+    "recall@10": 0.5,
+    "mrr": 0.5,
+    "n": 2,
+    "p50_ms": 9.08,
+    "p95_ms": 10.09,
+    "unanswerable": 1
+  },
+  "questions": [
+    {
+      "id": "fact-001",
+      "type": "fact",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        3,
+        5,
+        2
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 9.08,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-001",
+      "type": "table",
+      "gold_pages": [
+        94
+      ],
+      "retrieved_pages": [
+        1,
+        82,
+        97,
+        145
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 10.09,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-001",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        15,
+        19,
+        8,
+        7
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.89,
+      "hit@4": false,
+      "hit@10": false
+    }
+  ]
+}

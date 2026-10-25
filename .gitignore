@@ -58,3 +58,6 @@ temp/
 evals/corpus/*.pdf
 evals/.index/
 evals/.judge_cache/
+
+# Transient eval output
+evals/results/current.json
