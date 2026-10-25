@@ -53,3 +53,8 @@ htmlcov/
 # Temp uploads
 tmp/
 temp/
+
+# Evaluation corpus (downloaded, verified by lock.json) and local caches
+evals/corpus/*.pdf
+evals/.index/
+evals/.judge_cache/
