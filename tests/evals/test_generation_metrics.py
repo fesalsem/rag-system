@@ -3,6 +3,7 @@ from evals.metrics.generation import aggregate, is_abstention
 
 def test_is_abstention_matches_the_refusal_sentence():
     assert is_abstention("I could not find information about that in the uploaded documents.")
+    assert is_abstention("The excerpts do not contain any information about that.")
     assert not is_abstention("The answer is on page 4.")
 
 

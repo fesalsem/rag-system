@@ -8,11 +8,17 @@ from __future__ import annotations
 
 from typing import Any, Sequence
 
-REFUSAL = "could not find information"
+REFUSAL_PHRASES = (
+    # The exact sentence the QA prompt asks for, plus the paraphrase the model
+    # actually produces when it restates the instruction before refusing.
+    "could not find information",
+    "do not contain any information",
+)
 
 
 def is_abstention(answer: str | None) -> bool:
-    return REFUSAL in (answer or "").lower()
+    text = (answer or "").lower()
+    return any(phrase in text for phrase in REFUSAL_PHRASES)
 
 
 def _average(values: Sequence[float]) -> float | None:

@@ -95,15 +95,17 @@ def run_answers(
     for item in golden:
         result = engine.query(item["question"])
         answer = result["answer"]
+        abstained = is_abstention(answer)
         row: dict[str, Any] = {
             "id": item["id"],
             "type": item["type"],
             "answer": answer,
             "sources": result["sources"],
+            "abstained": abstained,
         }
-        if item["type"] == "unanswerable":
-            row["abstained"] = is_abstention(answer)
-        else:
+        # A refusal makes no factual claims, so judging it as unfaithful would
+        # punish the behaviour the prompt asks for.
+        if item["type"] != "unanswerable" and not abstained:
             row["faithfulness"] = judge.score_faithfulness(
                 item["question"],
                 answer,
