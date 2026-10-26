@@ -1,8 +1,11 @@
-name: Nightly faithfulness evaluation
+name: Faithfulness evaluation
 
 on:
+  # Weekly, not nightly. A full judged run costs about 150k Groq tokens and
+  # the free tier allows 200k per day, so a daily run spends the whole
+  # allowance and then fails on its own usage. Sundays at 18:00 UTC.
   schedule:
-    - cron: "0 18 * * *"
+    - cron: "0 18 * * 0"
   workflow_dispatch:
 
 jobs:

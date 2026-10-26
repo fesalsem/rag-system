@@ -107,5 +107,6 @@ for double the latency. Defaults stayed at 0.4 and 20.
 
 Every push reruns retrieval and fails if `recall@4`, `recall@10`, or `mrr`
 drops more than 0.02 below `evals/results/baseline.json`
-(`evals/compare.py`, `evals/thresholds.json`). A nightly workflow runs the full
-judged evaluation and uploads the JSON.
+(`evals/compare.py`, `evals/thresholds.json`). A weekly workflow runs the full
+judged evaluation and uploads the JSON. It is weekly because a full judged run
+spends about 150k of the free tier's 200k daily tokens.
