@@ -11,7 +11,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Callable, Sequence
 
 from config import RAGConfig
 from document_processor import DocumentProcessor
@@ -29,6 +29,42 @@ from rag_engine import RAGEngine
 
 LOGGER = logging.getLogger("evals.run_eval")
 K_VALUES = (4, 10)
+RETRY_DELAYS = (5, 15, 30, 60, 60)
+
+
+def _is_rate_limit(exc: Exception) -> bool:
+    return (
+        getattr(exc, "status_code", None) == 429
+        or "ratelimit" in type(exc).__name__.lower()
+    )
+
+
+def _is_daily_cap(exc: Exception) -> bool:
+    return _is_rate_limit(exc) and "per day" in str(exc).lower()
+
+
+def with_retry(
+    call: Callable[[], Any],
+    delays: Sequence[float] = RETRY_DELAYS,
+    sleep: Callable[[float], None] = time.sleep,
+) -> Any:
+    """Run a provider call, backing off while it is rate limited.
+
+    Groq's free tier meters tokens per minute, so a long answer can trip 429
+    partway through a run that started clean. A per-day cap is different: it
+    cannot clear inside a minute, so the run stops and the next one resumes
+    from the checkpoint. Failures other than 429 are not a timing problem and
+    are raised immediately.
+    """
+    for delay in delays:
+        try:
+            return call()
+        except Exception as exc:
+            if not _is_rate_limit(exc) or _is_daily_cap(exc):
+                raise
+            LOGGER.warning("Rate limited (%s); retrying in %ss.", exc, delay)
+            sleep(delay)
+    return call()
 
 
 def git_commit() -> str:
@@ -88,12 +124,37 @@ def run_retrieval(
     return rows
 
 
+def _read_checkpoint(path: Path | None) -> dict[str, dict[str, Any]]:
+    if path is None or not path.exists():
+        return {}
+    rows: dict[str, dict[str, Any]] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            row = json.loads(line)
+            rows[row["id"]] = row
+    return rows
+
+
 def run_answers(
-    golden: Sequence[dict[str, Any]], engine: RAGEngine, judge: DeepSeekJudge
+    golden: Sequence[dict[str, Any]],
+    engine: RAGEngine,
+    judge: DeepSeekJudge,
+    checkpoint: Path | None = None,
 ) -> list[dict[str, Any]]:
+    """Answer every question, appending each row to a checkpoint as it lands.
+
+    A free-tier Groq key can be capped mid-run, and a completed answer costs
+    real tokens to reproduce. The checkpoint lets the next run continue where
+    this one stopped. Delete it when retrieval settings change, or the report
+    mixes answers from two different configurations.
+    """
+    done = _read_checkpoint(checkpoint)
     rows: list[dict[str, Any]] = []
     for item in golden:
-        result = engine.query(item["question"])
+        if item["id"] in done:
+            rows.append(done[item["id"]])
+            continue
+        result = with_retry(lambda: engine.query(item["question"]))
         answer = result["answer"]
         abstained = is_abstention(answer)
         row: dict[str, Any] = {
@@ -106,12 +167,17 @@ def run_answers(
         # A refusal makes no factual claims, so judging it as unfaithful would
         # punish the behaviour the prompt asks for.
         if item["type"] != "unanswerable" and not abstained:
-            row["faithfulness"] = judge.score_faithfulness(
-                item["question"],
-                answer,
-                "\n\n".join(result["contexts"]),
+            row["faithfulness"] = with_retry(
+                lambda: judge.score_faithfulness(
+                    item["question"],
+                    answer,
+                    "\n\n".join(result["contexts"]),
+                )
             )
         rows.append(row)
+        if checkpoint is not None:
+            with checkpoint.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(row) + "\n")
     return rows
 
 
@@ -147,6 +213,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--reuse-index", action="store_true")
     parser.add_argument("--hybrid", action="store_true")
     parser.add_argument("--full", action="store_true")
+    parser.add_argument(
+        "--answers-cache",
+        default="evals/.answers.jsonl",
+        help="Checkpoint of answered questions, so a capped run can resume. "
+        "Delete it when retrieval settings change.",
+    )
     parser.add_argument("--limit", type=int)
     args = parser.parse_args(argv)
 
@@ -186,7 +258,9 @@ def main(argv: list[str] | None = None) -> int:
         judge = DeepSeekJudge(
             JudgeConfig(api_key=api_key), cache_dir="evals/.judge_cache"
         )
-        answers = run_answers(golden, engine, judge)
+        answers = run_answers(
+            golden, engine, judge, checkpoint=Path(args.answers_cache)
+        )
         report["generation"] = aggregate(answers)
         report["answers"] = answers
     destination = Path(args.out)

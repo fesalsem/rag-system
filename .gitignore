@@ -61,3 +61,4 @@ evals/.judge_cache/
 
 # Transient eval output
 evals/results/current.json
+evals/.answers.jsonl
