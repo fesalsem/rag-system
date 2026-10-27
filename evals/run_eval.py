@@ -165,7 +165,7 @@ def run_answers(
             "answer": answer,
             "sources": result["sources"],
             "abstained": abstained,
-            "partial": has_refusal(answer) and not abstained,
+            "partial": not abstained and has_refusal(answer),
         }
         # A refusal makes no factual claims, so judging it as unfaithful would
         # punish the behaviour the prompt asks for.

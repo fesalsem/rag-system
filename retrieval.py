@@ -107,7 +107,12 @@ class HybridRetriever:
         )
 
     def retrieve(self, query: str, k: int | None = None) -> List[Document]:
-        """Return the ``k`` best passages, defaulting to the answering budget."""
+        """
+        Return the ``k`` best passages, defaulting to the answering budget.
+
+        The evaluation asks for more passages than an answer needs, so that
+        recall@10 measures the ranking rather than repeating recall@4.
+        """
         candidates = self._ensemble.invoke(query)
         return self._reranker.rerank(
             query,

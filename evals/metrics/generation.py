@@ -20,9 +20,7 @@ from typing import Any, Sequence
 # and "the excerpts" both match.
 REFUSAL_STATEMENTS = (
     re.compile(r"^(?:i\s+)?could not find information\b"),
-    re.compile(
-        r"^(?:the\s+)?(?:\w+\s+){0,2}do not contain any information\b"
-    ),
+    re.compile(r"^(?:the\s+)?(?:\w+\s+){0,2}do not contain any information\b"),
 )
 
 # Citation markers are appended to the sentence they support, so they are
@@ -41,7 +39,7 @@ def _sentences(answer: str | None) -> list[str]:
 
 
 def _is_refusal(sentence: str) -> bool:
-    lowered = sentence.lower().strip()
+    lowered = sentence.lower()
     return any(pattern.match(lowered) for pattern in REFUSAL_STATEMENTS)
 
 
