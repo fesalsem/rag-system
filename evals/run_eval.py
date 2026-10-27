@@ -18,7 +18,7 @@ from document_processor import DocumentProcessor
 from evals.fetch_corpus import ensure_corpus
 from evals.golden import load_golden, validate
 from evals.judge import DeepSeekJudge, JudgeConfig
-from evals.metrics.generation import aggregate, is_abstention
+from evals.metrics.generation import aggregate, has_refusal, is_abstention
 from evals.metrics.retrieval import (
     hit_at_k,
     page_of,
@@ -107,7 +107,9 @@ def run_retrieval(
     rows: list[dict[str, Any]] = []
     for item in golden:
         started = time.perf_counter()
-        documents = engine.retrieve(item["question"])
+        # Ask for the widest K we score. With retriever_k chunks (4 by default)
+        # recall@10 would be a copy of recall@4 rather than a measurement.
+        documents = engine.retrieve(item["question"], k=max(K_VALUES))
         latency_ms = (time.perf_counter() - started) * 1000
         gold_pages = item["gold_pages"]
         row: dict[str, Any] = {
@@ -163,6 +165,7 @@ def run_answers(
             "answer": answer,
             "sources": result["sources"],
             "abstained": abstained,
+            "partial": has_refusal(answer) and not abstained,
         }
         # A refusal makes no factual claims, so judging it as unfaithful would
         # punish the behaviour the prompt asks for.

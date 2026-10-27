@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-27T13:39:44.691761+00:00",
-  "git_commit": "ed02138",
+  "generated_at": "2026-10-27T14:36:38.269235+00:00",
+  "git_commit": "c0f7897",
   "hybrid": true,
   "corpus": {
     "attention": "attention-is-all-you-need.pdf",
@@ -8,12 +8,12 @@
     "berkshire-2023": "berkshire-2023-ar.pdf"
   },
   "summary": {
-    "recall@4": 0.86,
-    "recall@10": 0.86,
-    "mrr": 0.74,
-    "n": 50,
-    "p50_ms": 1166.63,
-    "p95_ms": 1674.58,
+    "recall@4": 0.8654,
+    "recall@10": 0.8846,
+    "mrr": 0.7442,
+    "n": 52,
+    "p50_ms": 1027.89,
+    "p95_ms": 1471.97,
     "unanswerable": 10
   },
   "questions": [
@@ -28,7 +28,7 @@
         5
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 3579.16,
+      "latency_ms": 2640.71,
       "hit@4": true,
       "hit@10": true
     },
@@ -43,7 +43,7 @@
         3
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1052.34,
+      "latency_ms": 805.17,
       "hit@4": true,
       "hit@10": true
     },
@@ -57,7 +57,7 @@
         5
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1424.05,
+      "latency_ms": 903.2,
       "hit@4": false,
       "hit@10": false
     },
@@ -73,7 +73,7 @@
         9
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1127.15,
+      "latency_ms": 884.02,
       "hit@4": true,
       "hit@10": true
     },
@@ -87,7 +87,7 @@
         8
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1268.15,
+      "latency_ms": 863.11,
       "hit@4": true,
       "hit@10": true
     },
@@ -101,10 +101,12 @@
         1,
         8,
         8,
-        10
+        10,
+        9,
+        8
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 1228.8,
+      "latency_ms": 890.15,
       "hit@4": true,
       "hit@10": true
     },
@@ -118,10 +120,11 @@
         8,
         1,
         8,
-        10
+        10,
+        8
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1145.31,
+      "latency_ms": 903.35,
       "hit@4": true,
       "hit@10": true
     },
@@ -135,10 +138,11 @@
         8,
         8,
         7,
-        1
+        1,
+        2
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1227.65,
+      "latency_ms": 969.9,
       "hit@4": true,
       "hit@10": true
     },
@@ -152,7 +156,7 @@
         6
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1237.71,
+      "latency_ms": 916.18,
       "hit@4": true,
       "hit@10": true
     },
@@ -168,7 +172,7 @@
         5
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 1021.48,
+      "latency_ms": 968.2,
       "hit@4": true,
       "hit@10": true
     },
@@ -182,12 +186,18 @@
         13,
         15,
         3,
-        5
+        5,
+        4,
+        14,
+        1,
+        2,
+        6,
+        11
       ],
-      "reciprocal_rank": 0.0,
-      "latency_ms": 1074.99,
+      "reciprocal_rank": 0.2,
+      "latency_ms": 847.12,
       "hit@4": false,
-      "hit@10": false
+      "hit@10": true
     },
     {
       "id": "fact-012",
@@ -199,7 +209,7 @@
         9
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1062.46,
+      "latency_ms": 952.9,
       "hit@4": true,
       "hit@10": true
     },
@@ -215,7 +225,7 @@
         6
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1202.24,
+      "latency_ms": 987.45,
       "hit@4": true,
       "hit@10": true
     },
@@ -231,7 +241,7 @@
         3
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1101.84,
+      "latency_ms": 765.45,
       "hit@4": false,
       "hit@10": false
     },
@@ -245,10 +255,14 @@
         17,
         3,
         2,
-        3
+        3,
+        8,
+        8,
+        1,
+        6
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 1131.03,
+      "latency_ms": 811.66,
       "hit@4": true,
       "hit@10": true
     },
@@ -262,10 +276,16 @@
         3,
         8,
         3,
-        3
+        3,
+        17,
+        4,
+        4,
+        6,
+        7,
+        6
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1069.56,
+      "latency_ms": 1055.37,
       "hit@4": true,
       "hit@10": true
     },
@@ -279,7 +299,7 @@
         4
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1074.94,
+      "latency_ms": 1051.02,
       "hit@4": true,
       "hit@10": true
     },
@@ -296,7 +316,7 @@
         8
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1056.36,
+      "latency_ms": 960.19,
       "hit@4": true,
       "hit@10": true
     },
@@ -310,10 +330,15 @@
         6,
         8,
         7,
-        4
+        4,
+        8,
+        5,
+        18,
+        4,
+        5
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1148.1,
+      "latency_ms": 1027.89,
       "hit@4": true,
       "hit@10": true
     },
@@ -327,7 +352,7 @@
         7
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1010.28,
+      "latency_ms": 893.2,
       "hit@4": true,
       "hit@10": true
     },
@@ -342,7 +367,7 @@
         7
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1133.3,
+      "latency_ms": 995.94,
       "hit@4": true,
       "hit@10": true
     },
@@ -356,7 +381,7 @@
         17
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1139.12,
+      "latency_ms": 1033.56,
       "hit@4": true,
       "hit@10": true
     },
@@ -370,10 +395,16 @@
         25,
         25,
         35,
-        46
+        46,
+        97,
+        8,
+        82,
+        32,
+        11,
+        145
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1166.63,
+      "latency_ms": 1185.34,
       "hit@4": true,
       "hit@10": true
     },
@@ -387,10 +418,16 @@
         25,
         28,
         152,
-        48
+        48,
+        28,
+        149,
+        27,
+        146,
+        149,
+        149
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1280.97,
+      "latency_ms": 1063.95,
       "hit@4": true,
       "hit@10": true
     },
@@ -405,7 +442,7 @@
         82
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1373.77,
+      "latency_ms": 1367.45,
       "hit@4": true,
       "hit@10": true
     },
@@ -419,10 +456,12 @@
         107,
         145,
         60,
-        27
+        27,
+        46,
+        108
       ],
       "reciprocal_rank": 0.25,
-      "latency_ms": 1398.1,
+      "latency_ms": 1240.5,
       "hit@4": true,
       "hit@10": true
     },
@@ -436,10 +475,16 @@
         27,
         27,
         29,
-        136
+        136,
+        62,
+        64,
+        63,
+        60,
+        137,
+        61
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1505.53,
+      "latency_ms": 1499.05,
       "hit@4": true,
       "hit@10": true
     },
@@ -456,7 +501,7 @@
         14
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1288.5,
+      "latency_ms": 1071.38,
       "hit@4": true,
       "hit@10": true
     },
@@ -470,10 +515,16 @@
         8,
         97,
         145,
-        82
+        82,
+        107,
+        13,
+        6,
+        71,
+        145,
+        13
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1147.46,
+      "latency_ms": 1203.84,
       "hit@4": true,
       "hit@10": true
     },
@@ -487,10 +538,16 @@
         6,
         13,
         97,
-        145
+        145,
+        71,
+        106,
+        8,
+        13,
+        11,
+        144
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1289.57,
+      "latency_ms": 1334.15,
       "hit@4": false,
       "hit@10": false
     },
@@ -504,10 +561,16 @@
         94,
         144,
         98,
+        82,
+        145,
+        82,
+        71,
+        97,
+        91,
         82
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1188.6,
+      "latency_ms": 1250.84,
       "hit@4": true,
       "hit@10": true
     },
@@ -521,10 +584,11 @@
         8,
         9,
         7,
-        10
+        10,
+        8
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 882.8,
+      "latency_ms": 890.81,
       "hit@4": true,
       "hit@10": true
     },
@@ -539,7 +603,7 @@
         10
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 932.2,
+      "latency_ms": 1065.85,
       "hit@4": true,
       "hit@10": true
     },
@@ -553,10 +617,13 @@
         4,
         8,
         8,
+        6,
+        8,
+        5,
         6
       ],
       "reciprocal_rank": 0.25,
-      "latency_ms": 1074.49,
+      "latency_ms": 1543.7,
       "hit@4": true,
       "hit@10": true
     },
@@ -570,10 +637,12 @@
         6,
         8,
         6,
+        8,
+        6,
         8
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1152.18,
+      "latency_ms": 1097.39,
       "hit@4": true,
       "hit@10": true
     },
@@ -587,10 +656,11 @@
         8,
         7,
         6,
+        6,
         6
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1072.28,
+      "latency_ms": 1018.0,
       "hit@4": true,
       "hit@10": true
     },
@@ -604,10 +674,16 @@
         67,
         75,
         13,
-        76
+        76,
+        59,
+        73,
+        78,
+        13,
+        79,
+        70
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 1160.76,
+      "latency_ms": 1127.12,
       "hit@4": true,
       "hit@10": true
     },
@@ -621,10 +697,16 @@
         82,
         8,
         13,
-        71
+        71,
+        6,
+        82,
+        145,
+        13,
+        82,
+        145
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1163.6,
+      "latency_ms": 1451.72,
       "hit@4": false,
       "hit@10": false
     },
@@ -638,10 +720,11 @@
         98,
         145,
         66,
-        115
+        115,
+        82
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1239.69,
+      "latency_ms": 1471.97,
       "hit@4": true,
       "hit@10": true
     },
@@ -655,10 +738,15 @@
         25,
         30,
         13,
-        66
+        66,
+        13,
+        30,
+        98,
+        125,
+        63
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1674.58,
+      "latency_ms": 1082.76,
       "hit@4": false,
       "hit@10": false
     },
@@ -673,10 +761,16 @@
         2,
         5,
         3,
-        11
+        11,
+        6,
+        9,
+        2,
+        2,
+        4,
+        3
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 1484.12,
+      "latency_ms": 941.94,
       "hit@4": true,
       "hit@10": true
     },
@@ -693,7 +787,7 @@
         1
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 951.34,
+      "latency_ms": 899.54,
       "hit@4": true,
       "hit@10": true
     },
@@ -709,7 +803,7 @@
         10
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 867.19,
+      "latency_ms": 1049.18,
       "hit@4": true,
       "hit@10": true
     },
@@ -725,7 +819,7 @@
         6
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 823.87,
+      "latency_ms": 991.16,
       "hit@4": true,
       "hit@10": true
     },
@@ -740,10 +834,16 @@
         17,
         18,
         9,
-        5
+        5,
+        8,
+        4,
+        7,
+        3,
+        8,
+        4
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 917.28,
+      "latency_ms": 937.94,
       "hit@4": true,
       "hit@10": true
     },
@@ -759,7 +859,7 @@
         7
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1452.86,
+      "latency_ms": 930.41,
       "hit@4": true,
       "hit@10": true
     },
@@ -774,10 +874,16 @@
         82,
         144,
         82,
-        97
+        97,
+        145,
+        91,
+        82,
+        106,
+        97,
+        146
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1421.45,
+      "latency_ms": 988.69,
       "hit@4": false,
       "hit@10": false
     },
@@ -792,10 +898,16 @@
         8,
         82,
         82,
-        97
+        97,
+        82,
+        144,
+        107,
+        145,
+        145,
+        6
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1773.21,
+      "latency_ms": 1119.46,
       "hit@4": true,
       "hit@10": true
     },
@@ -810,10 +922,16 @@
         53,
         67,
         30,
-        68
+        68,
+        67,
+        67,
+        30,
+        53,
+        59,
+        67
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 1579.17,
+      "latency_ms": 869.72,
       "hit@4": true,
       "hit@10": true
     },
@@ -828,10 +946,16 @@
         25,
         35,
         13,
-        6
+        6,
+        13,
+        71,
+        145,
+        107,
+        97,
+        8
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 2031.93,
+      "latency_ms": 1080.97,
       "hit@4": true,
       "hit@10": true
     },
@@ -843,10 +967,16 @@
         15,
         19,
         8,
-        7
+        7,
+        2,
+        1,
+        9,
+        4,
+        9,
+        6
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1348.71,
+      "latency_ms": 934.32,
       "hit@4": false,
       "hit@10": false
     },
@@ -861,7 +991,7 @@
         10
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 942.37,
+      "latency_ms": 929.27,
       "hit@4": false,
       "hit@10": false
     },
@@ -873,10 +1003,16 @@
         8,
         2,
         7,
-        11
+        11,
+        9,
+        8,
+        1,
+        10,
+        17,
+        8
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1211.29,
+      "latency_ms": 1093.05,
       "hit@4": false,
       "hit@10": false
     },
@@ -888,10 +1024,11 @@
         4,
         7,
         8,
-        10
+        10,
+        7
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1413.0,
+      "latency_ms": 1000.52,
       "hit@4": false,
       "hit@10": false
     },
@@ -904,24 +1041,32 @@
         17
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1228.03,
+      "latency_ms": 1156.71,
       "hit@4": false,
       "hit@10": false
     },
     {
-      "id": "unans-006",
-      "type": "unanswerable",
-      "gold_pages": [],
+      "id": "fact-041",
+      "type": "fact",
+      "gold_pages": [
+        57
+      ],
       "retrieved_pages": [
         82,
         57,
         82,
-        108
+        108,
+        11,
+        57,
+        96,
+        145,
+        131,
+        82
       ],
-      "reciprocal_rank": 0.0,
-      "latency_ms": 949.2,
-      "hit@4": false,
-      "hit@10": false
+      "reciprocal_rank": 0.5,
+      "latency_ms": 1098.82,
+      "hit@4": true,
+      "hit@10": true
     },
     {
       "id": "unans-007",
@@ -931,10 +1076,16 @@
         82,
         107,
         82,
-        13
+        13,
+        8,
+        1,
+        6,
+        13,
+        106,
+        144
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1191.03,
+      "latency_ms": 1210.25,
       "hit@4": false,
       "hit@10": false
     },
@@ -946,27 +1097,36 @@
         82,
         82,
         108,
-        82
+        82,
+        57,
+        97,
+        57,
+        131,
+        131,
+        71
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1170.91,
+      "latency_ms": 974.78,
       "hit@4": false,
       "hit@10": false
     },
     {
-      "id": "unans-009",
-      "type": "unanswerable",
-      "gold_pages": [],
+      "id": "fact-042",
+      "type": "fact",
+      "gold_pages": [
+        30
+      ],
       "retrieved_pages": [
         30,
         53,
         30,
-        53
+        53,
+        149
       ],
-      "reciprocal_rank": 0.0,
-      "latency_ms": 1007.0,
-      "hit@4": false,
-      "hit@10": false
+      "reciprocal_rank": 1.0,
+      "latency_ms": 1043.66,
+      "hit@4": true,
+      "hit@10": true
     },
     {
       "id": "unans-010",
@@ -976,18 +1136,66 @@
         13,
         60,
         71,
-        13
+        13,
+        6,
+        97,
+        145,
+        106,
+        8,
+        107
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 1423.7,
+      "latency_ms": 1174.01,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-011",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        57,
+        21,
+        5,
+        82,
+        59,
+        3,
+        1,
+        107
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 1076.55,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-012",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        67,
+        68,
+        53,
+        53,
+        30,
+        67,
+        59,
+        68,
+        67,
+        30
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 1295.65,
       "hit@4": false,
       "hit@10": false
     }
   ],
   "generation": {
-    "faithfulness": 0.9119,
-    "abstention_accuracy": 0.7,
-    "judged_answers": 42
+    "faithfulness": 0.9067,
+    "abstention_accuracy": 0.8,
+    "false_abstention_rate": 0.1346,
+    "partial_answers": 1,
+    "judged_answers": 45
   },
   "answers": [
     {
@@ -1010,7 +1218,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-002",
@@ -1033,7 +1242,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-003",
@@ -1042,7 +1252,8 @@
       "sources": [
         "attention-is-all-you-need.pdf \u2014 Page 5"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "fact-004",
@@ -1065,7 +1276,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-005",
@@ -1092,7 +1304,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-006",
@@ -1116,7 +1329,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-007",
@@ -1145,7 +1359,8 @@
         "total": 2,
         "score": 0.5,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-008",
@@ -1174,7 +1389,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-009",
@@ -1199,7 +1415,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-010",
@@ -1208,7 +1425,8 @@
       "sources": [
         "attention-is-all-you-need.pdf \u2014 Page 4"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "fact-011",
@@ -1220,7 +1438,8 @@
         "attention-is-all-you-need.pdf \u2014 Page 3",
         "attention-is-all-you-need.pdf \u2014 Page 5"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "fact-012",
@@ -1243,7 +1462,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-013",
@@ -1287,7 +1507,8 @@
         "total": 5,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-014",
@@ -1336,7 +1557,8 @@
         "total": 6,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-015",
@@ -1360,7 +1582,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-016",
@@ -1403,7 +1626,8 @@
         "total": 5,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-017",
@@ -1443,7 +1667,8 @@
         "total": 4,
         "score": 0.75,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-018",
@@ -1478,7 +1703,8 @@
         "total": 3,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-019",
@@ -1503,7 +1729,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-020",
@@ -1525,7 +1752,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-021",
@@ -1548,7 +1776,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-022",
@@ -1585,7 +1814,8 @@
         "total": 4,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-023",
@@ -1610,7 +1840,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-024",
@@ -1635,7 +1866,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-025",
@@ -1663,7 +1895,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-026",
@@ -1688,7 +1921,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-027",
@@ -1722,7 +1956,8 @@
         "total": 3,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-028",
@@ -1751,7 +1986,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "fact-029",
@@ -1763,7 +1999,8 @@
         "berkshire-2023-ar.pdf \u2014 Page 145",
         "berkshire-2023-ar.pdf \u2014 Page 82"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "fact-030",
@@ -1788,7 +2025,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-001",
@@ -1813,7 +2051,8 @@
         "total": 1,
         "score": 0.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-002",
@@ -1843,7 +2082,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-003",
@@ -1865,7 +2105,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-004",
@@ -1888,7 +2129,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-005",
@@ -1912,7 +2154,8 @@
         "total": 1,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-006",
@@ -1941,7 +2184,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-007",
@@ -1971,7 +2215,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-008",
@@ -1983,7 +2228,8 @@
         "berkshire-2023-ar.pdf \u2014 Page 13",
         "berkshire-2023-ar.pdf \u2014 Page 71"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "table-009",
@@ -2008,7 +2254,8 @@
         "total": 1,
         "score": 0.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "table-010",
@@ -2020,7 +2267,8 @@
         "berkshire-2023-ar.pdf \u2014 Page 125",
         "berkshire-2023-ar.pdf \u2014 Page 63"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "multihop-001",
@@ -2060,7 +2308,8 @@
         "total": 4,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-002",
@@ -2119,7 +2368,8 @@
         "total": 8,
         "score": 0.75,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-003",
@@ -2147,7 +2397,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-004",
@@ -2175,7 +2426,8 @@
         "total": 2,
         "score": 0.5,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-005",
@@ -2205,17 +2457,37 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-006",
       "type": "multihop",
-      "answer": "RAG reached **70\u202f% accuracy** with a matching 2016 index and 2016 world leaders\u3010rag-knowledge-intensive-nlp.pdf \u2014 Page\u202f8\u3011.  \nI could not find information about how many vectors the non\u2011parametric index contains in the uploaded documents.",
+      "answer": "RAG reached **70\u202f% accuracy** with a matching 2016 index and 2016 world leaders (see [rag\u2011knowledge\u2011intensive\u2011nlp.pdf \u2014 Page\u202f8]).  \nI could not find information about how many vectors the non\u2011parametric index contains in the uploaded documents.",
       "sources": [
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 8",
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 7"
       ],
-      "abstained": true
+      "abstained": false,
+      "partial": true,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "RAG reached 70% accuracy with a matching 2016 index and 2016 world leaders.",
+            "supported": true,
+            "evidence": "RAG answers 70% correctly using the 2016 index for 2016 world leaders"
+          },
+          {
+            "claim": "The non-parametric index contains an unspecified number of vectors that is not stated in the documents.",
+            "supported": false,
+            "evidence": "The context passages do not mention the number of vectors in the non-parametric index."
+          }
+        ],
+        "supported": 1,
+        "total": 2,
+        "score": 0.5,
+        "model": "deepseek-flash"
+      }
     },
     {
       "id": "multihop-007",
@@ -2254,7 +2526,8 @@
         "total": 4,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-008",
@@ -2299,7 +2572,8 @@
         "total": 5,
         "score": 0.8,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-009",
@@ -2328,7 +2602,8 @@
         "total": 2,
         "score": 1.0,
         "model": "deepseek-flash"
-      }
+      },
+      "partial": false
     },
     {
       "id": "multihop-010",
@@ -2340,7 +2615,8 @@
         "berkshire-2023-ar.pdf \u2014 Page 145",
         "berkshire-2023-ar.pdf \u2014 Page 97"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "unans-001",
@@ -2352,7 +2628,8 @@
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 19",
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 2"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "unans-002",
@@ -2363,7 +2640,8 @@
         "attention-is-all-you-need.pdf \u2014 Page 8",
         "attention-is-all-you-need.pdf \u2014 Page 10"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "unans-003",
@@ -2375,7 +2653,8 @@
         "attention-is-all-you-need.pdf \u2014 Page 7",
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 11"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "unans-004",
@@ -2387,7 +2666,8 @@
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 8",
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 10"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
       "id": "unans-005",
@@ -2397,19 +2677,39 @@
         "attention-is-all-you-need.pdf \u2014 Page 8",
         "rag-knowledge-intensive-nlp.pdf \u2014 Page 17"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
-      "id": "unans-006",
-      "type": "unanswerable",
-      "answer": "Berkshire has not declared a cash dividend since 1967, so no dividend was paid on its Class\u202fA shares in 2023.  \n[berkshire-2023-ar.pdf \u2014 Page 57]",
+      "id": "fact-041",
+      "type": "fact",
+      "answer": "Berkshire has not declared a cash dividend since 1967, so it paid **no dividend per share on its Class\u202fA shares in 2023**\u3010berkshire-2023-ar.pdf \u2014 Page 57\u3011.",
       "sources": [
         "berkshire-2023-ar.pdf \u2014 Page 57",
         "berkshire-2023-ar.pdf \u2014 Page 96",
         "berkshire-2023-ar.pdf \u2014 Page 108",
         "berkshire-2023-ar.pdf \u2014 Page 82"
       ],
-      "abstained": false
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire has not declared a cash dividend since 1967.",
+            "supported": true,
+            "evidence": "Dividends: Berkshire has not declared a cash dividend since 1967."
+          },
+          {
+            "claim": "Berkshire paid no dividend per share on its Class A shares in 2023.",
+            "supported": true,
+            "evidence": "Berkshire has not declared a cash dividend since 1967 (no dividend declared in 2023, so none paid)."
+          }
+        ],
+        "supported": 2,
+        "total": 2,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
     },
     {
       "id": "unans-007",
@@ -2421,7 +2721,8 @@
         "berkshire-2023-ar.pdf \u2014 Page 97",
         "berkshire-2023-ar.pdf \u2014 Page 91"
       ],
-      "abstained": false
+      "abstained": false,
+      "partial": false
     },
     {
       "id": "unans-008",
@@ -2431,17 +2732,32 @@
         "berkshire-2023-ar.pdf \u2014 Page 82",
         "berkshire-2023-ar.pdf \u2014 Page 108"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
     },
     {
-      "id": "unans-009",
-      "type": "unanswerable",
+      "id": "fact-042",
+      "type": "fact",
       "answer": "BNSF Railway had approximately **37,000 employees** at the end of 2023\u3010berkshire-2023-ar.pdf \u2014 Page 30\u3011.",
       "sources": [
         "berkshire-2023-ar.pdf \u2014 Page 30",
         "berkshire-2023-ar.pdf \u2014 Page 53"
       ],
-      "abstained": false
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "BNSF Railway had approximately 37,000 employees at the end of 2023.",
+            "supported": true,
+            "evidence": "BNSF Railway had approximately 37,000 employees at the end of 2023, of whom approximately 32,000 were members of a labor union."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
     },
     {
       "id": "unans-010",
@@ -2452,7 +2768,33 @@
         "berkshire-2023-ar.pdf \u2014 Page 60",
         "berkshire-2023-ar.pdf \u2014 Page 71"
       ],
-      "abstained": true
+      "abstained": true,
+      "partial": false
+    },
+    {
+      "id": "unans-011",
+      "type": "unanswerable",
+      "answer": "I could not find information about that in the uploaded documents.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 57",
+        "berkshire-2023-ar.pdf \u2014 Page 21",
+        "berkshire-2023-ar.pdf \u2014 Page 5",
+        "berkshire-2023-ar.pdf \u2014 Page 82"
+      ],
+      "abstained": true,
+      "partial": false
+    },
+    {
+      "id": "unans-012",
+      "type": "unanswerable",
+      "answer": "BNSF Railway\u2019s operating ratio for 2023 was approximately **68.4\u202f%** (operating expenses of $16,059\u202fmillion divided by operating revenues of $23,474\u202fmillion)\u3010berkshire-2023-ar.pdf \u2014 Page 67\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 67",
+        "berkshire-2023-ar.pdf \u2014 Page 68",
+        "berkshire-2023-ar.pdf \u2014 Page 53"
+      ],
+      "abstained": false,
+      "partial": false
     }
   ]
 }

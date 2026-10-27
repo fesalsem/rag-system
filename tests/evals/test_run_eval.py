@@ -13,9 +13,31 @@ def doc(page):
 class FakeEngine:
     def __init__(self, pages):
         self.pages = pages
+        self.asked_with = []
 
-    def retrieve(self, question):
+    def retrieve(self, question, k=None):
+        self.asked_with.append(k)
         return [doc(page) for page in self.pages]
+
+
+def test_run_retrieval_asks_for_enough_chunks_to_score_recall_at_ten():
+    # recall@10 is meaningless when retrieval stops at four chunks, which is
+    # what retriever_k returns for answering.
+    engine = FakeEngine([1, 2])
+    run_retrieval(
+        [
+            {
+                "id": "q1",
+                "type": "fact",
+                "question": "Where?",
+                "reference_answer": "Page 2.",
+                "doc": "attention",
+                "gold_pages": [2],
+            }
+        ],
+        engine,
+    )
+    assert engine.asked_with == [10]
 
 
 def test_run_retrieval_scores_each_question():

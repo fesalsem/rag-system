@@ -27,7 +27,7 @@ class FakeHybrid:
         self.documents = documents
         self.queries = []
 
-    def retrieve(self, query):
+    def retrieve(self, query, k=None):
         self.queries.append(query)
         return list(self.documents)
 

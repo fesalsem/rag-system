@@ -45,18 +45,18 @@ When you upload a PDF, the app:
 
 ### Evaluation
 
-Intellect ships with a reproducible evaluation harness: 60 hand-written
+Intellect ships with a reproducible evaluation harness: 62 hand-written
 questions over three pinned public PDFs, deterministic retrieval metrics, and
 a cross-family LLM judge for claim-level faithfulness. Run
 `python -m evals.run_eval --out evals/results/current.json` to reproduce the
 numbers in [`evals/README.md`](evals/README.md).
 
-Hybrid retrieval lifts recall@4 from 0.78 to 0.86 and MRR from 0.575 to 0.740
-on the same index; it costs about one second per query on CPU, so it sits
-behind `RAG_HYBRID_ENABLED=1`.
+Hybrid retrieval lifts recall@4 from 0.789 to 0.865 and MRR from 0.592 to
+0.744 on the same index; it costs about one second per query on CPU, so it
+sits behind `RAG_HYBRID_ENABLED=1`.
 
 On the judged run, a cross-family LLM judge scored 0.91 of answer claims as
-supported by the retrieved pages, and the system refused on 7 of 10 questions
+supported by the retrieved pages, and the system refused on 8 of 10 questions
 the corpus cannot answer. Both numbers, and what they miss, are in
 [`evals/README.md`](evals/README.md).
 

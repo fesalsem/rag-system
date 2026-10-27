@@ -106,11 +106,12 @@ class HybridRetriever:
             [bm25, dense], [hybrid.bm25_weight, 1.0 - hybrid.bm25_weight]
         )
 
-    def retrieve(self, query: str) -> List[Document]:
+    def retrieve(self, query: str, k: int | None = None) -> List[Document]:
+        """Return the ``k`` best passages, defaulting to the answering budget."""
         candidates = self._ensemble.invoke(query)
         return self._reranker.rerank(
             query,
             candidates,
-            top_k=self.config.retriever_k,
+            top_k=k or self.config.retriever_k,
             min_score=self.config.hybrid.rerank_min_score,
         )

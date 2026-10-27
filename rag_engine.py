@@ -535,7 +535,9 @@ class RAGEngine:
                 shutil.rmtree(self.config.vector_store.index_path, ignore_errors=True)
         logger.info("Documents cleared for this session.")
 
-    def _relevant_chunks(self, search_query: str) -> List[Document]:
+    def _relevant_chunks(
+        self, search_query: str, k: int | None = None
+    ) -> List[Document]:
         """
         Chunks whose distance clears ``max_distance``, in ranked order.
 
@@ -552,7 +554,7 @@ class RAGEngine:
             )
         try:
             scored = self._vector_store.similarity_search_with_score(
-                search_query, k=self.config.retriever_k
+                search_query, k=k or self.config.retriever_k
             )
         except Exception as exc:
             logger.error("Retrieval failed: %s", exc, exc_info=True)
@@ -572,13 +574,17 @@ class RAGEngine:
             self._hybrid = HybridRetriever(documents, self._vector_store, self.config)
         return self._hybrid
 
-    def retrieve(self, question: str) -> List[Document]:
+    def retrieve(self, question: str, k: int | None = None) -> List[Document]:
         """
         Return the chunks that answer ``question``.
 
         Hybrid retrieval applies its own relevance gate, so an empty list means
         no passage cleared it. The dense path keeps the existing distance
         ceiling, which is what preserves current behaviour when hybrid is off.
+
+        ``k`` overrides the answering budget for one call. The evaluation asks
+        for more chunks than the app does, so recall@10 measures the ranking
+        rather than repeating recall@4.
         """
         if self._vector_store is None:
             raise RuntimeError(
@@ -587,9 +593,9 @@ class RAGEngine:
             )
         search_query = self._condense(question)
         if not self.config.hybrid.enabled:
-            return self._relevant_chunks(search_query)
+            return self._relevant_chunks(search_query, k)
         try:
-            documents = self._get_hybrid().retrieve(search_query)
+            documents = self._get_hybrid().retrieve(search_query, k)
         except Exception as exc:
             logger.error("Hybrid retrieval failed: %s", exc, exc_info=True)
             raise
@@ -600,7 +606,7 @@ class RAGEngine:
         # fallback, which samples whole documents and answers from the wrong
         # pages. Degrade to dense instead.
         logger.info("Reranker rejected every candidate; using dense retrieval.")
-        return self._relevant_chunks(search_query)
+        return self._relevant_chunks(search_query, k)
 
     def query(self, question: str) -> Dict[str, Any]:
         """

@@ -7,11 +7,13 @@ reproducible from the committed code.
 
 | Metric | What it answers | Set |
 |---|---|---|
-| recall@4, recall@10 | Did the right page reach the top of the prompt? | 50 answerable |
-| MRR | How high did the first correct page rank? | 50 answerable |
-| p50, p95 latency | How fast is retrieval? | all 60 |
-| faithfulness | Is each claim supported by the retrieved text? | 50 answerable |
+| recall@4, recall@10 | Did the right page reach the top of the prompt? | 52 answerable |
+| MRR | How high did the first correct page rank? | 52 answerable |
+| p50, p95 latency | How fast is retrieval? | all 62 |
+| faithfulness | Is each claim supported by the retrieved text? | 52 answerable |
 | abstention accuracy | Did it refuse when the corpus cannot answer? | 10 unanswerable |
+| false abstention rate | Did it refuse when the corpus can answer? | 52 answerable |
+| partial answers | How many answers refused part of the question? | 52 answerable |
 
 Retrieval is scored by page: a hit means a retrieved chunk came from a gold
 page. That is the same page number the user sees in a citation.
@@ -20,6 +22,12 @@ Faithfulness is judged by DeepSeek, a different model family from the
 GPT-OSS-20B that writes the answers, so the judge is not grading its own
 output. It splits an answer into claims and returns the supported fraction.
 Refusals make no claims and are not judged.
+
+A refusal is scored per sentence: an answer counts as a refusal only when
+every sentence refuses. An answer that gives one fact and refuses the rest is
+a partial answer, counted separately, because treating it as a refusal would
+hide work the system did. Retrieval is scored at k=10 even though the app
+answers from 4 chunks; scoring at 4 made recall@10 a copy of recall@4.
 
 ## Corpus and questions
 
@@ -34,8 +42,13 @@ Three public PDFs, pinned by SHA-256 in `evals/corpus/lock.json`:
 `python -m evals.fetch_corpus` downloads only what is missing and fails if a
 byte does not match the lock. The PDFs are gitignored; the lock is the contract.
 
-`evals/golden.jsonl` holds 60 questions: 30 fact, 10 table, 10 multihop, 10
-unanswerable. `gold_pages` is the 1-based PDF page index, which is what
+`evals/golden.jsonl` holds 62 questions: 32 fact, 10 table, 10 multihop, 10
+unanswerable. Two rows that were labelled unanswerable were corrected on
+2026-10-27 after checking the corpus: page 57 states that no cash dividend has
+been declared since 1967, and page 30 states BNSF Railway had about 37,000
+employees. The system had answered both correctly and was being scored wrong
+for it. Two new unanswerable questions replaced them, so the set still holds
+ten. `gold_pages` is the 1-based PDF page index, which is what
 `page_label` stores, so the Berkshire balance sheet is page 94 even though the
 printed label says K-70. `python -m evals.golden --strict` validates the file.
 
@@ -45,7 +58,6 @@ printed label says K-70. `python -m evals.golden --strict` validates the file.
 pip install -r requirements.txt
 
 python -m evals.run_eval --out evals/results/baseline.json              # dense
-python -m evals.run_eval --hybrid --reuse-index --out evals/results/hybrid.json
 python -m evals.run_eval --hybrid --reuse-index --full --out evals/results/full.json
 ```
 
@@ -54,33 +66,42 @@ python -m evals.run_eval --hybrid --reuse-index --full --out evals/results/full.
 
 ## Results
 
-Same index, same 60 questions, same machine.
+Same index, same 62 questions, same machine, both runs after the metric fixes
+of 2026-10-27.
 
 | Metric | Dense | Hybrid + rerank | Change |
 |---|---|---|---|
-| recall@4 | 0.78 | **0.86** | +0.08 |
-| recall@10 | 0.78 | **0.86** | +0.08 |
-| MRR | 0.575 | **0.740** | +0.165 |
-| p50 latency | 8 ms | 961 ms | +953 ms |
-| p95 latency | 10 ms | 1227 ms | +1217 ms |
+| recall@4 | 0.789 | **0.865** | +0.077 |
+| recall@10 | 0.865 | **0.885** | +0.019 |
+| MRR | 0.592 | **0.744** | +0.152 |
+| p50 latency | 13 ms | 1028 ms | +1015 ms |
+| p95 latency | 21 ms | 1472 ms | +1451 ms |
 | faithfulness | not run | **0.91** | — |
-| abstention accuracy | not run | **0.70** (7 of 10) | — |
+| abstention accuracy | not run | **0.80** (8 of 10) | — |
+| false abstention rate | not run | 0.13 (7 of 52) | — |
 
-`recall@10` equals `recall@4` for dense because the dense path requests exactly
-four chunks. There is nothing ranked between 5 and 10.
+Retrieval is scored at k=10 for both paths, which the app does not do: it
+answers from four chunks. That is why recall@10 now differs from recall@4 and
+why the latency rows are about 60 ms higher than an answering query costs.
 
-Faithfulness and abstention come from `evals/results/full.json`, run on
-2026-10-27 at commit `ed02138` with `--hybrid --reuse-index --full`. The judge
-scores each claim against the retrieved context: 0.9119 over the 42 answers
-that made a claim. Eight of the 50 answerable questions were refused, and a
-refused answer has no claims to judge. Abstention accuracy is 7 of 10; the
-three misses (`unans-006`, `unans-007`, `unans-009`) answered a question the
-corpus does not cover. Latencies from that run are inflated by Groq 429
-retries, so the latency rows above still come from `hybrid.json`.
+Faithfulness and abstention come from `evals/results/full.json`, rerun on
+2026-10-27 with `--hybrid --reuse-index --full`. The judge scores each claim
+against the retrieved context: 0.907 over the 45 answers that made a claim.
+Abstention accuracy is 8 of 10. One answer gave one half of a two-part
+question and refused the other, and is counted as a partial answer rather than
+a refusal.
+
+Two limitations of the remaining abstention misses. `unans-007` (return on
+equity) and `unans-012` (BNSF operating ratio) were answered by computing a
+ratio from two figures that are in the corpus; for `unans-012` the arithmetic
+checks out. The golden set treats a derived figure as not stated. That is a
+policy choice to make explicit, not a hallucination.
 
 ## Tuning
 
-One knob at a time, same index and questions:
+One knob at a time, same index and questions. These sweeps ran on the earlier
+60-question set, before two labels were corrected; the direction holds but the
+last digit is stale.
 
 | Knob | Setting | recall@4 | MRR | p50 |
 |---|---|---|---|---|
@@ -104,10 +125,18 @@ for double the latency. Defaults stayed at 0.4 and 20.
   name, so a provider-side model swap is invisible unless the cache is cleared.
 - **Reranker cost.** About one second per query on CPU. That is why
   `RAG_HYBRID_ENABLED` defaults to `0` in the deployed app.
-- **Phrase-based abstention.** A refusal counts when it matches one of two
-  refusal phrases, so the same check that credits a correct refusal also marks
-  8 of the 50 answerable questions as refused. Four of those followed a
-  retrieval miss, which is the behaviour the refusal is for.
+- **Sentence-based abstention.** An answer counts as a refusal when every
+  sentence refuses. A refusal is still recognised by wording, so a new
+  phrasing needs a new pattern, and the model's own summary of a table can
+  read as a claim even when it refuses the question. Seven of the 52
+  answerable questions were refused. Four followed a retrieval miss, two
+  refused with the evidence already in the context, and one (`fact-029`) had
+  the right page returned but a chunk from that page that did not hold the
+  figure.
+- **Derived answers are scored as wrong.** `unans-007` and `unans-012` were
+  answered by computing a ratio from figures in the corpus. The golden set
+  says the corpus does not state the figure. Decide the policy before
+  counting these as failures.
 - **Judge wants one statement.** Two claims scored 0 because no single
   passage states the figure: `table-001` and `table-009` summed two line items
   that do add up to it. Faithfulness is a lower bound there, not a wrong

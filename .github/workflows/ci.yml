@@ -8,26 +8,17 @@ on:
 
 jobs:
   test:
-    name: Python ${{ matrix.python-version }} · ${{ matrix.os }}${{ matrix.experimental && ' · experimental' || '' }}
+    name: Python ${{ matrix.python-version }} · ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental == true }}
 
     strategy:
       fail-fast: false   # run all matrix jobs even if one fails
       # Every supported interpreter on both operating systems. 3.12 is the
-      # deploy target. 3.15 is experimental and allowed to fail: torch and
-      # faiss-cpu publish no cp315 wheels yet, so pip cannot install the
-      # requirements there. Drop the flag once those wheels ship.
+      # deploy target. 3.15 is left out until torch and faiss-cpu publish
+      # cp315 wheels; without them pip cannot install the requirements.
       matrix:
         os: [ubuntu-latest, windows-latest]
         python-version: ["3.11", "3.12", "3.13", "3.14"]
-        include:
-          - os: ubuntu-latest
-            python-version: "3.15"
-            experimental: true
-          - os: windows-latest
-            python-version: "3.15"
-            experimental: true
 
     steps:
       # ── 1. Checkout ────────────────────────────────────────────────
