@@ -156,7 +156,7 @@ Set them in `.env` for local and Docker runs, or in Streamlit secrets on Cloud.
 | `RAG_PERSIST_INDEX` | `1` | Write the FAISS index to disk. The Streamlit app forces it off: its indexes are per-session, so persisting them would leave one directory per visit and never read any of them back |
 | `RAG_CHUNK_SIZE` | `256` | Chunk size, in tokens |
 | `RAG_CHUNK_OVERLAP` | `32` | Chunk overlap, in tokens |
-| `RAG_RETRIEVER_K` | `4` | Chunks retrieved per query |
+| `RAG_RETRIEVER_K` | `6` | Chunks retrieved per query |
 | `RAG_MAX_DISTANCE` | `1.4` | Largest FAISS squared-L2 distance accepted (normalised embeddings, so 1.4 is roughly cosine 0.3). Chunks beyond it are discarded, and if none pass the app answers from a whole-document overview instead |
 | `RAG_MEMORY_TURNS` | `6` | Conversation turns kept per session |
 | `RAG_MAX_PAGES` | `300` | Per-PDF page cap |

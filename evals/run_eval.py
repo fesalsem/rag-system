@@ -107,7 +107,7 @@ def run_retrieval(
     rows: list[dict[str, Any]] = []
     for item in golden:
         started = time.perf_counter()
-        # Ask for the widest K we score. With retriever_k chunks (4 by default)
+        # Ask for the widest K we score. With retriever_k chunks (6 by default)
         # recall@10 would be a copy of recall@4 rather than a measurement.
         documents = engine.retrieve(item["question"], k=max(K_VALUES))
         latency_ms = (time.perf_counter() - started) * 1000

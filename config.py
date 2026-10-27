@@ -187,7 +187,10 @@ class RAGConfig(BaseModel):
     hybrid: HybridRetrievalConfig = Field(default_factory=HybridRetrievalConfig)
 
     retriever_k: int = Field(
-        default_factory=lambda: _env_int("RAG_RETRIEVER_K", 4),
+        # Six, not four: on the 62-question set dense retrieval finds three
+        # more gold pages at ranks 5 and 6, and the gain stops there. Rank 8
+        # adds one page behind seven misses, so more context is mostly noise.
+        default_factory=lambda: _env_int("RAG_RETRIEVER_K", 6),
         gt=0,
         description="Number of chunks returned by the retriever.",
     )

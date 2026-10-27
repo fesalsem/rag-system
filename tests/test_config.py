@@ -244,7 +244,7 @@ class TestRAGConfig:
 
     def test_defaults(self, clean_env):
         cfg = RAGConfig()
-        assert cfg.retriever_k == 4
+        assert cfg.retriever_k == 6
         assert cfg.max_distance == 1.4
         assert cfg.max_pages == 300
         assert cfg.max_upload_mb == 50
@@ -267,7 +267,7 @@ class TestRAGConfig:
     @pytest.mark.parametrize(
         "var, attr, default",
         [
-            ("RAG_RETRIEVER_K", "retriever_k", 4),
+            ("RAG_RETRIEVER_K", "retriever_k", 6),
             ("RAG_MAX_DISTANCE", "max_distance", 1.4),
             ("RAG_MAX_PAGES", "max_pages", 300),
             ("RAG_MAX_UPLOAD_MB", "max_upload_mb", 50),
