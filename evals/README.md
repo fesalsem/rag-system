@@ -81,7 +81,7 @@ of 2026-10-27.
 | false abstention rate | not run | 0.13 (7 of 52) | — |
 
 Retrieval is scored at k=10 for both paths, which the app does not do: it
-answers from four chunks. That is why recall@10 now differs from recall@4 and
+answers from six chunks. That is why recall@10 now differs from recall@4 and
 why the latency rows are about 60 ms higher than an answering query costs.
 
 Faithfulness and abstention come from `evals/results/full.json`, rerun on
@@ -90,6 +90,13 @@ against the retrieved context: 0.907 over the 45 answers that made a claim.
 Abstention accuracy is 8 of 10. One answer gave one half of a two-part
 question and refused the other, and is counted as a partial answer rather than
 a refusal.
+
+That judged run used the four-chunk default the app answered from at the time.
+A rerun at the current six-chunk default was started later on 2026-10-27 and
+stopped after 22 of 62 answers when Groq's 200k daily token cap was reached.
+Its checkpoint is kept in `evals/.answers.jsonl`, so the same command continues
+from there; until it completes, the judged numbers above describe the
+four-chunk configuration.
 
 Two limitations of the remaining abstention misses. `unans-007` (return on
 equity) and `unans-012` (BNSF operating ratio) were answered by computing a
