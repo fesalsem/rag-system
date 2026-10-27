@@ -61,7 +61,7 @@ behind `RAG_HYBRID_ENABLED=1`.
 
 Want to run or modify it locally?
 
-### 1. Clone & set up (Python 3.12 is the supported target; CI also tests 3.11)
+### 1. Clone & set up (Python 3.12 is the deploy target; CI tests 3.11 to 3.14 on Linux and Windows)
 
 ```bash
 git clone https://github.com/fesalsem/rag-system.git

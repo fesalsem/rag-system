@@ -38,7 +38,7 @@ numpy==2.4.6
 
 # Every entry is pinned with ==. There is no lock file, so a rebuild would
 # otherwise drift to whatever the indexes serve that day. To re-check the whole
-# set resolves for the Python 3.11 and 3.12 / Linux targets, run:
+# set resolves for the Python 3.11 to 3.14 / Linux targets, run:
 #
 #   python -m pip install --dry-run --ignore-installed --only-binary=:all: \
 #     --python-version 3.12 --platform manylinux_2_28_x86_64 \
