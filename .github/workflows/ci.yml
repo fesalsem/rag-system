@@ -8,24 +8,26 @@ on:
 
 jobs:
   test:
-    name: Python ${{ matrix.python-version }} · ${{ matrix.os }}
+    name: Python ${{ matrix.python-version }} · ${{ matrix.os }}${{ matrix.experimental && ' · experimental' || '' }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental == true }}
 
     strategy:
       fail-fast: false   # run all matrix jobs even if one fails
-      # Three legs, not the old 3 x 2 grid. The suite is fully mocked, so more
-      # interpreters add little, and the docker job below already builds the
-      # real image and runs the same suite on Linux. 3.12 is the supported
-      # target; 3.11 is kept because requirements still resolve there, and one
-      # Windows leg stays because the maintainer develops on Windows.
+      # Every supported interpreter on both operating systems. 3.12 is the
+      # deploy target. 3.15 is experimental and allowed to fail: torch and
+      # faiss-cpu publish no cp315 wheels yet, so pip cannot install the
+      # requirements there. Drop the flag once those wheels ship.
       matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
         include:
           - os: ubuntu-latest
-            python-version: "3.11"
-          - os: ubuntu-latest
-            python-version: "3.12"
+            python-version: "3.15"
+            experimental: true
           - os: windows-latest
-            python-version: "3.12"
+            python-version: "3.15"
+            experimental: true
 
     steps:
       # ── 1. Checkout ────────────────────────────────────────────────
