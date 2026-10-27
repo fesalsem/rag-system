@@ -63,16 +63,20 @@ Same index, same 60 questions, same machine.
 | MRR | 0.575 | **0.740** | +0.165 |
 | p50 latency | 8 ms | 961 ms | +953 ms |
 | p95 latency | 10 ms | 1227 ms | +1217 ms |
-| faithfulness | pending | pending | — |
-| abstention accuracy | pending | pending | — |
+| faithfulness | not run | **0.91** | — |
+| abstention accuracy | not run | **0.70** (7 of 10) | — |
 
 `recall@10` equals `recall@4` for dense because the dense path requests exactly
 four chunks. There is nothing ranked between 5 and 10.
 
-Faithfulness and abstention are marked pending. A judged run made before the
-empty-hybrid fallback fix (`df5e0b0`) scored 0.84 and 5/10, but it answered
-several questions from a whole-document overview, so it does not describe this
-code. The rerun is blocked on the free Groq tier's daily token cap.
+Faithfulness and abstention come from `evals/results/full.json`, run on
+2026-10-27 at commit `ed02138` with `--hybrid --reuse-index --full`. The judge
+scores each claim against the retrieved context: 0.9119 over the 42 answers
+that made a claim. Eight of the 50 answerable questions were refused, and a
+refused answer has no claims to judge. Abstention accuracy is 7 of 10; the
+three misses (`unans-006`, `unans-007`, `unans-009`) answered a question the
+corpus does not cover. Latencies from that run are inflated by Groq 429
+retries, so the latency rows above still come from `hybrid.json`.
 
 ## Tuning
 
@@ -101,7 +105,13 @@ for double the latency. Defaults stayed at 0.4 and 20.
 - **Reranker cost.** About one second per query on CPU. That is why
   `RAG_HYBRID_ENABLED` defaults to `0` in the deployed app.
 - **Phrase-based abstention.** A refusal counts when it matches one of two
-  refusal phrases.
+  refusal phrases, so the same check that credits a correct refusal also marks
+  8 of the 50 answerable questions as refused. Four of those followed a
+  retrieval miss, which is the behaviour the refusal is for.
+- **Judge wants one statement.** Two claims scored 0 because no single
+  passage states the figure: `table-001` and `table-009` summed two line items
+  that do add up to it. Faithfulness is a lower bound there, not a wrong
+  answer.
 
 ## CI
 
