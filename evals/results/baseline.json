@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-27T14:38:03.716057+00:00",
-  "git_commit": "c0f7897",
+  "generated_at": "2026-10-28T07:06:18.391048+00:00",
+  "git_commit": "dbaa8db",
   "hybrid": false,
   "corpus": {
     "attention": "attention-is-all-you-need.pdf",
@@ -8,12 +8,12 @@
     "berkshire-2023": "berkshire-2023-ar.pdf"
   },
   "summary": {
-    "recall@4": 0.7885,
-    "recall@10": 0.8654,
-    "mrr": 0.5918,
+    "recall@4": 0.8077,
+    "recall@10": 0.9231,
+    "mrr": 0.6085,
     "n": 52,
-    "p50_ms": 12.78,
-    "p95_ms": 20.76,
+    "p50_ms": 13.32,
+    "p95_ms": 24.38,
     "unanswerable": 10
   },
   "questions": [
@@ -26,17 +26,17 @@
       "retrieved_pages": [
         5,
         3,
-        5,
         2,
-        10,
-        3,
         10,
         9,
         13,
-        1
+        1,
+        14,
+        8,
+        17
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 23.09,
+      "latency_ms": 35.55,
       "hit@4": true,
       "hit@10": true
     },
@@ -48,18 +48,16 @@
       ],
       "retrieved_pages": [
         3,
-        3,
         6,
         18,
         5,
-        5,
-        6,
-        6,
         2,
-        6
+        8,
+        7,
+        13
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 20.83,
+      "latency_ms": 20.78,
       "hit@4": true,
       "hit@10": true
     },
@@ -73,13 +71,11 @@
         5,
         6,
         3,
-        6,
         18,
-        5,
         9
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 19.08,
+      "latency_ms": 12.95,
       "hit@4": true,
       "hit@10": true
     },
@@ -91,17 +87,12 @@
       ],
       "retrieved_pages": [
         8,
-        8,
         9,
         7,
-        8,
-        8,
-        7,
-        18,
-        9
+        18
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 19.4,
+      "latency_ms": 12.93,
       "hit@4": true,
       "hit@10": true
     },
@@ -118,7 +109,7 @@
         18
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 19.61,
+      "latency_ms": 17.28,
       "hit@4": true,
       "hit@10": true
     },
@@ -130,18 +121,16 @@
       ],
       "retrieved_pages": [
         8,
-        8,
         9,
-        8,
         1,
+        10,
+        11,
         8,
-        9,
-        10,
-        10,
-        11
+        18,
+        7
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 23.66,
+      "latency_ms": 14.03,
       "hit@4": true,
       "hit@10": true
     },
@@ -153,18 +142,17 @@
       ],
       "retrieved_pages": [
         8,
-        8,
         1,
         9,
-        8,
-        8,
-        9,
         10,
-        10,
-        10
+        11,
+        7,
+        8,
+        14,
+        18
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 14.1,
+      "latency_ms": 13.37,
       "hit@4": true,
       "hit@10": true
     },
@@ -176,18 +164,15 @@
       ],
       "retrieved_pages": [
         8,
-        8,
         2,
         7,
-        8,
         17,
         1,
         54,
-        8,
         10
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 18.54,
+      "latency_ms": 14.55,
       "hit@4": true,
       "hit@10": true
     },
@@ -202,15 +187,15 @@
         6,
         3,
         5,
-        5,
-        6,
-        6,
         4,
-        3,
-        9
+        9,
+        11,
+        1,
+        4,
+        3
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 15.31,
+      "latency_ms": 24.38,
       "hit@4": true,
       "hit@10": true
     },
@@ -222,12 +207,11 @@
       ],
       "retrieved_pages": [
         4,
-        4,
         5,
         9
       ],
-      "reciprocal_rank": 0.3333,
-      "latency_ms": 16.36,
+      "reciprocal_rank": 0.5,
+      "latency_ms": 43.34,
       "hit@4": true,
       "hit@10": true
     },
@@ -250,7 +234,7 @@
         11
       ],
       "reciprocal_rank": 0.2,
-      "latency_ms": 13.41,
+      "latency_ms": 17.3,
       "hit@4": false,
       "hit@10": true
     },
@@ -267,13 +251,13 @@
         15,
         8,
         13,
-        5,
         8,
         1,
-        3
+        3,
+        15
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 12.75,
+      "latency_ms": 18.36,
       "hit@4": true,
       "hit@10": true
     },
@@ -289,16 +273,16 @@
         8,
         19,
         7,
-        6,
         4,
         3,
         5,
-        7
+        2,
+        1
       ],
-      "reciprocal_rank": 0.0,
-      "latency_ms": 16.77,
+      "reciprocal_rank": 0.1,
+      "latency_ms": 13.54,
       "hit@4": false,
-      "hit@10": false
+      "hit@10": true
     },
     {
       "id": "fact-014",
@@ -309,17 +293,17 @@
       "retrieved_pages": [
         19,
         3,
-        3,
-        8,
         8,
         9,
         4,
         2,
-        2,
-        3
+        18,
+        7,
+        5,
+        12
       ],
-      "reciprocal_rank": 0.125,
-      "latency_ms": 12.94,
+      "reciprocal_rank": 0.1667,
+      "latency_ms": 16.21,
       "hit@4": false,
       "hit@10": true
     },
@@ -331,18 +315,18 @@
       ],
       "retrieved_pages": [
         3,
-        3,
         8,
         19,
         2,
         4,
         7,
-        3,
-        4,
-        17
+        17,
+        5,
+        6,
+        18
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 15.15,
+      "latency_ms": 12.18,
       "hit@4": true,
       "hit@10": true
     },
@@ -354,18 +338,18 @@
       ],
       "retrieved_pages": [
         3,
-        3,
         8,
         4,
         5,
         7,
-        7,
         6,
-        3,
-        6
+        10,
+        2,
+        17,
+        19
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 15.57,
+      "latency_ms": 12.37,
       "hit@4": true,
       "hit@10": true
     },
@@ -382,13 +366,13 @@
         5,
         18,
         8,
-        8,
         9,
         2,
-        6
+        6,
+        19
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 12.47,
+      "latency_ms": 12.74,
       "hit@4": true,
       "hit@10": true
     },
@@ -401,17 +385,17 @@
       "retrieved_pages": [
         5,
         4,
-        5,
         13,
         17,
         2,
         19,
         6,
         18,
-        2
+        8,
+        7
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 11.55,
+      "latency_ms": 11.73,
       "hit@4": true,
       "hit@10": true
     },
@@ -426,15 +410,15 @@
         6,
         8,
         4,
-        8,
-        6,
         19,
-        5,
         7,
-        8
+        3,
+        18,
+        17,
+        2
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 14.05,
+      "latency_ms": 13.8,
       "hit@4": true,
       "hit@10": true
     },
@@ -449,15 +433,15 @@
         5,
         8,
         6,
-        8,
         18,
-        6,
-        7,
         10,
-        10
+        19,
+        3,
+        4,
+        17
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 13.38,
+      "latency_ms": 12.17,
       "hit@4": true,
       "hit@10": true
     },
@@ -471,16 +455,16 @@
         7,
         8,
         17,
-        8,
         6,
         5,
-        8,
-        8,
         10,
-        7
+        19,
+        9,
+        19,
+        8
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 14.84,
+      "latency_ms": 13.52,
       "hit@4": true,
       "hit@10": true
     },
@@ -492,17 +476,15 @@
       ],
       "retrieved_pages": [
         17,
-        17,
         4,
         8,
         2,
         10,
-        8,
         7,
         8
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 14.53,
+      "latency_ms": 11.42,
       "hit@4": true,
       "hit@10": true
     },
@@ -515,17 +497,17 @@
       "retrieved_pages": [
         8,
         1,
-        8,
         35,
         20,
         6,
         12,
         144,
         82,
-        9
+        9,
+        97
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 14.2,
+      "latency_ms": 12.29,
       "hit@4": false,
       "hit@10": false
     },
@@ -548,7 +530,7 @@
         28
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 12.32,
+      "latency_ms": 13.87,
       "hit@4": true,
       "hit@10": true
     },
@@ -563,15 +545,15 @@
         6,
         97,
         146,
-        146,
         8,
-        97,
         144,
         95,
-        98
+        98,
+        145,
+        13
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 14.34,
+      "latency_ms": 15.44,
       "hit@4": true,
       "hit@10": true
     },
@@ -590,11 +572,11 @@
         8,
         152,
         146,
-        8,
-        9
+        9,
+        46
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 12.05,
+      "latency_ms": 13.96,
       "hit@4": true,
       "hit@10": true
     },
@@ -610,14 +592,14 @@
         17,
         51,
         28,
-        16,
-        51,
         63,
         25,
-        20
+        20,
+        29,
+        136
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 11.9,
+      "latency_ms": 13.62,
       "hit@4": false,
       "hit@10": false
     },
@@ -629,18 +611,18 @@
       ],
       "retrieved_pages": [
         53,
-        53,
         30,
         67,
-        30,
         14,
         31,
-        53,
-        67,
-        15
+        15,
+        55,
+        136,
+        54,
+        149
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 13.82,
+      "latency_ms": 13.91,
       "hit@4": true,
       "hit@10": true
     },
@@ -652,18 +634,18 @@
       ],
       "retrieved_pages": [
         8,
-        8,
         6,
         1,
-        144,
         144,
         19,
         97,
         13,
-        71
+        71,
+        7,
+        145
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 14.75,
+      "latency_ms": 12.89,
       "hit@4": true,
       "hit@10": true
     },
@@ -677,16 +659,16 @@
         6,
         1,
         13,
-        13,
-        144,
         144,
         97,
         145,
         19,
-        71
+        71,
+        8,
+        106
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 18.83,
+      "latency_ms": 11.96,
       "hit@4": false,
       "hit@10": false
     },
@@ -701,17 +683,17 @@
         82,
         97,
         145,
-        145,
         144,
         20,
-        82,
-        144,
-        98
+        98,
+        71,
+        8,
+        94
       ],
-      "reciprocal_rank": 0.0,
-      "latency_ms": 20.76,
+      "reciprocal_rank": 0.1,
+      "latency_ms": 14.45,
       "hit@4": false,
-      "hit@10": false
+      "hit@10": true
     },
     {
       "id": "table-002",
@@ -724,15 +706,15 @@
         8,
         14,
         5,
-        8,
         10,
         3,
         7,
-        10,
-        7
+        18,
+        2,
+        3
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 12.79,
+      "latency_ms": 12.61,
       "hit@4": true,
       "hit@10": true
     },
@@ -747,14 +729,11 @@
         3,
         9,
         8,
-        8,
-        10,
         5,
-        11,
-        5
+        11
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 14.6,
+      "latency_ms": 13.41,
       "hit@4": true,
       "hit@10": true
     },
@@ -768,16 +747,16 @@
         4,
         6,
         8,
-        6,
-        8,
-        6,
         3,
         5,
         17,
-        5
+        7,
+        18,
+        16,
+        19
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 11.85,
+      "latency_ms": 12.41,
       "hit@4": true,
       "hit@10": true
     },
@@ -790,17 +769,17 @@
       "retrieved_pages": [
         8,
         6,
-        8,
-        8,
         3,
         8,
-        6,
         4,
         5,
-        9
+        9,
+        7,
+        17,
+        19
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 12.69,
+      "latency_ms": 13.32,
       "hit@4": true,
       "hit@10": true
     },
@@ -817,13 +796,13 @@
         17,
         3,
         5,
-        5,
         4,
-        8,
-        19
+        19,
+        2,
+        13
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 11.59,
+      "latency_ms": 14.26,
       "hit@4": true,
       "hit@10": true
     },
@@ -837,18 +816,18 @@
         75,
         112,
         78,
-        78,
-        78,
         6,
         74,
-        75,
         77,
-        78
+        73,
+        13,
+        1,
+        72
       ],
-      "reciprocal_rank": 0.0,
-      "latency_ms": 10.32,
+      "reciprocal_rank": 0.125,
+      "latency_ms": 12.42,
       "hit@4": false,
-      "hit@10": false
+      "hit@10": true
     },
     {
       "id": "table-008",
@@ -863,13 +842,13 @@
         71,
         8,
         144,
-        13,
         19,
         145,
-        97
+        97,
+        12
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 10.73,
+      "latency_ms": 12.43,
       "hit@4": false,
       "hit@10": false
     },
@@ -887,12 +866,12 @@
         128,
         139,
         6,
-        98,
         113,
-        112
+        112,
+        127
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 10.91,
+      "latency_ms": 14.49,
       "hit@4": true,
       "hit@10": true
     },
@@ -905,18 +884,18 @@
       "retrieved_pages": [
         13,
         16,
-        13,
         30,
         20,
         17,
         1,
-        16,
-        20,
-        98
+        98,
+        125,
+        51,
+        9
       ],
-      "reciprocal_rank": 0.2,
-      "latency_ms": 10.99,
-      "hit@4": false,
+      "reciprocal_rank": 0.25,
+      "latency_ms": 15.73,
+      "hit@4": true,
       "hit@10": true
     },
     {
@@ -933,13 +912,13 @@
         11,
         6,
         9,
-        2,
-        2,
         4,
-        3
+        3,
+        10,
+        1
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 12.17,
+      "latency_ms": 18.76,
       "hit@4": true,
       "hit@10": true
     },
@@ -952,17 +931,17 @@
       "retrieved_pages": [
         8,
         9,
-        8,
         1,
-        8,
-        8,
         10,
-        10,
-        9,
-        11
+        11,
+        8,
+        14,
+        17,
+        18,
+        7
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 11.65,
+      "latency_ms": 13.62,
       "hit@4": true,
       "hit@10": true
     },
@@ -978,15 +957,15 @@
         5,
         2,
         10,
-        10,
         6,
-        2,
         1,
-        2,
-        6
+        7,
+        8,
+        11,
+        12
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 11.68,
+      "latency_ms": 13.48,
       "hit@4": true,
       "hit@10": true
     },
@@ -999,18 +978,18 @@
       ],
       "retrieved_pages": [
         8,
-        8,
         3,
         6,
         7,
         9,
-        7,
-        7,
-        6,
-        3
+        4,
+        5,
+        8,
+        19,
+        17
       ],
-      "reciprocal_rank": 0.3333,
-      "latency_ms": 12.55,
+      "reciprocal_rank": 0.5,
+      "latency_ms": 13.59,
       "hit@4": true,
       "hit@10": true
     },
@@ -1027,14 +1006,14 @@
         8,
         3,
         17,
-        3,
         19,
-        5,
-        4,
-        2
+        2,
+        6,
+        9,
+        7
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 11.61,
+      "latency_ms": 14.79,
       "hit@4": true,
       "hit@10": true
     },
@@ -1048,17 +1027,17 @@
       "retrieved_pages": [
         8,
         7,
-        8,
         5,
-        8,
         6,
-        7,
         19,
         10,
-        8
+        4,
+        9,
+        3,
+        17
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 11.14,
+      "latency_ms": 15.11,
       "hit@4": true,
       "hit@10": true
     },
@@ -1073,16 +1052,16 @@
         1,
         97,
         144,
-        144,
         145,
         95,
         82,
         71,
         8,
-        144
+        12,
+        106
       ],
-      "reciprocal_rank": 0.1667,
-      "latency_ms": 11.06,
+      "reciprocal_rank": 0.2,
+      "latency_ms": 13.3,
       "hit@4": false,
       "hit@10": true
     },
@@ -1096,17 +1075,17 @@
       "retrieved_pages": [
         8,
         144,
-        8,
         6,
-        144,
         71,
         1,
         95,
         13,
-        97
+        97,
+        19,
+        145
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 12.78,
+      "latency_ms": 11.08,
       "hit@4": true,
       "hit@10": true
     },
@@ -1119,18 +1098,18 @@
       ],
       "retrieved_pages": [
         67,
-        67,
         30,
         53,
-        30,
         15,
-        53,
-        53,
         14,
-        67
+        68,
+        149,
+        31,
+        13,
+        137
       ],
-      "reciprocal_rank": 0.25,
-      "latency_ms": 11.27,
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 10.96,
       "hit@4": true,
       "hit@10": true
     },
@@ -1145,16 +1124,16 @@
         6,
         13,
         1,
-        13,
         144,
         8,
         71,
-        144,
         145,
-        97
+        97,
+        19,
+        106
       ],
       "reciprocal_rank": 0.5,
-      "latency_ms": 20.12,
+      "latency_ms": 10.85,
       "hit@4": true,
       "hit@10": true
     },
@@ -1171,11 +1150,11 @@
         1,
         9,
         4,
-        9,
-        6
+        6,
+        18
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 9.91,
+      "latency_ms": 9.64,
       "hit@4": false,
       "hit@10": false
     },
@@ -1185,18 +1164,18 @@
       "gold_pages": [],
       "retrieved_pages": [
         8,
-        8,
         1,
-        8,
         9,
         10,
-        10,
-        10,
+        14,
+        2,
+        11,
+        7,
         8,
-        9
+        4
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 18.57,
+      "latency_ms": 9.95,
       "hit@4": false,
       "hit@10": false
     },
@@ -1210,14 +1189,14 @@
         7,
         11,
         9,
-        8,
         1,
         10,
         17,
-        8
+        12,
+        3
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 17.48,
+      "latency_ms": 9.71,
       "hit@4": false,
       "hit@10": false
     },
@@ -1228,17 +1207,17 @@
       "retrieved_pages": [
         10,
         7,
-        7,
         5,
         8,
         6,
-        8,
         3,
         19,
-        17
+        17,
+        4,
+        2
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 11.42,
+      "latency_ms": 9.99,
       "hit@4": false,
       "hit@10": false
     },
@@ -1250,14 +1229,11 @@
         7,
         17,
         8,
-        17,
-        8,
         18,
-        8,
         10
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 13.8,
+      "latency_ms": 11.41,
       "hit@4": false,
       "hit@10": false
     },
@@ -1269,18 +1245,18 @@
       ],
       "retrieved_pages": [
         57,
-        57,
         19,
         131,
         144,
         96,
         95,
-        144,
         97,
-        82
+        82,
+        1,
+        145
       ],
       "reciprocal_rank": 1.0,
-      "latency_ms": 11.82,
+      "latency_ms": 11.2,
       "hit@4": true,
       "hit@10": true
     },
@@ -1294,14 +1270,14 @@
         97,
         9,
         82,
-        82,
-        13,
         13,
         6,
-        57
+        57,
+        144,
+        12
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 9.58,
+      "latency_ms": 10.4,
       "hit@4": false,
       "hit@10": false
     },
@@ -1311,7 +1287,6 @@
       "gold_pages": [],
       "retrieved_pages": [
         57,
-        57,
         131,
         1,
         82,
@@ -1319,10 +1294,11 @@
         97,
         19,
         71,
-        96
+        96,
+        20
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 9.21,
+      "latency_ms": 10.39,
       "hit@4": false,
       "hit@10": false
     },
@@ -1337,15 +1313,15 @@
         67,
         30,
         149,
-        30,
-        53,
-        67,
-        53,
-        67,
-        14
+        14,
+        15,
+        31,
+        52,
+        137,
+        136
       ],
       "reciprocal_rank": 0.3333,
-      "latency_ms": 10.36,
+      "latency_ms": 10.76,
       "hit@4": true,
       "hit@10": true
     },
@@ -1356,17 +1332,17 @@
       "retrieved_pages": [
         6,
         13,
-        13,
         1,
         19,
         71,
         144,
         97,
         145,
-        144
+        106,
+        7
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 9.5,
+      "latency_ms": 11.85,
       "hit@4": false,
       "hit@10": false
     },
@@ -1387,7 +1363,7 @@
         106
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 9.52,
+      "latency_ms": 11.32,
       "hit@4": false,
       "hit@10": false
     },
@@ -1397,18 +1373,18 @@
       "gold_pages": [],
       "retrieved_pages": [
         67,
-        67,
         53,
-        53,
-        30,
         30,
         68,
         31,
         149,
-        15
+        15,
+        14,
+        137,
+        52
       ],
       "reciprocal_rank": 0.0,
-      "latency_ms": 10.64,
+      "latency_ms": 33.75,
       "hit@4": false,
       "hit@10": false
     }

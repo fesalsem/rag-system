@@ -71,14 +71,20 @@ of 2026-10-27.
 
 | Metric | Dense | Hybrid + rerank | Change |
 |---|---|---|---|
-| recall@4 | 0.789 | **0.865** | +0.077 |
-| recall@10 | 0.865 | **0.885** | +0.019 |
-| MRR | 0.592 | **0.744** | +0.152 |
+| recall@4 | 0.808 | **0.865** | +0.058 |
+| recall@10 | **0.923** | 0.885 | -0.038 |
+| MRR | 0.609 | **0.744** | +0.135 |
 | p50 latency | 13 ms | 946 ms | +933 ms |
-| p95 latency | 21 ms | 1364 ms | +1343 ms |
+| p95 latency | 24 ms | 1364 ms | +1340 ms |
 | faithfulness | not run | **0.95** | — |
 | abstention accuracy | not run | **0.80** (8 of 10) | — |
 | false abstention rate | not run | 0.058 (3 of 52) | — |
+
+The dense column now uses the default one-chunk-per-page cap. Hybrid does not:
+its reranker reorders a fused candidate pool, and the cap is applied to the
+dense ranking only. That is why dense finds more gold pages by rank 10 while
+hybrid still ranks the right page first more often. Answer quality at the cap
+is not judged yet, so this is a retrieval result, not an answer-quality one.
 
 Retrieval is scored at k=10 for both paths, which the app does not do: it
 answers from six chunks. That is why recall@10 now differs from recall@4 and
@@ -118,9 +124,9 @@ sweep below is dense-only, same index and questions, retrieval at k=10.
 
 At one chunk per page, one question gained at rank 4 and three gained at rank
 10; none lost. A cap of two barely changes anything because most duplicate
-pages contribute exactly two chunks. Answer quality at cap 1 has not been
-judged yet: page-level recall rewards page diversity by construction, so the
-faithfulness run is the one that decides whether the default should move.
+pages contribute exactly two chunks. One is now the default. Page-level recall
+rewards page diversity by construction, so a judged run at the cap is still
+what would prove the answers themselves improved.
 
 
 ## Tuning

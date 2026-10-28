@@ -247,9 +247,9 @@ class TestRAGConfig:
         cfg = RAGConfig()
         assert cfg.retriever_k == 6
         assert cfg.max_distance == 1.4
-        # Off by default: the cap is an experiment until the evaluation says
-        # otherwise.
-        assert cfg.max_chunks_per_page == 0
+        # One chunk per page: the page cap sweep in evals/README.md shows it
+        # finds more distinct pages than the plain ranking.
+        assert cfg.max_chunks_per_page == 1
         assert cfg.max_pages == 300
         assert cfg.max_upload_mb == 50
         assert cfg.log_level == "INFO"
@@ -259,7 +259,7 @@ class TestRAGConfig:
         [
             ("RAG_RETRIEVER_K", "retriever_k", "7", 7),
             ("RAG_MAX_DISTANCE", "max_distance", "0.9", 0.9),
-            ("RAG_MAX_PER_PAGE", "max_chunks_per_page", "2", 2),
+            ("RAG_MAX_PER_PAGE", "max_chunks_per_page", "3", 3),
             ("RAG_MAX_PAGES", "max_pages", "10", 10),
             ("RAG_MAX_UPLOAD_MB", "max_upload_mb", "5", 5),
             ("RAG_LOG_LEVEL", "log_level", "DEBUG", "DEBUG"),
@@ -274,7 +274,7 @@ class TestRAGConfig:
         [
             ("RAG_RETRIEVER_K", "retriever_k", 6),
             ("RAG_MAX_DISTANCE", "max_distance", 1.4),
-            ("RAG_MAX_PER_PAGE", "max_chunks_per_page", 0),
+            ("RAG_MAX_PER_PAGE", "max_chunks_per_page", 1),
             ("RAG_MAX_PAGES", "max_pages", 300),
             ("RAG_MAX_UPLOAD_MB", "max_upload_mb", 50),
         ],

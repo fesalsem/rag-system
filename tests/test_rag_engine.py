@@ -415,10 +415,11 @@ class TestPageCap:
         cfg.max_chunks_per_page = 2
         store = FakeVectorStore(scored=[], ntotal=0)
         engine = make_engine(cfg, store=store)
-        engine._vector_store.similarity_search_with_score = (
-            lambda query, k=None: store.queries.append(k) or []
-        )
+        def record_k(query, k=None):
+            store.queries.append(k)
+            return []
 
+        engine._vector_store.similarity_search_with_score = record_k
         engine.retrieve("q")
 
         # Six wanted, cap of two: one page can supply at most a third of the
