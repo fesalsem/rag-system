@@ -55,7 +55,7 @@ Hybrid retrieval lifts recall@4 from 0.789 to 0.865 and MRR from 0.592 to
 0.744 on the same index; it costs about one second per query on CPU, so it
 sits behind `RAG_HYBRID_ENABLED=1`.
 
-On the judged run, a cross-family LLM judge scored 0.91 of answer claims as
+On the judged run, a cross-family LLM judge scored 0.95 of answer claims as
 supported by the retrieved pages, and the system refused on 8 of 10 questions
 the corpus cannot answer. Both numbers, and what they miss, are in
 [`evals/README.md`](evals/README.md).

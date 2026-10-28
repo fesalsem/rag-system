@@ -74,29 +74,27 @@ of 2026-10-27.
 | recall@4 | 0.789 | **0.865** | +0.077 |
 | recall@10 | 0.865 | **0.885** | +0.019 |
 | MRR | 0.592 | **0.744** | +0.152 |
-| p50 latency | 13 ms | 1028 ms | +1015 ms |
-| p95 latency | 21 ms | 1472 ms | +1451 ms |
-| faithfulness | not run | **0.91** | — |
+| p50 latency | 13 ms | 946 ms | +933 ms |
+| p95 latency | 21 ms | 1364 ms | +1343 ms |
+| faithfulness | not run | **0.95** | — |
 | abstention accuracy | not run | **0.80** (8 of 10) | — |
-| false abstention rate | not run | 0.13 (7 of 52) | — |
+| false abstention rate | not run | 0.058 (3 of 52) | — |
 
 Retrieval is scored at k=10 for both paths, which the app does not do: it
 answers from six chunks. That is why recall@10 now differs from recall@4 and
 why the latency rows are about 60 ms higher than an answering query costs.
 
 Faithfulness and abstention come from `evals/results/full.json`, rerun on
-2026-10-27 with `--hybrid --reuse-index --full`. The judge scores each claim
-against the retrieved context: 0.907 over the 45 answers that made a claim.
-Abstention accuracy is 8 of 10. One answer gave one half of a two-part
-question and refused the other, and is counted as a partial answer rather than
-a refusal.
+2026-10-28 with `--hybrid --reuse-index --full` at the current six-chunk
+default. The judge scores each claim against the retrieved context: 0.952 over
+the 49 answers that made a claim. Abstention accuracy is 8 of 10. Three
+answers gave one half of a two-part question and refused the other; they are
+counted as partial answers rather than refusals.
 
-That judged run used the four-chunk default the app answered from at the time.
-A rerun at the current six-chunk default was started later on 2026-10-27 and
-stopped after 22 of 62 answers when Groq's 200k daily token cap was reached.
-Its checkpoint is kept in `evals/.answers.jsonl`, so the same command continues
-from there; until it completes, the judged numbers above describe the
-four-chunk configuration.
+The same judged run at four chunks, a day earlier, scored 0.907 and refused 7
+of the 52 answerable questions. Two more chunks raised the supported fraction
+and cut false refusals to 3. Both runs are on the same index and question set,
+so the six-chunk default is the one the numbers describe.
 
 Two limitations of the remaining abstention misses. `unans-007` (return on
 equity) and `unans-012` (BNSF operating ratio) were answered by computing a
@@ -135,19 +133,22 @@ for double the latency. Defaults stayed at 0.4 and 20.
 - **Sentence-based abstention.** An answer counts as a refusal when every
   sentence refuses. A refusal is still recognised by wording, so a new
   phrasing needs a new pattern, and the model's own summary of a table can
-  read as a claim even when it refuses the question. Seven of the 52
-  answerable questions were refused. Four followed a retrieval miss, two
-  refused with the evidence already in the context, and one (`fact-029`) had
-  the right page returned but a chunk from that page that did not hold the
-  figure.
+  read as a claim even when it refuses the question. Three of the 52
+  answerable questions were refused. One (`fact-003`) followed a retrieval
+  miss; two (`table-004`, `multihop-005`) refused with a gold page already in
+  the context.
 - **Derived answers are scored as wrong.** `unans-007` and `unans-012` were
   answered by computing a ratio from figures in the corpus. The golden set
   says the corpus does not state the figure. Decide the policy before
   counting these as failures.
-- **Judge wants one statement.** Two claims scored 0 because no single
-  passage states the figure: `table-001` and `table-009` summed two line items
-  that do add up to it. Faithfulness is a lower bound there, not a wrong
-  answer.
+- **Failure modes that flatter or punish the numbers.** Four unsupported
+  claims were page numbers written into the answer text ("Page 3", "Page 96")
+  that the judge cannot see in the context, so they are judge artefacts, not
+  wrong answers. One (`table-001`) summed two segment figures the context
+  states separately. One (`multihop-004`) was a real gap: the retrieved pages
+  did not state which RAG variant uses a single document per sequence. Read
+  faithfulness as a lower bound until the prompt stops writing page numbers
+  into prose.
 
 ## CI
 
