@@ -23,7 +23,7 @@ import re
 import shutil
 import threading
 import uuid
-from collections import Counter, deque
+from collections import deque
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -34,15 +34,10 @@ from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import RAGConfig, settings
-from retrieval import HybridRetriever
+from retrieval import HybridRetriever, PAGE_CAP_OVERFETCH, cap_per_page
 from ui_helpers import source_label, source_labels
 
 logger = logging.getLogger(__name__)
-
-# How many times the answering budget to fetch when a per-page cap is active.
-# With a cap of two and a budget of six, every page can supply at most two of
-# the six chunks, so the ranking has to be read further down to fill it.
-_PAGE_CAP_OVERFETCH = 4
 
 
 # ---------------------------------------------------------------------------
@@ -565,7 +560,7 @@ class RAGEngine:
             )
         limit = k or self.config.retriever_k
         per_page_cap = self.config.max_chunks_per_page
-        fetch = limit if per_page_cap <= 0 else limit * _PAGE_CAP_OVERFETCH
+        fetch = limit if per_page_cap <= 0 else limit * PAGE_CAP_OVERFETCH
         try:
             scored = self._vector_store.similarity_search_with_score(
                 search_query, k=fetch
@@ -574,23 +569,10 @@ class RAGEngine:
             logger.error("Retrieval failed: %s", exc, exc_info=True)
             raise
 
-        kept: List[Document] = []
-        per_page: Counter = Counter()
-        for doc, distance in scored:
-            if distance > self.config.max_distance:
-                continue
-            if per_page_cap > 0:
-                page_key = (
-                    doc.metadata.get("file_name"),
-                    doc.metadata.get("page_label"),
-                )
-                if per_page[page_key] >= per_page_cap:
-                    continue
-                per_page[page_key] += 1
-            kept.append(doc)
-            if len(kept) == limit:
-                break
-        return kept
+        relevant = [
+            doc for doc, distance in scored if distance <= self.config.max_distance
+        ]
+        return cap_per_page(relevant, limit, per_page_cap)
 
     def _get_hybrid(self) -> HybridRetriever:
         """Build the hybrid retriever once per index change."""

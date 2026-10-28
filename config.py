@@ -210,10 +210,10 @@ class RAGConfig(BaseModel):
         ge=0,
         description=(
             "Largest number of chunks from one page that may enter the "
-            "context. Zero keeps the plain distance ranking. One is the "
-            "default because dense retrieval filled 81% of top-six lists "
-            "with a repeated page; capping it to one raised recall@10 from "
-            "0.865 to 0.923 with no question getting worse."
+            "context. Zero keeps the plain ranking. One is the default: "
+            "dense retrieval had a repeated page in 81% of top-six lists, "
+            "and capping it raised dense recall@10 from 0.865 to 0.923 "
+            "with no question getting worse. Applies to both paths."
         ),
     )
     max_pages: int = Field(

@@ -72,30 +72,32 @@ of 2026-10-27.
 | Metric | Dense | Hybrid + rerank | Change |
 |---|---|---|---|
 | recall@4 | 0.808 | **0.865** | +0.058 |
-| recall@10 | **0.923** | 0.885 | -0.038 |
-| MRR | 0.609 | **0.744** | +0.135 |
-| p50 latency | 13 ms | 946 ms | +933 ms |
-| p95 latency | 24 ms | 1364 ms | +1340 ms |
+| recall@10 | **0.923** | 0.904 | -0.019 |
+| MRR | 0.609 | **0.751** | +0.143 |
+| p50 latency | 13 ms | 935 ms | +922 ms |
+| p95 latency | 24 ms | 1159 ms | +1135 ms |
 | faithfulness | not run | **0.95** | — |
 | abstention accuracy | not run | **0.80** (8 of 10) | — |
 | false abstention rate | not run | 0.058 (3 of 52) | — |
 
-The dense column now uses the default one-chunk-per-page cap. Hybrid does not:
-its reranker reorders a fused candidate pool, and the cap is applied to the
-dense ranking only. That is why dense finds more gold pages by rank 10 while
-hybrid still ranks the right page first more often. Answer quality at the cap
-is not judged yet, so this is a retrieval result, not an answer-quality one.
+Both paths now keep at most one chunk per page. Dense still finds more gold
+pages by rank 10, while hybrid ranks the right page first more often: MRR 0.751
+against 0.609. The judged run behind the faithfulness and abstention rows
+predates the page cap, so those two rows describe the uncapped hybrid ranking.
+The cap changed one rank-10 hit and no rank-4 hits, but the answers under the
+cap have not been judged.
 
 Retrieval is scored at k=10 for both paths, which the app does not do: it
 answers from six chunks. That is why recall@10 now differs from recall@4 and
 why the latency rows are about 60 ms higher than an answering query costs.
 
 Faithfulness and abstention come from `evals/results/full.json`, rerun on
-2026-10-28 with `--hybrid --reuse-index --full` at the current six-chunk
-default. The judge scores each claim against the retrieved context: 0.952 over
-the 49 answers that made a claim. Abstention accuracy is 8 of 10. Three
-answers gave one half of a two-part question and refused the other; they are
-counted as partial answers rather than refusals.
+2026-10-28 with `--hybrid --reuse-index --full`, before the page cap existed.
+Reproduce that ranking with `RAG_MAX_PER_PAGE=0`; without it the run uses the
+current default. The judge scores each claim against the retrieved context:
+0.952 over the 49 answers that made a claim. Abstention accuracy is 8 of 10.
+Three answers gave one half of a two-part question and refused the other; they
+are counted as partial answers rather than refusals.
 
 The same judged run at four chunks, a day earlier, scored 0.907 and refused 7
 of the 52 answerable questions. Two more chunks raised the supported fraction
@@ -123,10 +125,11 @@ sweep below is dense-only, same index and questions, retrieval at k=10.
 | 3 | 0.788 | 0.865 | 0.592 | 81% | 0.700 |
 
 At one chunk per page, one question gained at rank 4 and three gained at rank
-10; none lost. A cap of two barely changes anything because most duplicate
-pages contribute exactly two chunks. One is now the default. Page-level recall
-rewards page diversity by construction, so a judged run at the cap is still
-what would prove the answers themselves improved.
+10; none lost. Hybrid benefits less because its reranker already spread the
+list: recall@10 rose 0.885 to 0.904, MRR 0.744 to 0.751, and the share of top-six
+lists with a repeat fell from 53% to 0%. One is now the default on both paths.
+Page-level recall rewards page diversity by construction, so a judged run at the
+cap is still what would prove the answers themselves improved.
 
 
 ## Tuning

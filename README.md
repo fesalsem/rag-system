@@ -52,9 +52,9 @@ a cross-family LLM judge for claim-level faithfulness. Run
 numbers in [`evals/README.md`](evals/README.md).
 
 Hybrid retrieval lifts recall@4 from 0.808 to 0.865 and MRR from 0.609 to
-0.744 on the same index, though dense now finds more gold pages by rank 10
-(0.923 against 0.885). Hybrid costs about one second per query on CPU, so it
-sits behind `RAG_HYBRID_ENABLED=1`.
+0.751 on the same index, though dense finds more gold pages by rank 10 (0.923
+against 0.904). Hybrid costs about one second per query on CPU, so it sits
+behind `RAG_HYBRID_ENABLED=1`.
 
 On the judged run, a cross-family LLM judge scored 0.95 of answer claims as
 supported by the retrieved pages, and the system refused on 8 of 10 questions
@@ -159,7 +159,7 @@ Set them in `.env` for local and Docker runs, or in Streamlit secrets on Cloud.
 | `RAG_CHUNK_OVERLAP` | `32` | Chunk overlap, in tokens |
 | `RAG_RETRIEVER_K` | `6` | Chunks retrieved per query |
 | `RAG_MAX_DISTANCE` | `1.4` | Largest FAISS squared-L2 distance accepted (normalised embeddings, so 1.4 is roughly cosine 0.3). Chunks beyond it are discarded, and if none pass the app answers from a whole-document overview instead |
-| `RAG_MAX_PER_PAGE` | `1` | Most chunks one page may contribute. `0` restores the plain distance ranking. The evaluation found dense retrieval repeated pages in 81% of top-six lists; capping at one raised recall@10 from 0.865 to 0.923 |
+| `RAG_MAX_PER_PAGE` | `1` | Most chunks one page may contribute, on both retrieval paths. `0` restores the plain ranking. Dense retrieval had a repeated page in 81% of top-six lists; capping at one raised dense recall@10 from 0.865 to 0.923 and hybrid from 0.885 to 0.904 |
 | `RAG_MEMORY_TURNS` | `6` | Conversation turns kept per session |
 | `RAG_MAX_PAGES` | `300` | Per-PDF page cap |
 | `RAG_MAX_UPLOAD_MB` | `50` | Per-file upload size cap, in MB |

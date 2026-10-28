@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import logging
 import threading
+from collections import Counter
 from typing import Any, Callable, List, Optional, Protocol, Sequence
 
 from langchain_core.documents import Document
@@ -16,6 +17,33 @@ from langchain_core.documents import Document
 from config import RAGConfig
 
 logger = logging.getLogger(__name__)
+
+# How many times the answering budget to rank when a per-page cap is active.
+# With a cap of one and a budget of six, every page can supply at most one of
+# the six chunks, so the ranking has to be read further down to fill it.
+PAGE_CAP_OVERFETCH = 4
+
+
+def cap_per_page(
+    documents: Sequence[Document], limit: int, cap: int
+) -> List[Document]:
+    """Keep at most ``cap`` chunks per page, in order, up to ``limit``."""
+    if cap <= 0:
+        return list(documents)[:limit]
+    kept: List[Document] = []
+    per_page: Counter = Counter()
+    for document in documents:
+        page_key = (
+            document.metadata.get("file_name"),
+            document.metadata.get("page_label"),
+        )
+        if per_page[page_key] >= cap:
+            continue
+        per_page[page_key] += 1
+        kept.append(document)
+        if len(kept) == limit:
+            break
+    return kept
 
 _MODEL_CACHE: dict[str, Any] = {}
 _MODEL_LOCK = threading.Lock()
@@ -112,11 +140,20 @@ class HybridRetriever:
 
         The evaluation asks for more passages than an answer needs, so that
         recall@10 measures the ranking rather than repeating recall@4.
+
+        ``max_chunks_per_page`` limits how many passages one page may
+        contribute. The reranker is asked for more than the budget when the
+        cap is active, so the cap cannot silently shrink ``k``. It already
+        scores the whole fused candidate pool, so the wider request costs
+        nothing.
         """
-        candidates = self._ensemble.invoke(query)
-        return self._reranker.rerank(
+        limit = k or self.config.retriever_k
+        cap = self.config.max_chunks_per_page
+        top_k = limit if cap <= 0 else limit * PAGE_CAP_OVERFETCH
+        ranked = self._reranker.rerank(
             query,
-            candidates,
-            top_k=k or self.config.retriever_k,
+            self._ensemble.invoke(query),
+            top_k=top_k,
             min_score=self.config.hybrid.rerank_min_score,
         )
+        return cap_per_page(ranked, limit, cap)
