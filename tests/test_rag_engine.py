@@ -352,6 +352,80 @@ class TestRelevanceThreshold:
         assert result["answer"] == "Overview answer"
 
 
+class TestPageCap:
+    """The per-page cap trades depth on one page for breadth across pages."""
+
+    def test_cap_replaces_repeats_with_chunks_from_other_pages(self, cfg):
+        cfg.max_chunks_per_page = 2
+        first = [make_doc("a.pdf", "Page 1", f"page 1 chunk {i}") for i in range(3)]
+        second = make_doc("a.pdf", "Page 2", "page 2 chunk")
+        store = FakeVectorStore(
+            scored=[
+                (first[0], 0.1),
+                (first[1], 0.2),
+                (first[2], 0.3),
+                (second, 0.4),
+            ],
+            ntotal=4,
+        )
+        engine = make_engine(cfg, store=store)
+
+        kept = engine.retrieve("what happened?")
+
+        assert [doc.page_content for doc in kept] == [
+            "page 1 chunk 0",
+            "page 1 chunk 1",
+            "page 2 chunk",
+        ]
+
+    def test_cap_counts_pages_per_file(self, cfg):
+        # "Page 3" in two different PDFs is two different pages, so the cap
+        # must not stop the second document from contributing.
+        cfg.max_chunks_per_page = 1
+        a = make_doc("a.pdf", "Page 3", "from a")
+        b = make_doc("b.pdf", "Page 3", "from b")
+        store = FakeVectorStore(scored=[(a, 0.1), (b, 0.2)], ntotal=2)
+        engine = make_engine(cfg, store=store)
+
+        assert [doc.page_content for doc in engine.retrieve("q")] == [
+            "from a",
+            "from b",
+        ]
+
+    def test_cap_still_applies_the_distance_ceiling(self, cfg):
+        cfg.max_chunks_per_page = 1
+        near = make_doc("a.pdf", "Page 1", "relevant")
+        far = make_doc("a.pdf", "Page 2", "unrelated")
+        store = FakeVectorStore(scored=[(near, 0.2), (far, 9.0)], ntotal=2)
+        engine = make_engine(cfg, store=store)
+
+        assert [doc.page_content for doc in engine.retrieve("q")] == ["relevant"]
+
+    def test_cap_off_keeps_the_plain_ranking(self, cfg):
+        cfg.max_chunks_per_page = 0
+        docs = [make_doc("a.pdf", "Page 1", f"chunk {i}") for i in range(4)]
+        store = FakeVectorStore(
+            scored=[(doc, 0.1 * (i + 1)) for i, doc in enumerate(docs)], ntotal=4
+        )
+        engine = make_engine(cfg, store=store)
+
+        assert len(engine.retrieve("q")) == 4
+
+    def test_cap_fetches_more_candidates_than_the_budget(self, cfg):
+        cfg.max_chunks_per_page = 2
+        store = FakeVectorStore(scored=[], ntotal=0)
+        engine = make_engine(cfg, store=store)
+        engine._vector_store.similarity_search_with_score = (
+            lambda query, k=None: store.queries.append(k) or []
+        )
+
+        engine.retrieve("q")
+
+        # Six wanted, cap of two: one page can supply at most a third of the
+        # budget, so the store must be asked for more than six.
+        assert store.queries[0] > 6
+
+
 class TestGroundedAnswerRegression:
     GROUNDED = (
         "The FY2023 audit could not find information to support the reported "

@@ -205,6 +205,16 @@ class RAGConfig(BaseModel):
             "passage' and answered from a whole-document overview instead."
         ),
     )
+    max_chunks_per_page: int = Field(
+        default_factory=lambda: _env_int("RAG_MAX_PER_PAGE", 0),
+        ge=0,
+        description=(
+            "Largest number of chunks from one page that may enter the "
+            "context. Zero keeps the plain distance ranking. Dense retrieval "
+            "fills most top-six lists with two or more chunks from the same "
+            "page, so a cap trades some depth for breadth."
+        ),
+    )
     max_pages: int = Field(
         default_factory=lambda: _env_int("RAG_MAX_PAGES", 300),
         gt=0,

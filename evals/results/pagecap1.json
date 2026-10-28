@@ -1,0 +1,1392 @@
+{
+  "generated_at": "2026-10-28T07:02:30.658769+00:00",
+  "git_commit": "ce126d1",
+  "hybrid": false,
+  "corpus": {
+    "attention": "attention-is-all-you-need.pdf",
+    "rag-paper": "rag-knowledge-intensive-nlp.pdf",
+    "berkshire-2023": "berkshire-2023-ar.pdf"
+  },
+  "summary": {
+    "recall@4": 0.8077,
+    "recall@10": 0.9231,
+    "mrr": 0.6085,
+    "n": 52,
+    "p50_ms": 8.15,
+    "p95_ms": 9.12,
+    "unanswerable": 10
+  },
+  "questions": [
+    {
+      "id": "fact-001",
+      "type": "fact",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        3,
+        2,
+        10,
+        9,
+        13,
+        1,
+        14,
+        8,
+        17
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 18.88,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-002",
+      "type": "fact",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        3,
+        6,
+        18,
+        5,
+        2,
+        8,
+        7,
+        13
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.71,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-003",
+      "type": "fact",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        5,
+        6,
+        3,
+        18,
+        9
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 9.12,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-004",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        9,
+        7,
+        18
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 7.91,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-005",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        7,
+        8,
+        130,
+        18
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 9.24,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-006",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        9,
+        1,
+        10,
+        11,
+        8,
+        18,
+        7
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 9.12,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-007",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        1,
+        9,
+        10,
+        11,
+        7,
+        8,
+        14,
+        18
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.79,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-008",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        2,
+        7,
+        17,
+        1,
+        54,
+        10
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 9.08,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-009",
+      "type": "fact",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        6,
+        3,
+        5,
+        4,
+        9,
+        11,
+        1,
+        4,
+        3
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.02,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-010",
+      "type": "fact",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        4,
+        5,
+        9
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.28,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-011",
+      "type": "fact",
+      "gold_pages": [
+        4
+      ],
+      "retrieved_pages": [
+        13,
+        15,
+        3,
+        5,
+        4,
+        14,
+        1,
+        2,
+        6,
+        11
+      ],
+      "reciprocal_rank": 0.2,
+      "latency_ms": 7.87,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "fact-012",
+      "type": "fact",
+      "gold_pages": [
+        9
+      ],
+      "retrieved_pages": [
+        14,
+        5,
+        9,
+        15,
+        8,
+        13,
+        8,
+        1,
+        3,
+        15
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 8.24,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-013",
+      "type": "fact",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        6,
+        9,
+        8,
+        19,
+        7,
+        4,
+        3,
+        5,
+        2,
+        1
+      ],
+      "reciprocal_rank": 0.1,
+      "latency_ms": 7.72,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "fact-014",
+      "type": "fact",
+      "gold_pages": [
+        2
+      ],
+      "retrieved_pages": [
+        19,
+        3,
+        8,
+        9,
+        4,
+        2,
+        18,
+        7,
+        5,
+        12
+      ],
+      "reciprocal_rank": 0.1667,
+      "latency_ms": 7.85,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "fact-015",
+      "type": "fact",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        3,
+        8,
+        19,
+        2,
+        4,
+        7,
+        17,
+        5,
+        6,
+        18
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.06,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-016",
+      "type": "fact",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        3,
+        8,
+        4,
+        5,
+        7,
+        6,
+        10,
+        2,
+        17,
+        19
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.03,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-017",
+      "type": "fact",
+      "gold_pages": [
+        4
+      ],
+      "retrieved_pages": [
+        17,
+        4,
+        3,
+        5,
+        18,
+        8,
+        9,
+        2,
+        6,
+        19
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 7.97,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-018",
+      "type": "fact",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        4,
+        13,
+        17,
+        2,
+        19,
+        6,
+        18,
+        8,
+        7
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.13,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-019",
+      "type": "fact",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        5,
+        6,
+        8,
+        4,
+        19,
+        7,
+        3,
+        18,
+        17,
+        2
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.2,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-020",
+      "type": "fact",
+      "gold_pages": [
+        7
+      ],
+      "retrieved_pages": [
+        7,
+        5,
+        8,
+        6,
+        18,
+        10,
+        19,
+        3,
+        4,
+        17
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.04,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-021",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        7,
+        8,
+        17,
+        6,
+        5,
+        10,
+        19,
+        9,
+        19,
+        8
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.16,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-022",
+      "type": "fact",
+      "gold_pages": [
+        17
+      ],
+      "retrieved_pages": [
+        17,
+        4,
+        8,
+        2,
+        10,
+        7,
+        8
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 7.86,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-023",
+      "type": "fact",
+      "gold_pages": [
+        25
+      ],
+      "retrieved_pages": [
+        8,
+        1,
+        35,
+        20,
+        6,
+        12,
+        144,
+        82,
+        9,
+        97
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.03,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "fact-024",
+      "type": "fact",
+      "gold_pages": [
+        25
+      ],
+      "retrieved_pages": [
+        25,
+        152,
+        20,
+        1,
+        48,
+        146,
+        97,
+        145,
+        144,
+        28
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 7.96,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-025",
+      "type": "fact",
+      "gold_pages": [
+        20
+      ],
+      "retrieved_pages": [
+        20,
+        6,
+        97,
+        146,
+        8,
+        144,
+        95,
+        98,
+        145,
+        13
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.12,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-026",
+      "type": "fact",
+      "gold_pages": [
+        27
+      ],
+      "retrieved_pages": [
+        145,
+        27,
+        107,
+        97,
+        60,
+        8,
+        152,
+        146,
+        9,
+        46
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 7.87,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-027",
+      "type": "fact",
+      "gold_pages": [
+        27
+      ],
+      "retrieved_pages": [
+        16,
+        62,
+        17,
+        51,
+        28,
+        63,
+        25,
+        20,
+        29,
+        136
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.86,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "fact-028",
+      "type": "fact",
+      "gold_pages": [
+        53
+      ],
+      "retrieved_pages": [
+        53,
+        30,
+        67,
+        14,
+        31,
+        15,
+        55,
+        136,
+        54,
+        149
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.33,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-029",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        6,
+        1,
+        144,
+        19,
+        97,
+        13,
+        71,
+        7,
+        145
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.15,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-030",
+      "type": "fact",
+      "gold_pages": [
+        96
+      ],
+      "retrieved_pages": [
+        6,
+        1,
+        13,
+        144,
+        97,
+        145,
+        19,
+        71,
+        8,
+        106
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.86,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "table-001",
+      "type": "table",
+      "gold_pages": [
+        94
+      ],
+      "retrieved_pages": [
+        1,
+        82,
+        97,
+        145,
+        144,
+        20,
+        98,
+        71,
+        8,
+        94
+      ],
+      "reciprocal_rank": 0.1,
+      "latency_ms": 8.64,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "table-002",
+      "type": "table",
+      "gold_pages": [
+        9
+      ],
+      "retrieved_pages": [
+        9,
+        8,
+        14,
+        5,
+        10,
+        3,
+        7,
+        18,
+        2,
+        3
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.07,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-003",
+      "type": "table",
+      "gold_pages": [
+        10
+      ],
+      "retrieved_pages": [
+        10,
+        3,
+        9,
+        8,
+        5,
+        11
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.48,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-004",
+      "type": "table",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        4,
+        6,
+        8,
+        3,
+        5,
+        17,
+        7,
+        18,
+        16,
+        19
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 7.96,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-005",
+      "type": "table",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        8,
+        6,
+        3,
+        8,
+        4,
+        5,
+        9,
+        7,
+        17,
+        19
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.26,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-006",
+      "type": "table",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        6,
+        8,
+        7,
+        17,
+        3,
+        5,
+        4,
+        19,
+        2,
+        13
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.4,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-007",
+      "type": "table",
+      "gold_pages": [
+        13
+      ],
+      "retrieved_pages": [
+        75,
+        112,
+        78,
+        6,
+        74,
+        77,
+        73,
+        13,
+        1,
+        72
+      ],
+      "reciprocal_rank": 0.125,
+      "latency_ms": 8.05,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "table-008",
+      "type": "table",
+      "gold_pages": [
+        96
+      ],
+      "retrieved_pages": [
+        6,
+        13,
+        1,
+        71,
+        8,
+        144,
+        19,
+        145,
+        97,
+        12
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.76,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "table-009",
+      "type": "table",
+      "gold_pages": [
+        98
+      ],
+      "retrieved_pages": [
+        145,
+        115,
+        98,
+        66,
+        128,
+        139,
+        6,
+        113,
+        112,
+        127
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 7.93,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-010",
+      "type": "table",
+      "gold_pages": [
+        20
+      ],
+      "retrieved_pages": [
+        13,
+        16,
+        30,
+        20,
+        17,
+        1,
+        98,
+        125,
+        51,
+        9
+      ],
+      "reciprocal_rank": 0.25,
+      "latency_ms": 7.81,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-001",
+      "type": "multihop",
+      "gold_pages": [
+        6,
+        3
+      ],
+      "retrieved_pages": [
+        2,
+        5,
+        3,
+        11,
+        6,
+        9,
+        4,
+        3,
+        10,
+        1
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 8.33,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-002",
+      "type": "multihop",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        9,
+        1,
+        10,
+        11,
+        8,
+        14,
+        17,
+        18,
+        7
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.19,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-003",
+      "type": "multihop",
+      "gold_pages": [
+        3,
+        10
+      ],
+      "retrieved_pages": [
+        3,
+        5,
+        2,
+        10,
+        6,
+        1,
+        7,
+        8,
+        11,
+        12
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.73,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-004",
+      "type": "multihop",
+      "gold_pages": [
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        8,
+        3,
+        6,
+        7,
+        9,
+        4,
+        5,
+        8,
+        19,
+        17
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.85,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-005",
+      "type": "multihop",
+      "gold_pages": [
+        4,
+        17
+      ],
+      "retrieved_pages": [
+        5,
+        4,
+        8,
+        3,
+        17,
+        19,
+        2,
+        6,
+        9,
+        7
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.48,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-006",
+      "type": "multihop",
+      "gold_pages": [
+        8,
+        19
+      ],
+      "retrieved_pages": [
+        8,
+        7,
+        5,
+        6,
+        19,
+        10,
+        4,
+        9,
+        3,
+        17
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.29,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-007",
+      "type": "multihop",
+      "gold_pages": [
+        94,
+        95
+      ],
+      "retrieved_pages": [
+        1,
+        97,
+        144,
+        145,
+        95,
+        82,
+        71,
+        8,
+        12,
+        106
+      ],
+      "reciprocal_rank": 0.2,
+      "latency_ms": 8.4,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-008",
+      "type": "multihop",
+      "gold_pages": [
+        8,
+        94
+      ],
+      "retrieved_pages": [
+        8,
+        144,
+        6,
+        71,
+        1,
+        95,
+        13,
+        97,
+        19,
+        145
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.28,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-009",
+      "type": "multihop",
+      "gold_pages": [
+        53,
+        13
+      ],
+      "retrieved_pages": [
+        67,
+        30,
+        53,
+        15,
+        14,
+        68,
+        149,
+        31,
+        13,
+        137
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 8.3,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-010",
+      "type": "multihop",
+      "gold_pages": [
+        25,
+        13
+      ],
+      "retrieved_pages": [
+        6,
+        13,
+        1,
+        144,
+        8,
+        71,
+        145,
+        97,
+        19,
+        106
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 8.91,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "unans-001",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        15,
+        19,
+        8,
+        7,
+        2,
+        1,
+        9,
+        4,
+        6,
+        18
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.41,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-002",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        8,
+        1,
+        9,
+        10,
+        14,
+        2,
+        11,
+        7,
+        8,
+        4
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.91,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-003",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        8,
+        2,
+        7,
+        11,
+        9,
+        1,
+        10,
+        17,
+        12,
+        3
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.77,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-004",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        10,
+        7,
+        5,
+        8,
+        6,
+        3,
+        19,
+        17,
+        4,
+        2
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.82,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-005",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        7,
+        17,
+        8,
+        18,
+        10
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.82,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "fact-041",
+      "type": "fact",
+      "gold_pages": [
+        57
+      ],
+      "retrieved_pages": [
+        57,
+        19,
+        131,
+        144,
+        96,
+        95,
+        97,
+        82,
+        1,
+        145
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 8.01,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "unans-007",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        8,
+        97,
+        9,
+        82,
+        13,
+        6,
+        57,
+        144,
+        12
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.79,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-008",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        57,
+        131,
+        1,
+        82,
+        12,
+        97,
+        19,
+        71,
+        96,
+        20
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.93,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "fact-042",
+      "type": "fact",
+      "gold_pages": [
+        30
+      ],
+      "retrieved_pages": [
+        53,
+        67,
+        30,
+        149,
+        14,
+        15,
+        31,
+        52,
+        137,
+        136
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 7.75,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "unans-010",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        6,
+        13,
+        1,
+        19,
+        71,
+        144,
+        97,
+        145,
+        106,
+        7
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 7.95,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-011",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        3,
+        144,
+        97,
+        21,
+        5,
+        20,
+        8,
+        82,
+        106
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.38,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-012",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        67,
+        53,
+        30,
+        68,
+        31,
+        149,
+        15,
+        14,
+        137,
+        52
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 8.16,
+      "hit@4": false,
+      "hit@10": false
+    }
+  ]
+}

@@ -23,7 +23,7 @@ import re
 import shutil
 import threading
 import uuid
-from collections import deque
+from collections import Counter, deque
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -38,6 +38,11 @@ from retrieval import HybridRetriever
 from ui_helpers import source_label, source_labels
 
 logger = logging.getLogger(__name__)
+
+# How many times the answering budget to fetch when a per-page cap is active.
+# With a cap of two and a budget of six, every page can supply at most two of
+# the six chunks, so the ranking has to be read further down to fill it.
+_PAGE_CAP_OVERFETCH = 4
 
 
 # ---------------------------------------------------------------------------
@@ -546,22 +551,46 @@ class RAGEngine:
         entirely, which fed the model the four nearest chunks whether or not
         any of them were related — and the only guard was the model's own
         willingness to say it could not find the answer.
+
+        ``max_chunks_per_page`` limits how many chunks one page may contribute.
+        Without it, dense retrieval returns near-duplicate chunks from the
+        same page and spends most of the context budget on one part of the
+        document. The extra candidates needed to fill the budget after a cap
+        are fetched up front, so the cap does not silently shrink ``k``.
         """
         if self._vector_store is None:
             raise RuntimeError(
                 "The RAG chain is not ready. "
                 "Load or create an index before querying."
             )
+        limit = k or self.config.retriever_k
+        per_page_cap = self.config.max_chunks_per_page
+        fetch = limit if per_page_cap <= 0 else limit * _PAGE_CAP_OVERFETCH
         try:
             scored = self._vector_store.similarity_search_with_score(
-                search_query, k=k or self.config.retriever_k
+                search_query, k=fetch
             )
         except Exception as exc:
             logger.error("Retrieval failed: %s", exc, exc_info=True)
             raise
-        return [
-            doc for doc, distance in scored if distance <= self.config.max_distance
-        ]
+
+        kept: List[Document] = []
+        per_page: Counter = Counter()
+        for doc, distance in scored:
+            if distance > self.config.max_distance:
+                continue
+            if per_page_cap > 0:
+                page_key = (
+                    doc.metadata.get("file_name"),
+                    doc.metadata.get("page_label"),
+                )
+                if per_page[page_key] >= per_page_cap:
+                    continue
+                per_page[page_key] += 1
+            kept.append(doc)
+            if len(kept) == limit:
+                break
+        return kept
 
     def _get_hybrid(self) -> HybridRetriever:
         """Build the hybrid retriever once per index change."""

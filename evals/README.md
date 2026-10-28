@@ -102,6 +102,27 @@ ratio from two figures that are in the corpus; for `unans-012` the arithmetic
 checks out. The golden set treats a derived figure as not stated. That is a
 policy choice to make explicit, not a hallucination.
 
+## Page cap sweep
+
+Dense retrieval returned near-duplicate chunks from the same page: 81% of the
+52 answerable questions had a repeated page in their top six, and 94% in their
+top ten. `RAG_MAX_PER_PAGE` caps how many chunks one page may contribute. The
+sweep below is dense-only, same index and questions, retrieval at k=10.
+
+| Cap | recall@4 | recall@10 | MRR | top-6 lists with a repeat | table recall@10 |
+|---|---|---|---|---|---|
+| 0 (off) | 0.788 | 0.865 | 0.592 | 81% | 0.700 |
+| 1 | **0.808** | **0.923** | **0.609** | **6%** | **0.900** |
+| 2 | 0.788 | 0.885 | 0.594 | 81% | 0.800 |
+| 3 | 0.788 | 0.865 | 0.592 | 81% | 0.700 |
+
+At one chunk per page, one question gained at rank 4 and three gained at rank
+10; none lost. A cap of two barely changes anything because most duplicate
+pages contribute exactly two chunks. Answer quality at cap 1 has not been
+judged yet: page-level recall rewards page diversity by construction, so the
+faithfulness run is the one that decides whether the default should move.
+
+
 ## Tuning
 
 One knob at a time, same index and questions. These sweeps ran on the earlier
