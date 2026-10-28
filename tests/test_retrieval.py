@@ -79,9 +79,10 @@ def test_page_cap_widens_the_rerank_budget():
     reranker = FakeReranker()
     retriever, _, config = build_retriever(reranker)
     retriever.retrieve("question")
+    _, _, top_k, _ = reranker.calls[0]
     # Each page can supply at most one of the two wanted chunks, so the
     # reranker has to be read further down than k.
-    assert reranker.calls[0][2] == config.retriever_k * 4
+    assert top_k == config.retriever_k * 4
 
 
 def test_page_cap_keeps_one_chunk_per_page():

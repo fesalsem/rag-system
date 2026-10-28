@@ -34,7 +34,7 @@ from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import RAGConfig, settings
-from retrieval import HybridRetriever, PAGE_CAP_OVERFETCH, cap_per_page
+from retrieval import HybridRetriever, cap_per_page, fetch_size
 from ui_helpers import source_label, source_labels
 
 logger = logging.getLogger(__name__)
@@ -560,7 +560,7 @@ class RAGEngine:
             )
         limit = k or self.config.retriever_k
         per_page_cap = self.config.max_chunks_per_page
-        fetch = limit if per_page_cap <= 0 else limit * PAGE_CAP_OVERFETCH
+        fetch = fetch_size(limit, per_page_cap)
         try:
             scored = self._vector_store.similarity_search_with_score(
                 search_query, k=fetch

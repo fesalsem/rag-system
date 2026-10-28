@@ -24,6 +24,11 @@ logger = logging.getLogger(__name__)
 PAGE_CAP_OVERFETCH = 4
 
 
+def fetch_size(limit: int, cap: int) -> int:
+    """How many candidates to request so a page cap cannot shrink ``limit``."""
+    return limit if cap <= 0 else limit * PAGE_CAP_OVERFETCH
+
+
 def cap_per_page(
     documents: Sequence[Document], limit: int, cap: int
 ) -> List[Document]:
@@ -44,6 +49,7 @@ def cap_per_page(
         if len(kept) == limit:
             break
     return kept
+
 
 _MODEL_CACHE: dict[str, Any] = {}
 _MODEL_LOCK = threading.Lock()
@@ -149,7 +155,7 @@ class HybridRetriever:
         """
         limit = k or self.config.retriever_k
         cap = self.config.max_chunks_per_page
-        top_k = limit if cap <= 0 else limit * PAGE_CAP_OVERFETCH
+        top_k = fetch_size(limit, cap)
         ranked = self._reranker.rerank(
             query,
             self._ensemble.invoke(query),
