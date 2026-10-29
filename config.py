@@ -216,6 +216,16 @@ class RAGConfig(BaseModel):
             "with no question getting worse. Applies to both paths."
         ),
     )
+    page_chunks: int = Field(
+        default_factory=lambda: _env_int("RAG_PAGE_CHUNKS", 0),
+        ge=0,
+        description=(
+            "Largest number of chunks from each retrieved page that reach "
+            "the prompt. Zero sends only the retrieved chunk. Retrieval "
+            "keeps one chunk per page, so a window around that chunk is "
+            "what recovers a sentence that sits next to it."
+        ),
+    )
     max_pages: int = Field(
         default_factory=lambda: _env_int("RAG_MAX_PAGES", 300),
         gt=0,

@@ -160,6 +160,7 @@ Set them in `.env` for local and Docker runs, or in Streamlit secrets on Cloud.
 | `RAG_RETRIEVER_K` | `6` | Chunks retrieved per query |
 | `RAG_MAX_DISTANCE` | `1.4` | Largest FAISS squared-L2 distance accepted (normalised embeddings, so 1.4 is roughly cosine 0.3). Chunks beyond it are discarded, and if none pass the app answers from a whole-document overview instead |
 | `RAG_MAX_PER_PAGE` | `1` | Most chunks one page may contribute, on both retrieval paths. `0` restores the plain ranking. Dense retrieval had a repeated page in 81% of top-six lists; capping at one raised dense recall@10 from 0.865 to 0.923 and hybrid from 0.885 to 0.904 |
+| `RAG_PAGE_CHUNKS` | `0` | Chunks from each retrieved page that reach the prompt, as a window centred on the chunk that matched. `0` and `1` send only the matched chunk. Wider windows recover sentences split across a chunk boundary at the cost of a longer prompt |
 | `RAG_MEMORY_TURNS` | `6` | Conversation turns kept per session |
 | `RAG_MAX_PAGES` | `300` | Per-PDF page cap |
 | `RAG_MAX_UPLOAD_MB` | `50` | Per-file upload size cap, in MB |

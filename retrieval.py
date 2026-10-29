@@ -29,6 +29,11 @@ def fetch_size(limit: int, cap: int) -> int:
     return limit if cap <= 0 else limit * PAGE_CAP_OVERFETCH
 
 
+def page_key(document: Document) -> tuple:
+    """The file and page a chunk came from, used to group chunks."""
+    return (document.metadata.get("file_name"), document.metadata.get("page_label"))
+
+
 def cap_per_page(
     documents: Sequence[Document], limit: int, cap: int
 ) -> List[Document]:
@@ -38,13 +43,10 @@ def cap_per_page(
     kept: List[Document] = []
     per_page: Counter = Counter()
     for document in documents:
-        page_key = (
-            document.metadata.get("file_name"),
-            document.metadata.get("page_label"),
-        )
-        if per_page[page_key] >= cap:
+        key = page_key(document)
+        if per_page[key] >= cap:
             continue
-        per_page[page_key] += 1
+        per_page[key] += 1
         kept.append(document)
         if len(kept) == limit:
             break

@@ -145,6 +145,10 @@ def test_retry_does_not_wait_on_a_daily_cap():
 class RecordingEngine:
     def __init__(self):
         self.asked = []
+        self.cleared = 0
+
+    def clear_memory(self):
+        self.cleared += 1
 
     def query(self, question):
         self.asked.append(question)
@@ -178,6 +182,13 @@ def test_run_answers_writes_each_row_to_the_checkpoint(tmp_path):
     assert [row["id"] for row in rows] == ["q1", "q2"]
     written = [json.loads(line) for line in checkpoint.read_text().splitlines()]
     assert [row["id"] for row in written] == ["q1", "q2"]
+
+
+def test_run_answers_clears_memory_between_questions():
+    # Otherwise question 2 is condensed against question 1.
+    engine = RecordingEngine()
+    run_answers([golden_item("q1"), golden_item("q2")], engine, FakeJudge())
+    assert engine.cleared == 2
 
 
 def test_run_answers_skips_questions_already_in_the_checkpoint(tmp_path):

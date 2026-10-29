@@ -64,6 +64,15 @@ python -m evals.run_eval --hybrid --reuse-index --full --out evals/results/full.
 `--full` adds faithfulness and abstention. It needs `GROQ_API_KEY` and
 `DEEPSEEK_API_KEY`.
 
+The answer pass clears conversation memory before each question. The judged
+runs recorded below did not: the engine condensed question N against the answer
+to question N-1, so some answers respond to a rewritten question, and the run
+order decided what that rewrite was. A source mismatch makes it visible. The
+run of 2026-10-28 answered table-010 from pages 125, 97, 60, 98, 66 and 91,
+while that same run's own retrieval rows for table-010 list pages 25, 30, 13,
+66, 98 and 125. Judge rows from before the fix describe the system it was, not
+the system it is, and are not comparable to a new run row by row.
+
 ## Results
 
 Same index, same 62 questions, same machine, both runs after the metric fixes

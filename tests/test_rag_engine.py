@@ -427,6 +427,86 @@ class TestPageCap:
         assert store.queries[0] > 6
 
 
+class TestPageExpansion:
+    """page_chunks widens a hit to its neighbours on the same page."""
+
+    @staticmethod
+    def page_one():
+        return [
+            Document(
+                page_content=f"page 1 chunk {index}",
+                metadata={
+                    "file_name": "a.pdf",
+                    "page_label": "Page 1",
+                    "chunk_index": index,
+                },
+            )
+            for index in range(5)
+        ]
+
+    def test_off_by_default_keeps_only_the_retrieved_chunk(self, cfg):
+        docs = self.page_one()
+        store = FakeVectorStore(scored=[(docs[2], 0.1)], ntotal=5)
+        engine = make_engine(cfg, store=store)
+        engine._docs = docs
+
+        assert engine.query("what happened?")["contexts"] == ["page 1 chunk 2"]
+
+    def test_window_adds_neighbours_from_the_same_page(self, cfg):
+        cfg.page_chunks = 3
+        docs = self.page_one()
+        other = Document(
+            page_content="page 2 chunk 5",
+            metadata={"file_name": "a.pdf", "page_label": "Page 2", "chunk_index": 5},
+        )
+        docs.append(other)
+        store = FakeVectorStore(scored=[(docs[2], 0.1), (other, 0.2)], ntotal=6)
+        engine = make_engine(cfg, store=store)
+        engine._docs = docs
+
+        result = engine.query("what happened?")
+
+        # One chunk either side of the hit, then the other page's own chunk.
+        assert result["contexts"] == [
+            "page 1 chunk 1",
+            "page 1 chunk 2",
+            "page 1 chunk 3",
+            "page 2 chunk 5",
+        ]
+        # Sources still describe what retrieval picked, not what was widened.
+        assert result["sources"] == ["a.pdf — Page 1", "a.pdf — Page 2"]
+
+    def test_two_hits_on_one_page_share_one_window(self, cfg):
+        cfg.max_chunks_per_page = 0
+        cfg.page_chunks = 3
+        docs = self.page_one()
+        store = FakeVectorStore(scored=[(docs[1], 0.1), (docs[2], 0.2)], ntotal=5)
+        engine = make_engine(cfg, store=store)
+        engine._docs = docs
+
+        contexts = engine.query("what happened?")["contexts"]
+
+        # Windows for chunks 1 and 2 overlap; each chunk is still sent once.
+        assert contexts == [
+            "page 1 chunk 0",
+            "page 1 chunk 1",
+            "page 1 chunk 2",
+            "page 1 chunk 3",
+        ]
+
+    def test_window_stops_at_the_page_edge(self, cfg):
+        cfg.page_chunks = 4
+        docs = self.page_one()[:2]
+        store = FakeVectorStore(scored=[(docs[1], 0.1)], ntotal=2)
+        engine = make_engine(cfg, store=store)
+        engine._docs = docs
+
+        assert engine.query("what happened?")["contexts"] == [
+            "page 1 chunk 0",
+            "page 1 chunk 1",
+        ]
+
+
 class TestGroundedAnswerRegression:
     GROUNDED = (
         "The FY2023 audit could not find information to support the reported "

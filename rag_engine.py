@@ -34,7 +34,7 @@ from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import RAGConfig, settings
-from retrieval import HybridRetriever, cap_per_page, fetch_size
+from retrieval import HybridRetriever, cap_per_page, fetch_size, page_key
 from ui_helpers import source_label, source_labels
 
 logger = logging.getLogger(__name__)
@@ -364,6 +364,52 @@ class RAGEngine:
             return []
         return list(store.values())
 
+    def _expand_pages(self, documents: List[Document]) -> List[Document]:
+        """
+        Widen each retrieved chunk to a window of chunks from its own page.
+
+        Retrieval keeps one chunk per page, so a sentence that straddles a
+        chunk boundary loses the half that was not picked. ``page_chunks``
+        is the size of that window, centred on the chunk that matched, and
+        the pages come in retrieval order. Zero (the default) changes
+        nothing, and one is the same thing as zero because the matched
+        chunk is already present.
+        """
+        width = self.config.page_chunks
+        if width <= 1:
+            return documents
+
+        pages: Dict[tuple, List[Document]] = {}
+        for document in self._get_all_documents():
+            pages.setdefault(page_key(document), []).append(document)
+        for chunks in pages.values():
+            chunks.sort(key=lambda chunk: chunk.metadata.get("chunk_index", 0))
+
+        # Where each chunk sits within its page, so a retrieved chunk can be
+        # found without scanning the page again for every hit.
+        position_of: Dict[tuple, int] = {}
+        for key, chunks in pages.items():
+            for position, chunk in enumerate(chunks):
+                position_of[(key, chunk.metadata.get("chunk_index"))] = position
+
+        offset = (width - 1) // 2
+        expanded: List[Document] = []
+        seen: set[tuple] = set()
+        for document in documents:
+            key = page_key(document)
+            chunks = pages.get(key)
+            position = position_of.get((key, document.metadata.get("chunk_index")))
+            if position is None or chunks is None:
+                chunks, position = [document], 0
+            start = max(0, position - offset)
+            for chunk in chunks[start : start + width]:
+                chunk_key = (key, chunk.metadata.get("chunk_index"))
+                if chunk_key in seen:
+                    continue
+                seen.add(chunk_key)
+                expanded.append(chunk)
+        return expanded
+
     def _summarize_document(self, question: str, max_chunks: int = 12) -> Dict[str, Any]:
         """
         Whole-document overview: build an answer from an evenly-sampled spread
@@ -668,8 +714,9 @@ class RAGEngine:
             self._remember(question, result["answer"])
             return result
 
+        context_docs = self._expand_pages(relevant)
         prompt = _QA_TEMPLATE.format(
-            context=self._format_context(relevant),
+            context=self._format_context(context_docs),
             chat_history=self._history_text(),
             question=question,
         )
@@ -681,7 +728,7 @@ class RAGEngine:
         return {
             "answer": answer,
             "sources": sources,
-            "contexts": [doc.page_content for doc in relevant],
+            "contexts": [doc.page_content for doc in context_docs],
         }
 
     def clear_memory(self) -> None:

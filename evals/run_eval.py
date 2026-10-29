@@ -149,6 +149,11 @@ def run_answers(
     real tokens to reproduce. The checkpoint lets the next run continue where
     this one stopped. Delete it when retrieval settings change, or the report
     mixes answers from two different configurations.
+
+    Memory is cleared before each question so the engine cannot condense a
+    question against the previous answer and answer something the golden set
+    never asked. This also keeps runs order-independent, so two configurations
+    are comparable question by question.
     """
     done = _read_checkpoint(checkpoint)
     rows: list[dict[str, Any]] = []
@@ -156,6 +161,7 @@ def run_answers(
         if item["id"] in done:
             rows.append(done[item["id"]])
             continue
+        engine.clear_memory()
         result = with_retry(lambda: engine.query(item["question"]))
         answer = result["answer"]
         abstained = is_abstention(answer)
