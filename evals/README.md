@@ -141,6 +141,45 @@ Page-level recall rewards page diversity by construction, so a judged run at the
 cap is still what would prove the answers themselves improved.
 
 
+## Page windows, paired run
+
+`RAG_PAGE_CHUNKS` widens each retrieved chunk to a window of chunks from the
+same page. This pair isolates the knob: same index, same 30-question subset,
+hybrid and capped at one chunk per page on both sides, with only the window
+changed. The subset is 16 fact, 5 table, 5 multi-hop and 4 unanswerable
+questions, cut from the 62 to fit the free tier's daily token budget. Both runs
+clear memory between questions.
+
+| Metric | Window 0 | Window 3 |
+|---|---|---|
+| recall@4 | 0.808 | 0.808 |
+| recall@10 | 0.846 | 0.846 |
+| MRR | 0.722 | 0.722 |
+| false abstention | 0.154 (4 of 26) | **0.038 (1 of 26)** |
+| abstention accuracy | 0.75 (3 of 4) | 0.75 (3 of 4) |
+| claim-level support | 0.900 (36 of 40) | **0.920 (46 of 50)** |
+| judged answers | 22 | 25 |
+
+Retrieval rows are identical by construction: the window changes what reaches
+the prompt, not what is retrieved. Three of the four false abstentions
+(`fact-001`, `fact-003`, `fact-028`) were answered at window 3, and all three
+were judged fully supported. The fourth, `table-008`, refused on both sides.
+
+The two runs abstained on different questions, so the totals above cover
+different answer sets. Restricted to the 22 questions judged on both sides,
+claim support is 36 of 40 against 42 of 46. With 26 answerable questions, one
+refusal is 3.8 points, so read the abstention gap as a direction.
+
+Two reading caveats for this pair. The control run returned three empty
+answers (`table-001`, `table-005`, `multihop-005`) and the window run returned
+one (`multihop-005`). An answer with no claims scores 1.0 under the judge's
+default, so per-answer means are inflated on both sides and are not quoted
+here; claim totals ignore empty answers. Latency is not quoted either: the
+window adds prompt tokens, and the two medians (978 ms and 908 ms) differ in
+the wrong direction, which makes the difference noise at this sample. The
+`unans-012` miss is present in both runs and is the derived-answer policy
+question noted under Limitations.
+
 ## Tuning
 
 One knob at a time, same index and questions. These sweeps ran on the earlier

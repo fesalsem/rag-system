@@ -1,0 +1,1422 @@
+{
+  "generated_at": "2026-10-29T12:16:56.167303+00:00",
+  "git_commit": "513bee5",
+  "hybrid": true,
+  "corpus": {
+    "attention": "attention-is-all-you-need.pdf",
+    "rag-paper": "rag-knowledge-intensive-nlp.pdf",
+    "berkshire-2023": "berkshire-2023-ar.pdf"
+  },
+  "summary": {
+    "recall@4": 0.8077,
+    "recall@10": 0.8462,
+    "mrr": 0.7224,
+    "n": 26,
+    "p50_ms": 908.49,
+    "p95_ms": 1324.47,
+    "unanswerable": 4
+  },
+  "questions": [
+    {
+      "id": "fact-001",
+      "type": "fact",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        5
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 2571.49,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-003",
+      "type": "fact",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        5
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 1225.09,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "fact-005",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 1087.83,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-007",
+      "type": "fact",
+      "gold_pages": [
+        8
+      ],
+      "retrieved_pages": [
+        8,
+        1,
+        10
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 761.73,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-009",
+      "type": "fact",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        6
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 948.22,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-011",
+      "type": "fact",
+      "gold_pages": [
+        4
+      ],
+      "retrieved_pages": [
+        13,
+        15,
+        3,
+        5,
+        4,
+        14,
+        1,
+        2,
+        6,
+        11
+      ],
+      "reciprocal_rank": 0.2,
+      "latency_ms": 816.93,
+      "hit@4": false,
+      "hit@10": true
+    },
+    {
+      "id": "fact-013",
+      "type": "fact",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        9,
+        6
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 1053.11,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-015",
+      "type": "fact",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        17,
+        3,
+        2,
+        8,
+        1,
+        6
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 867.39,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-018",
+      "type": "fact",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        4,
+        19,
+        8
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 974.1,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-020",
+      "type": "fact",
+      "gold_pages": [
+        7
+      ],
+      "retrieved_pages": [
+        7
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 832.11,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-022",
+      "type": "fact",
+      "gold_pages": [
+        17
+      ],
+      "retrieved_pages": [
+        17
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 875.25,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-024",
+      "type": "fact",
+      "gold_pages": [
+        25
+      ],
+      "retrieved_pages": [
+        25,
+        28,
+        152,
+        48,
+        149,
+        27,
+        146,
+        1
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 908.49,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-026",
+      "type": "fact",
+      "gold_pages": [
+        27
+      ],
+      "retrieved_pages": [
+        107,
+        145,
+        60,
+        27,
+        46,
+        108
+      ],
+      "reciprocal_rank": 0.25,
+      "latency_ms": 827.43,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-028",
+      "type": "fact",
+      "gold_pages": [
+        53
+      ],
+      "retrieved_pages": [
+        53,
+        30,
+        14
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 892.45,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "fact-030",
+      "type": "fact",
+      "gold_pages": [
+        96
+      ],
+      "retrieved_pages": [
+        6,
+        13,
+        97,
+        145,
+        71,
+        106,
+        8,
+        11,
+        144,
+        90
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 1022.87,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "table-001",
+      "type": "table",
+      "gold_pages": [
+        94
+      ],
+      "retrieved_pages": [
+        94,
+        144,
+        98,
+        82,
+        145,
+        71,
+        97,
+        91,
+        106,
+        125
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 1044.75,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-003",
+      "type": "table",
+      "gold_pages": [
+        10
+      ],
+      "retrieved_pages": [
+        10
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 863.9,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-005",
+      "type": "table",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        8
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 867.8,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "table-008",
+      "type": "table",
+      "gold_pages": [
+        96
+      ],
+      "retrieved_pages": [
+        82,
+        8,
+        13,
+        71,
+        6,
+        145,
+        97,
+        73,
+        79,
+        139
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 1025.96,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "table-010",
+      "type": "table",
+      "gold_pages": [
+        20
+      ],
+      "retrieved_pages": [
+        25,
+        30,
+        13,
+        66,
+        98,
+        125,
+        63
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 891.33,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "multihop-001",
+      "type": "multihop",
+      "gold_pages": [
+        6,
+        3
+      ],
+      "retrieved_pages": [
+        2,
+        5,
+        3,
+        11,
+        6,
+        9,
+        4,
+        3,
+        10,
+        1
+      ],
+      "reciprocal_rank": 0.3333,
+      "latency_ms": 971.27,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-003",
+      "type": "multihop",
+      "gold_pages": [
+        3,
+        10
+      ],
+      "retrieved_pages": [
+        2,
+        10
+      ],
+      "reciprocal_rank": 0.5,
+      "latency_ms": 995.16,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-005",
+      "type": "multihop",
+      "gold_pages": [
+        4,
+        17
+      ],
+      "retrieved_pages": [
+        17,
+        18,
+        9,
+        5,
+        8,
+        4,
+        7,
+        3
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 845.36,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-008",
+      "type": "multihop",
+      "gold_pages": [
+        8,
+        94
+      ],
+      "retrieved_pages": [
+        8,
+        82,
+        97,
+        144,
+        107,
+        145,
+        6,
+        71,
+        12,
+        10
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 1324.18,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "multihop-010",
+      "type": "multihop",
+      "gold_pages": [
+        25,
+        13
+      ],
+      "retrieved_pages": [
+        25,
+        35,
+        13,
+        6,
+        71,
+        145,
+        107,
+        97,
+        8,
+        59
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 1324.47,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "unans-001",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        15,
+        19,
+        8,
+        7,
+        2,
+        1,
+        9,
+        4,
+        6,
+        18
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 943.16,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-004",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        4,
+        7,
+        8,
+        10
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 844.87,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "unans-008",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        82,
+        108,
+        57,
+        97,
+        131,
+        71,
+        133,
+        13,
+        8,
+        107
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 878.03,
+      "hit@4": false,
+      "hit@10": false
+    },
+    {
+      "id": "fact-042",
+      "type": "fact",
+      "gold_pages": [
+        30
+      ],
+      "retrieved_pages": [
+        30,
+        53,
+        149
+      ],
+      "reciprocal_rank": 1.0,
+      "latency_ms": 840.52,
+      "hit@4": true,
+      "hit@10": true
+    },
+    {
+      "id": "unans-012",
+      "type": "unanswerable",
+      "gold_pages": [],
+      "retrieved_pages": [
+        67,
+        68,
+        53,
+        30,
+        59,
+        13,
+        82,
+        31
+      ],
+      "reciprocal_rank": 0.0,
+      "latency_ms": 992.03,
+      "hit@4": false,
+      "hit@10": false
+    }
+  ],
+  "generation": {
+    "faithfulness": 0.91,
+    "abstention_accuracy": 0.75,
+    "false_abstention_rate": 0.0385,
+    "partial_answers": 0,
+    "judged_answers": 25
+  },
+  "answers": [
+    {
+      "id": "fact-001",
+      "type": "fact",
+      "answer": "The base Transformer uses **8 attention heads**\u3010attention-is-all-you-need.pdf \u2014 Page 5\u3011.",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 5"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The base Transformer uses 8 attention heads.",
+            "supported": true,
+            "evidence": "In this work we employ h = 8 parallel attention layers, or heads."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-003",
+      "type": "fact",
+      "answer": "The dimensionality \\(d_{\\text{model}}\\) used by all sub\u2011layers and embedding layers is **512**\u3010attention-is-all-you-need.pdf \u2014 Page 5\u3011.",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 5"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The dimensionality d_model used by all sub-layers and embedding layers is 512.",
+            "supported": true,
+            "evidence": "The dimensionality of input and output is dmodel = 512, and the inner-layer has dimensionality dff = 2048."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-005",
+      "type": "fact",
+      "answer": "The label smoothing value used during training was\u202f\u03f5\u2097\u209b\u202f=\u202f0.1\u3010attention-is-all-you-need.pdf \u2014 Page 8\u3011.",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 8"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The label smoothing value used during training was \u03f5ls = 0.1.",
+            "supported": true,
+            "evidence": "Label Smoothing During training, we employed label smoothing of value \u03f5ls = 0.1 [36]."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-007",
+      "type": "fact",
+      "answer": "The Transformer (big) model achieved a BLEU score of **41.0** on the WMT\u202f2014 English\u2011to\u2011French translation task.  \n[attention\u2011is\u2011all\u2011you\u2011need.pdf \u2014 Page\u202f8]",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 8",
+        "attention-is-all-you-need.pdf \u2014 Page 1",
+        "attention-is-all-you-need.pdf \u2014 Page 10"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The Transformer (big) model achieved a BLEU score of 41.0 on the WMT 2014 English-to-French translation task.",
+            "supported": true,
+            "evidence": "On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0"
+          },
+          {
+            "claim": "The answer is sourced from page 8 of the attention-is-all-you-need.pdf document.",
+            "supported": false,
+            "evidence": "The context does not contain page numbers or document metadata linking the passage to page 8."
+          }
+        ],
+        "supported": 1,
+        "total": 2,
+        "score": 0.5,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-009",
+      "type": "fact",
+      "answer": "The fixed positional encodings are computed using sine and cosine functions of different frequencies:\n\n\\[\n\\begin{aligned}\nPE_{\\text{pos},\\,2i} &= \\sin\\!\\left(\\frac{\\text{pos}}{10000^{\\,2i/d_{\\text{model}}}}\\right),\\\\\nPE_{\\text{pos},\\,2i+1} &= \\cos\\!\\left(\\frac{\\text{pos}}{10000^{\\,2i/d_{\\text{model}}}}\\right),\n\\end{aligned}\n\\]\n\nwhere \\(\\text{pos}\\) is the position and \\(i\\) indexes the dimension.  \n[attention-is-all-you-need.pdf \u2014 Page 6]",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 6"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The fixed positional encodings are computed using sine and cosine functions of different frequencies.",
+            "supported": true,
+            "evidence": "In this work, we use sine and cosine functions of different frequencies:"
+          },
+          {
+            "claim": "The even-dimension positional encoding is PE(pos,2i) = sin(pos/10000^(2i/dmodel)).",
+            "supported": true,
+            "evidence": "P E(pos,2i) = sin(pos/100002i/dmodel )"
+          },
+          {
+            "claim": "The odd-dimension positional encoding is PE(pos,2i+1) = cos(pos/10000^(2i/dmodel)).",
+            "supported": true,
+            "evidence": "P E(pos,2i+1) = cos(pos/100002i/dmodel )"
+          },
+          {
+            "claim": "pos is the position and i indexes the dimension.",
+            "supported": true,
+            "evidence": "where pos is the position and i is the dimension."
+          }
+        ],
+        "supported": 4,
+        "total": 4,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-011",
+      "type": "fact",
+      "answer": "The paper introduces the **Scaled Dot\u2011Product Attention** function.  \n[attention\u2011is\u2011all\u2011you\u2011need.pdf \u2014 Page\u202f4]",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 13",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 15",
+        "attention-is-all-you-need.pdf \u2014 Page 3",
+        "attention-is-all-you-need.pdf \u2014 Page 5",
+        "attention-is-all-you-need.pdf \u2014 Page 4",
+        "attention-is-all-you-need.pdf \u2014 Page 14"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The paper introduces an attention function called Scaled Dot-Product Attention.",
+            "supported": true,
+            "evidence": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2)."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-013",
+      "type": "fact",
+      "answer": "RAG combines two types of memory: a **parametric memory** (a pre\u2011trained seq2seq model) and a **non\u2011parametric memory** (a dense vector index of Wikipedia accessed with a pre\u2011trained neural retriever)\u3010rag-knowledge-intensive-nlp.pdf \u2014 Page 1\u3011.",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 1",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 9",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 6"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "RAG combines a parametric memory and a non-parametric memory.",
+            "supported": true,
+            "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever."
+          },
+          {
+            "claim": "The parametric memory in RAG is a pre-trained seq2seq model.",
+            "supported": true,
+            "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever."
+          },
+          {
+            "claim": "The non-parametric memory in RAG is a dense vector index of Wikipedia.",
+            "supported": true,
+            "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever."
+          },
+          {
+            "claim": "The non-parametric memory is accessed with a pre-trained neural retriever.",
+            "supported": true,
+            "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever."
+          }
+        ],
+        "supported": 4,
+        "total": 4,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-015",
+      "type": "fact",
+      "answer": "In RAG\u2011Sequence, the entire output sequence is conditioned on a single retrieved document.  \n[rag\u2011knowledge-intensive-nlp.pdf \u2014 Page 3]",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 17",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 3",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 2",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 8",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 1",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 6"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "In RAG-Sequence, the entire output sequence is conditioned on a single retrieved document.",
+            "supported": true,
+            "evidence": "RAG-Sequence Model The RAG-Sequence model uses the same retrieved document to generate the complete sequence."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-018",
+      "type": "fact",
+      "answer": "The Jeopardy question\u2011generation dataset is split into:\n\n- **Train:** 97,392 examples  \n- **Development (dev):** 13,714 examples  \n- **Test:** 26,849 examples  \n\n[rag\u2011knowledge-intensive\u2011nlp.pdf \u2014 Page 19]",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 5",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 4",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 19",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 8"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The Jeopardy question generation dataset has 97,392 training examples.",
+            "supported": true,
+            "evidence": "Table 7: Jeopardy Question Generation 97392 13714 26849"
+          },
+          {
+            "claim": "The Jeopardy question generation dataset has 13,714 development examples.",
+            "supported": true,
+            "evidence": "Table 7: Jeopardy Question Generation 97392 13714 26849"
+          },
+          {
+            "claim": "The Jeopardy question generation dataset has 26,849 test examples.",
+            "supported": true,
+            "evidence": "Table 7: Jeopardy Question Generation 97392 13714 26849"
+          }
+        ],
+        "supported": 3,
+        "total": 3,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-020",
+      "type": "fact",
+      "answer": "The top retrieved document is from a gold FEVER article in **71\u202f% of cases**\u3010rag-knowledge-intensive-nlp.pdf \u2014 Page 7\u3011.",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 7"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "RAG's top retrieved document comes from a gold FEVER article in 71% of cases.",
+            "supported": true,
+            "evidence": "We find that the top retrieved document is from a gold article in 71% of cases"
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-022",
+      "type": "fact",
+      "answer": "The RAG models were trained on **8 NVIDIA\u202fV100 GPUs, each with 32\u202fGB of memory** (using mixed\u2011precision floating\u2011point arithmetic). This setup is described in the training details on page\u202f17 of the document.",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 17"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The RAG models were trained on 8 NVIDIA V100 GPUs.",
+            "supported": true,
+            "evidence": "We train with mixed precision floating point arithmetic [40], distributing training across 8, 32GB NVIDIA V100 GPUs"
+          },
+          {
+            "claim": "Each GPU had 32 GB of memory.",
+            "supported": true,
+            "evidence": "distributing training across 8, 32GB NVIDIA V100 GPUs"
+          },
+          {
+            "claim": "Training used mixed-precision floating-point arithmetic.",
+            "supported": true,
+            "evidence": "We train with mixed precision floating point arithmetic [40]"
+          },
+          {
+            "claim": "This setup is described in the training details on page 17 of the document.",
+            "supported": true,
+            "evidence": "C Training setup Details ... 17"
+          }
+        ],
+        "supported": 4,
+        "total": 4,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-024",
+      "type": "fact",
+      "answer": "Berkshire Hathaway\u2019s corporate headquarters is in Omaha, Nebraska, while the company is domiciled in the state of Delaware.  \n[berkshire-2023-ar.pdf \u2014 Page 25]",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 25",
+        "berkshire-2023-ar.pdf \u2014 Page 28",
+        "berkshire-2023-ar.pdf \u2014 Page 152",
+        "berkshire-2023-ar.pdf \u2014 Page 48",
+        "berkshire-2023-ar.pdf \u2014 Page 149",
+        "berkshire-2023-ar.pdf \u2014 Page 27"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire Hathaway's corporate headquarters is in Omaha, Nebraska.",
+            "supported": true,
+            "evidence": "Berkshire is domiciled in the state of Delaware, and its corporate headquarters is in Omaha, Nebraska."
+          },
+          {
+            "claim": "Berkshire Hathaway is domiciled in the state of Delaware.",
+            "supported": true,
+            "evidence": "Berkshire is domiciled in the state of Delaware, and its corporate headquarters is in Omaha, Nebraska."
+          }
+        ],
+        "supported": 2,
+        "total": 2,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-026",
+      "type": "fact",
+      "answer": "Berkshire acquired Alleghany Corporation on **October\u202f19,\u202f2022**\u3010berkshire-2023-ar.pdf \u2014 Page\u202f107\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 107",
+        "berkshire-2023-ar.pdf \u2014 Page 145",
+        "berkshire-2023-ar.pdf \u2014 Page 60",
+        "berkshire-2023-ar.pdf \u2014 Page 27",
+        "berkshire-2023-ar.pdf \u2014 Page 46",
+        "berkshire-2023-ar.pdf \u2014 Page 108"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire acquired Alleghany Corporation on October 19, 2022.",
+            "supported": true,
+            "evidence": "On October 19, 2022, Berkshire acquired all of the outstanding common stock of Alleghany Corporation (\u201cAlleghany\u201d) for $11.5 billion."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-028",
+      "type": "fact",
+      "answer": "BNSF operates **over 32,500 route miles of track in 28 states**\u3010berkshire-2023-ar.pdf \u2014 Page 53\u3011",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 53",
+        "berkshire-2023-ar.pdf \u2014 Page 30",
+        "berkshire-2023-ar.pdf \u2014 Page 14"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "BNSF operates over 32,500 route miles of track.",
+            "supported": true,
+            "evidence": "Through BNSF Railway, BNSF operates over 32,500 route miles of track (excluding multiple main tracks, yard tracks and sidings)"
+          },
+          {
+            "claim": "BNSF operates in 28 states.",
+            "supported": true,
+            "evidence": "in 28 states, and also operates in three Canadian provinces"
+          }
+        ],
+        "supported": 2,
+        "total": 2,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "fact-030",
+      "type": "fact",
+      "answer": "Berkshire\u2019s net earnings for 2023 were **$96\u202fbillion**\u3010berkshire-2023-ar.pdf \u2014 Page 6\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 6",
+        "berkshire-2023-ar.pdf \u2014 Page 13",
+        "berkshire-2023-ar.pdf \u2014 Page 97",
+        "berkshire-2023-ar.pdf \u2014 Page 145",
+        "berkshire-2023-ar.pdf \u2014 Page 71",
+        "berkshire-2023-ar.pdf \u2014 Page 106"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire's net earnings for 2023 were $96 billion.",
+            "supported": true,
+            "evidence": "The passage states the 'Net earnings (loss)' numbers read $90 billion for 2021, ($23 billion) for 2022 and $96 billion for 2023. The Consolidated Statements of Comprehensive Income show Net earnings (loss) of $97,147 million for 2023, consistent with approximately $96-97 billion."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "table-001",
+      "type": "table",
+      "answer": "Berkshire Hathaway\u2019s consolidated cash and cash equivalents at December\u202f31,\u202f2023 were **$38,022\u202fmillion** (Cash and cash equivalents of $33,672\u202fmillion for insurance and other businesses plus $4,350\u202fmillion for railroad, utilities and energy)\u3010berkshire-2023-ar.pdf \u2014 Page 94\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 94",
+        "berkshire-2023-ar.pdf \u2014 Page 144",
+        "berkshire-2023-ar.pdf \u2014 Page 98",
+        "berkshire-2023-ar.pdf \u2014 Page 82",
+        "berkshire-2023-ar.pdf \u2014 Page 145",
+        "berkshire-2023-ar.pdf \u2014 Page 71"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire Hathaway's consolidated cash and cash equivalents at December 31, 2023 were $38,022 million.",
+            "supported": true,
+            "evidence": "Insurance and Other: Cash and cash equivalents $33,672; Railroad, Utilities and Energy: Cash and cash equivalents $4,350 (both at December 31, 2023); 33,672 + 4,350 = 38,022."
+          },
+          {
+            "claim": "Cash and cash equivalents for insurance and other businesses were $33,672 million at December 31, 2023.",
+            "supported": true,
+            "evidence": "Insurance and Other: Cash and cash equivalents* $ 33,672 $ 32,260 (December 31, 2023 and 2022)."
+          },
+          {
+            "claim": "Cash and cash equivalents for railroad, utilities and energy businesses were $4,350 million at December 31, 2023.",
+            "supported": true,
+            "evidence": "Railroad, Utilities and Energy: Cash and cash equivalents* 4,350 3,551 (December 31, 2023 and 2022)."
+          },
+          {
+            "claim": "The figure is cited to page 94 of berkshire-2023-ar.pdf.",
+            "supported": false,
+            "evidence": "The context passages are labeled K-70, K-120, K-74, K-58, K-121; no page 94 citation appears in the supplied context."
+          }
+        ],
+        "supported": 3,
+        "total": 4,
+        "score": 0.75,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "table-003",
+      "type": "table",
+      "answer": "The 4\u2011layer Transformer reaches an F1 of **92.7** in the semi\u2011supervised setting\u3010attention-is-all-you-need.pdf \u2014 Page 10\u3011.",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 10"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "In Table 4, the 4-layer Transformer reaches an F1 of 92.7 in the semi-supervised setting.",
+            "supported": true,
+            "evidence": "Table 4 lists \"Transformer (4 layers) semi-supervised 92.7\"."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "table-005",
+      "type": "table",
+      "answer": "RAG\u2011Sequence scores **14.7 BLEU\u20111** on MS\u2011MARCO (Table\u202f2, [rag\u2011knowledge\u2011intensive\u2011nlp.pdf \u2014 Page\u202f6]).",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 6",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 8"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "In Table 2, RAG-Sequence scores 14.7 BLEU-1 on MS-MARCO.",
+            "supported": false,
+            "evidence": "Table 2 shows RAG-Seq. with B-1 14.7 under the Jeopardy column, not MS-MARCO; the MS-MARCO B-1 for RAG-Seq. is 40.8."
+          }
+        ],
+        "supported": 0,
+        "total": 1,
+        "score": 0.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "table-008",
+      "type": "table",
+      "answer": "I could not find information about that in the uploaded documents.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 82",
+        "berkshire-2023-ar.pdf \u2014 Page 8",
+        "berkshire-2023-ar.pdf \u2014 Page 13",
+        "berkshire-2023-ar.pdf \u2014 Page 71",
+        "berkshire-2023-ar.pdf \u2014 Page 6",
+        "berkshire-2023-ar.pdf \u2014 Page 145"
+      ],
+      "abstained": true,
+      "partial": false
+    },
+    {
+      "id": "table-010",
+      "type": "table",
+      "answer": "Berkshire\u2019s insurance float was approximately **$169\u202fbillion** at the end of 2023.  \n[berkshire-2023-ar.pdf \u2014 Page 30]  \n[berkshire-2023-ar.pdf \u2014 Page 66]",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 25",
+        "berkshire-2023-ar.pdf \u2014 Page 30",
+        "berkshire-2023-ar.pdf \u2014 Page 13",
+        "berkshire-2023-ar.pdf \u2014 Page 66",
+        "berkshire-2023-ar.pdf \u2014 Page 98",
+        "berkshire-2023-ar.pdf \u2014 Page 125"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire's insurance float was approximately $169 billion at the end of 2023.",
+            "supported": true,
+            "evidence": "Float was approximately $169 billion at December 31, 2023, $164 billion at December 31, 2022 and $147 billion at December 31, 2021."
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "multihop-001",
+      "type": "multihop",
+      "answer": "The Transformer injects token order by adding **positional encodings** to the input embeddings.  \nThese encodings are summed with the embeddings at the bottom of the encoder and decoder stacks, so they must have the **same dimensionality as the embeddings**\u2014i.e., the model\u2019s `dmodel` dimension.  \n\n[attention\u2011is\u2011all\u2011you\u2011need.pdf \u2014 Page\u202f6]",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 2",
+        "attention-is-all-you-need.pdf \u2014 Page 5",
+        "attention-is-all-you-need.pdf \u2014 Page 3",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 11",
+        "attention-is-all-you-need.pdf \u2014 Page 6",
+        "attention-is-all-you-need.pdf \u2014 Page 9"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The Transformer injects token order by adding positional encodings to the input embeddings.",
+            "supported": true,
+            "evidence": "Since our model contains no recurrence and no convolution, in order for the model to make use of the order of the sequence, we must inject some information about the relative or absolute position of the tokens in the sequence. To this end, we add \"positional encodings\" to the input embeddings at the bottoms of the encoder and decoder stacks."
+          },
+          {
+            "claim": "The positional encodings are added at the bottoms of the encoder and decoder stacks.",
+            "supported": true,
+            "evidence": "we add \"positional encodings\" to the input embeddings at the bottoms of the encoder and decoder stacks."
+          },
+          {
+            "claim": "The positional encodings must have the same dimensionality as the embeddings, i.e., the model's dmodel dimension.",
+            "supported": true,
+            "evidence": "The positional encodings have the same dimension dmodel as the embeddings, so that the two can be summed."
+          }
+        ],
+        "supported": 3,
+        "total": 3,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "multihop-003",
+      "type": "multihop",
+      "answer": "The Transformer replaces the recurrent layers with **multi\u2011headed self\u2011attention**\u3010attention\u2011is\u2011all\u2011you\u2011need.pdf \u2014 Page 2\u3011.  \nIn the conclusion it states that the model is **the first sequence transduction model based entirely on attention, replacing the recurrent layers most commonly used in encoder\u2011decoder architectures with multi\u2011headed self\u2011attention**\u3010attention\u2011is\u2011all\u2011you\u2011need.pdf \u2014 Page 10\u3011.",
+      "sources": [
+        "attention-is-all-you-need.pdf \u2014 Page 2",
+        "attention-is-all-you-need.pdf \u2014 Page 10"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "The Transformer replaces the recurrent layers with multi-headed self-attention.",
+            "supported": true,
+            "evidence": "Conclusion: \"replacing the recurrent layers most commonly used in encoder-decoder architectures with multi-headed self-attention.\""
+          },
+          {
+            "claim": "The conclusion states that the model is the first sequence transduction model based entirely on attention.",
+            "supported": true,
+            "evidence": "Conclusion: \"we presented the Transformer, the first sequence transduction model based entirely on attention\""
+          }
+        ],
+        "supported": 2,
+        "total": 2,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "multihop-005",
+      "type": "multihop",
+      "answer": "",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 17",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 18",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 9",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 5",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 8",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 4"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "RAG-Sequence retrieves 50 documents for open-domain QA at test time.",
+            "supported": true,
+            "evidence": "For RAG-Sequence models, we report test results using 50 retrieved documents, and we use the Thorough Decoding approach since answers are generally short."
+          },
+          {
+            "claim": "A RAG component is held fixed during training.",
+            "supported": false,
+            "evidence": "The context does not state that any RAG component is held fixed during training; it only describes RAG-Token-Frozen and RAG-Sequence-Frozen as model variants in a results table without explaining what is frozen."
+          }
+        ],
+        "supported": 1,
+        "total": 2,
+        "score": 0.5,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "multihop-008",
+      "type": "multihop",
+      "answer": "Berkshire\u2019s GAAP net worth at year\u2011end\u202f2023 was **$561\u202fbillion** (reported as $561.3\u202fbillion in the consolidated balance sheet)\u3010berkshire-2023-ar.pdf \u2014 Page 8\u3011\u3010berkshire-2023-ar.pdf \u2014 Page 82\u3011.  \n\nThe company\u2019s total assets at that date were **$581.5\u202fbillion** (sum of cash, short\u2011term Treasury bills, investments in subsidiaries, Kraft Heinz investment, and other assets)\u3010berkshire-2023-ar.pdf \u2014 Page 144\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 8",
+        "berkshire-2023-ar.pdf \u2014 Page 82",
+        "berkshire-2023-ar.pdf \u2014 Page 97",
+        "berkshire-2023-ar.pdf \u2014 Page 144",
+        "berkshire-2023-ar.pdf \u2014 Page 107",
+        "berkshire-2023-ar.pdf \u2014 Page 145"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire's GAAP net worth at year-end 2023 was $561 billion.",
+            "supported": true,
+            "evidence": "Berkshire now has \u2013 by far \u2013 the largest GAAP net worth recorded by any American business. Record operating income and a strong stock market led to a yearend figure of $561 billion."
+          },
+          {
+            "claim": "The consolidated balance sheet reports shareholders' equity of $561.3 billion at December 31, 2023.",
+            "supported": true,
+            "evidence": "Berkshire's shareholders' equity at December 31, 2023 was $561.3 billion, an increase of $87.8 billion since December 31, 2022."
+          },
+          {
+            "claim": "Berkshire's total assets at year-end 2023 were $581.5 billion.",
+            "supported": true,
+            "evidence": "Parent Company Balance Sheets: Assets: Cash and cash equivalents $5,566; Short-term investments in U.S. Treasury Bills $16,140; Investments in and advances to consolidated subsidiaries $546,566; Investment in The Kraft Heinz Company $13,230; Other assets $16; $581,518."
+          },
+          {
+            "claim": "The $581.5 billion total assets figure is the sum of cash, short-term Treasury bills, investments in subsidiaries, Kraft Heinz investment, and other assets.",
+            "supported": true,
+            "evidence": "Parent Company Balance Sheets line items: Cash and cash equivalents $5,566; Short-term investments in U.S. Treasury Bills $16,140; Investments in and advances to consolidated subsidiaries $546,566; Investment in The Kraft Heinz Company $13,230; Other assets $16; total $581,518."
+          }
+        ],
+        "supported": 4,
+        "total": 4,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "multihop-010",
+      "type": "multihop",
+      "answer": "Berkshire employed approximately **396,500 people** worldwide at the end of 2023\u3010berkshire-2023-ar.pdf \u2014 Page 25\u3011, and its total operating earnings for the year were **$37,350\u202fmillion**\u3010berkshire-2023-ar.pdf \u2014 Page 13\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 25",
+        "berkshire-2023-ar.pdf \u2014 Page 35",
+        "berkshire-2023-ar.pdf \u2014 Page 13",
+        "berkshire-2023-ar.pdf \u2014 Page 6",
+        "berkshire-2023-ar.pdf \u2014 Page 71",
+        "berkshire-2023-ar.pdf \u2014 Page 145"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "Berkshire employed approximately 396,500 people worldwide at the end of 2023.",
+            "supported": true,
+            "evidence": "Berkshire and its subsidiary business units employed approximately 396,500 people worldwide at the end of 2023"
+          },
+          {
+            "claim": "Berkshire's total operating earnings for the year were $37,350 million.",
+            "supported": true,
+            "evidence": "Operating earnings .......................... $37,350 $30,853"
+          }
+        ],
+        "supported": 2,
+        "total": 2,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "unans-001",
+      "type": "unanswerable",
+      "answer": "I could not find information about that in the uploaded documents.",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 15",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 19",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 8",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 7",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 2",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 1"
+      ],
+      "abstained": true,
+      "partial": false
+    },
+    {
+      "id": "unans-004",
+      "type": "unanswerable",
+      "answer": "I could not find information about that in the uploaded documents.",
+      "sources": [
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 4",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 7",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 8",
+        "rag-knowledge-intensive-nlp.pdf \u2014 Page 10"
+      ],
+      "abstained": true,
+      "partial": false
+    },
+    {
+      "id": "unans-008",
+      "type": "unanswerable",
+      "answer": "I could not find information about that in the uploaded documents.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 82",
+        "berkshire-2023-ar.pdf \u2014 Page 108",
+        "berkshire-2023-ar.pdf \u2014 Page 57",
+        "berkshire-2023-ar.pdf \u2014 Page 97",
+        "berkshire-2023-ar.pdf \u2014 Page 131",
+        "berkshire-2023-ar.pdf \u2014 Page 71"
+      ],
+      "abstained": true,
+      "partial": false
+    },
+    {
+      "id": "fact-042",
+      "type": "fact",
+      "answer": "BNSF Railway had approximately **37,025 employees** at the end of 2023.  \n[berkshire-2023-ar.pdf \u2014 Page 149]",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 30",
+        "berkshire-2023-ar.pdf \u2014 Page 53",
+        "berkshire-2023-ar.pdf \u2014 Page 149"
+      ],
+      "abstained": false,
+      "partial": false,
+      "faithfulness": {
+        "claims": [
+          {
+            "claim": "BNSF Railway had approximately 37,025 employees at the end of 2023.",
+            "supported": true,
+            "evidence": "BNSF Railway ..................................  37,025"
+          }
+        ],
+        "supported": 1,
+        "total": 1,
+        "score": 1.0,
+        "model": "deepseek-flash"
+      }
+    },
+    {
+      "id": "unans-012",
+      "type": "unanswerable",
+      "answer": "BNSF Railway\u2019s operating ratio in 2023 was **68.4\u202f%**\u3010berkshire-2023-ar.pdf \u2014 Page 68\u3011.",
+      "sources": [
+        "berkshire-2023-ar.pdf \u2014 Page 67",
+        "berkshire-2023-ar.pdf \u2014 Page 68",
+        "berkshire-2023-ar.pdf \u2014 Page 53",
+        "berkshire-2023-ar.pdf \u2014 Page 30",
+        "berkshire-2023-ar.pdf \u2014 Page 59",
+        "berkshire-2023-ar.pdf \u2014 Page 13"
+      ],
+      "abstained": false,
+      "partial": false
+    }
+  ]
+}
