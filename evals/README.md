@@ -83,35 +83,41 @@ of 2026-10-27.
 | recall@4 | 0.808 | **0.865** | +0.058 |
 | recall@10 | **0.923** | 0.904 | -0.019 |
 | MRR | 0.609 | **0.751** | +0.143 |
-| p50 latency | 13 ms | 935 ms | +922 ms |
+| p50 latency | 13 ms | 893 ms | +880 ms |
 | p95 latency | 24 ms | 1159 ms | +1135 ms |
-| faithfulness | not run | **0.95** | — |
+| faithfulness | not run | **0.91** | — |
 | abstention accuracy | not run | **0.80** (8 of 10) | — |
-| false abstention rate | not run | 0.058 (3 of 52) | — |
+| false abstention rate | not run | 0.135 (7 of 52) | — |
 
 Both paths now keep at most one chunk per page. Dense still finds more gold
 pages by rank 10, while hybrid ranks the right page first more often: MRR 0.751
-against 0.609. The judged run behind the faithfulness and abstention rows
-predates the page cap, so those two rows describe the uncapped hybrid ranking.
-The cap changed one rank-10 hit and no rank-4 hits, but the answers under the
-cap have not been judged.
+against 0.609. The judged rows come from a run at the cap on 2026-11-02, with
+memory cleared between questions. Against the uncapped run of 2026-10-28,
+mean support fell from 0.952 over 49 judged answers to 0.911 over 45, and
+false abstentions rose from 3 to 7 of 52. Two answers came back empty and
+score zero; excluding them, 79 of 82 claims are supported. The cap and the
+memory reset landed together, so these runs cannot separate their effects.
 
 Retrieval is scored at k=10 for both paths, which the app does not do: it
 answers from six chunks. That is why recall@10 now differs from recall@4 and
 why the latency rows are about 60 ms higher than an answering query costs.
 
 Faithfulness and abstention come from `evals/results/full.json`, rerun on
-2026-10-28 with `--hybrid --reuse-index --full`, before the page cap existed.
-Reproduce that ranking with `RAG_MAX_PER_PAGE=0`; without it the run uses the
-current default. The judge scores each claim against the retrieved context:
-0.952 over the 49 answers that made a claim. Abstention accuracy is 8 of 10.
-Three answers gave one half of a two-part question and refused the other; they
-are counted as partial answers rather than refusals.
+2026-11-02 with `--hybrid --reuse-index --full` at the current default,
+`RAG_MAX_PER_PAGE=1`, with memory cleared between questions. The judge scores
+each claim against the retrieved context, and the table reports mean support
+per judged answer. Abstention accuracy is 8 of 10. Two answers gave one half
+of a two-part question and refused the other; they are counted as partial
+answers rather than refusals. Two generations returned an empty string and
+score zero: `multihop-002` and `multihop-005`. A second run at the same commit
+on 2026-11-01 scored 0.948, so treat judge differences under about 0.02 as
+noise.
 
-The same judged run at four chunks, a day earlier, scored 0.907 and refused 7
-of the 52 answerable questions. Two more chunks raised the supported fraction
-and cut false refusals to 3. Both runs are on the same index and question set,
-so the six-chunk default is the one the numbers describe.
+The uncapped history is kept for context. The judged run at four chunks on
+2026-10-27 scored 0.907 and refused 7 of the 52 answerable questions; two more
+chunks raised support to 0.952 and cut false refusals to 3. Those runs predate
+both the page cap and the memory reset, so they are not comparable to the
+current rows.
 
 Two limitations of the remaining abstention misses. `unans-007` (return on
 equity) and `unans-012` (BNSF operating ratio) were answered by computing a
@@ -211,20 +217,21 @@ for double the latency. Defaults stayed at 0.4 and 20.
 - **Sentence-based abstention.** An answer counts as a refusal when every
   sentence refuses. A refusal is still recognised by wording, so a new
   phrasing needs a new pattern, and the model's own summary of a table can
-  read as a claim even when it refuses the question. Three of the 52
-  answerable questions were refused. One (`fact-003`) followed a retrieval
-  miss; two (`table-004`, `multihop-005`) refused with a gold page already in
-  the context.
+  read as a claim even when it refuses the question. Seven of the 52
+  answerable questions were refused. Four (`fact-001`, `fact-029`,
+  `table-004`, `multihop-004`) refused with a gold page already in the
+  context; three (`fact-003`, `fact-014`, `table-008`) followed a retrieval
+  miss.
 - **Derived answers are scored as wrong.** `unans-007` and `unans-012` were
   answered by computing a ratio from figures in the corpus. The golden set
   says the corpus does not state the figure. Decide the policy before
   counting these as failures.
-- **Failure modes that flatter or punish the numbers.** Four unsupported
-  claims were page numbers written into the answer text ("Page 3", "Page 96")
-  that the judge cannot see in the context, so they are judge artefacts, not
-  wrong answers. One (`table-001`) summed two segment figures the context
-  states separately. One (`multihop-004`) was a real gap: the retrieved pages
-  did not state which RAG variant uses a single document per sequence. Read
+- **Failure modes that flatter or punish the numbers.** Two unsupported
+  claims were page numbers written into the answer text ("page 8", "page 4")
+  that the judge cannot see in the context, so they are judge artefacts
+  (`fact-007`, `fact-011`). One (`table-001`) summed two segment figures the
+  context states separately. Two empty generations (`multihop-002`,
+  `multihop-005`) score zero and are real failures, not judge noise. Read
   faithfulness as a lower bound until the prompt stops writing page numbers
   into prose.
 

@@ -173,9 +173,19 @@ def run_answers(
             "abstained": abstained,
             "partial": not abstained and has_refusal(answer),
         }
+        # An empty answer is a failed generation, not a refusal. Judging it lets
+        # the judge invent claims from the question, so score the failure zero.
+        if not (answer or "").strip():
+            row["faithfulness"] = {
+                "score": 0.0,
+                "claims": [],
+                "supported": 0,
+                "total": 0,
+                "model": None,
+            }
         # A refusal makes no factual claims, so judging it as unfaithful would
         # punish the behaviour the prompt asks for.
-        if item["type"] != "unanswerable" and not abstained:
+        elif item["type"] != "unanswerable" and not abstained:
             row["faithfulness"] = with_retry(
                 lambda: judge.score_faithfulness(
                     item["question"],

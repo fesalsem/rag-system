@@ -156,7 +156,11 @@ class RecordingEngine:
 
 
 class FakeJudge:
+    def __init__(self):
+        self.calls = 0
+
     def score_faithfulness(self, question, answer, context):
+        self.calls += 1
         return {"score": 1.0, "claims": 1, "supported": 1, "total": 1, "model": "fake"}
 
 
@@ -182,6 +186,18 @@ def test_run_answers_writes_each_row_to_the_checkpoint(tmp_path):
     assert [row["id"] for row in rows] == ["q1", "q2"]
     written = [json.loads(line) for line in checkpoint.read_text().splitlines()]
     assert [row["id"] for row in written] == ["q1", "q2"]
+
+
+def test_run_answers_scores_an_empty_answer_zero_without_judging_it():
+    # The judge invents claims for an empty answer, so it must not be asked.
+    class EmptyEngine(RecordingEngine):
+        def query(self, question):
+            return {"answer": "", "sources": [], "contexts": ["chunk"]}
+
+    judge = FakeJudge()
+    rows = run_answers([golden_item("q1")], EmptyEngine(), judge)
+    assert rows[0]["faithfulness"]["score"] == 0.0
+    assert judge.calls == 0
 
 
 def test_run_answers_clears_memory_between_questions():
