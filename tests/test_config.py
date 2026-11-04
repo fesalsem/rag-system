@@ -84,7 +84,7 @@ class TestLLMConfig:
         cfg = LLMConfig()
         assert cfg.model_name == "openai/gpt-oss-20b"
         assert cfg.temperature == 0.2
-        assert cfg.max_tokens == 1024
+        assert cfg.max_tokens == 8192
         # No key in the environment means an empty string, so the registry can
         # raise a useful error instead of building a client with None.
         assert cfg.groq_api_key == ""
@@ -251,9 +251,9 @@ class TestRAGConfig:
         # One chunk per page: the page cap sweep in evals/README.md shows it
         # finds more distinct pages than the plain ranking.
         assert cfg.max_chunks_per_page == 1
-        # Off by default: page expansion is an experiment until the judged
-        # evaluation says otherwise.
-        assert cfg.page_chunks == 0
+        # Three chunks per page: on the 30-question pair this cut false
+        # abstentions from 4 of 26 to 1 of 26 with retrieval unchanged.
+        assert cfg.page_chunks == 3
         assert cfg.max_pages == 300
         assert cfg.max_upload_mb == 50
         assert cfg.log_level == "INFO"
@@ -280,7 +280,7 @@ class TestRAGConfig:
             ("RAG_RETRIEVER_K", "retriever_k", 6),
             ("RAG_MAX_DISTANCE", "max_distance", 1.4),
             ("RAG_MAX_PER_PAGE", "max_chunks_per_page", 1),
-            ("RAG_PAGE_CHUNKS", "page_chunks", 0),
+            ("RAG_PAGE_CHUNKS", "page_chunks", 3),
             ("RAG_MAX_PAGES", "max_pages", 300),
             ("RAG_MAX_UPLOAD_MB", "max_upload_mb", 50),
         ],

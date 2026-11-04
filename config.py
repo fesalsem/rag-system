@@ -73,7 +73,9 @@ class LLMConfig(BaseModel):
         description="Model identifier served by Groq.",
     )
     temperature: float = Field(default=0.2, ge=0.0, le=2.0)
-    max_tokens: int = Field(default=1024, gt=0)
+    # gpt-oss spends this budget on hidden reasoning before answering. At 1024
+    # two two-part eval questions ran out and returned ""; one needed 8192.
+    max_tokens: int = Field(default=8192, gt=0)
     groq_api_key: str = Field(
         default_factory=lambda: os.getenv("GROQ_API_KEY", ""),
         description="Groq API key. Never logged — see RAGConfig.redacted().",
@@ -217,13 +219,14 @@ class RAGConfig(BaseModel):
         ),
     )
     page_chunks: int = Field(
-        default_factory=lambda: _env_int("RAG_PAGE_CHUNKS", 0),
+        default_factory=lambda: _env_int("RAG_PAGE_CHUNKS", 3),
         ge=0,
         description=(
             "Largest number of chunks from each retrieved page that reach "
-            "the prompt. Zero sends only the retrieved chunk. Retrieval "
-            "keeps one chunk per page, so a window around that chunk is "
-            "what recovers a sentence that sits next to it."
+            "the prompt; zero sends only the retrieved chunk. Retrieval keeps "
+            "one chunk per page, so a window recovers a sentence next to it. "
+            "Three is the default: on the 30-question pair it cut false "
+            "abstentions from 4 of 26 to 1 of 26 with retrieval unchanged."
         ),
     )
     max_pages: int = Field(

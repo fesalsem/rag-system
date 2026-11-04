@@ -444,7 +444,8 @@ class TestPageExpansion:
             for index in range(5)
         ]
 
-    def test_off_by_default_keeps_only_the_retrieved_chunk(self, cfg):
+    def test_zero_sends_only_the_retrieved_chunk(self, cfg):
+        cfg.page_chunks = 0
         docs = self.page_one()
         store = FakeVectorStore(scored=[(docs[2], 0.1)], ntotal=5)
         engine = make_engine(cfg, store=store)
