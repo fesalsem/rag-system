@@ -208,6 +208,41 @@ The fusion weight changes nothing because the cross-encoder sets the final
 order. The candidate pool does: 10 loses 6 points of recall, 40 buys 0.013 MRR
 for double the latency. Defaults stayed at 0.4 and 20.
 
+## Threshold calibration
+
+`RAG_MAX_DISTANCE` is the only relevance gate on the dense path, and the dense
+path is what the deployed app runs. It was set to 1.4 by hand, from cosine 0.3.
+Sweeping it over the 62 questions on the saved index, capped at one chunk per
+page and scored at k=10:
+
+| `RAG_MAX_DISTANCE` | answerable with context | unanswerable with context | recall@4 | recall@10 |
+|---|---|---|---|---|
+| 1.0 | 41/52 | 8/10 | 0.577 | 0.635 |
+| 1.1 | 49/52 | 9/10 | 0.692 | 0.769 |
+| 1.2 | 52/52 | 10/10 | 0.769 | 0.846 |
+| 1.3 | 52/52 | 10/10 | 0.788 | 0.885 |
+| **1.4** | **52/52** | **10/10** | **0.808** | **0.923** |
+| 1.5 | 52/52 | 10/10 | 0.808 | 0.923 |
+| 1.6 | 52/52 | 10/10 | 0.808 | 0.923 |
+| 1.7 | 52/52 | 10/10 | 0.808 | 0.923 |
+
+1.4 is the lowest cutoff that reaches the best recall@10; above it nothing
+changes, and below it answerable questions start losing their context. The
+classes never separate: every cutoff loose enough to keep all 52 answerable
+questions in context also keeps all 10 unanswerable ones. A distance gate
+therefore cannot improve abstention here. The remaining misses are a ranking
+miss (`table-008`) and two derived answers (`unans-007`, `unans-012`).
+
+The hybrid gate behaves the same way once the engine's dense fallback is
+counted. At 0.0 the reranker rejects every candidate for 2 of 52 answerable
+questions and 2 of 10 unanswerable ones, but `RAGEngine.retrieve` falls back to
+dense on an empty rerank, and the recorded run has non-empty context for all 62.
+Sweeping the gate moves the ordering, not whether context exists: -1.0 keeps
+the same unanswerable set and moves recall@10 by 0.038, this sample's noise
+floor, while 1.0 removes one question from each class. The default is the
+cross-encoder's trained relevance boundary, and no neighbouring value beats it
+outside noise, so both defaults stay unchanged.
+
 ## Limitations
 
 - **Page-level truth.** A hit means the right page, not the right passage.
